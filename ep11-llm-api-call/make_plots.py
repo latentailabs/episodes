@@ -47,15 +47,19 @@ def load_data():
 
 def make_fig1_stateless_vs_prefix_cache(data):
     """Fig 1: 10-Turn Stateless Re-Prefill vs Prefix KV Cache Reuse (Tokens & TTFT ms)."""
-    bench = data["m1_stateless_and_prefix_cache"]["ten_turn_benchmark"]
-    s_turns = bench["stateless_reprefill_turns"]
-    c_turns = bench["prefix_cached_turns"]
-
-    turns = [t["turn"] for t in s_turns]
-    s_toks = [t["prefill_tokens_computed"] for t in s_turns]
-    c_toks = [t["delta_tokens_computed"] for t in c_turns]
-    s_ttft = [t["ttft_ms"] for t in s_turns]
-    c_ttft = [t["ttft_ms"] for t in c_turns]
+    # 4 Nov 2026: Fig 1 uses the corrected re-check (data/m1_prefix_recheck.json, m1_prefix_recheck.py):
+    # the reusable prefix is the true longest common prefix, timings are medians of 5 runs.
+    with open(os.path.join(os.path.dirname(DATA_PATH), "m1_prefix_recheck.json"), "r", encoding="utf-8") as f:
+        rc = json.load(f)
+    rows = rc["turns"]
+    turns = [t["turn"] for t in rows]
+    s_toks = [t["context_tokens"] for t in rows]
+    c_toks = [t["delta_tokens"] for t in rows]
+    s_ttft = [t["stateless_ttft_ms_median"] for t in rows]
+    c_ttft = [t["cached_ttft_ms_median"] for t in rows]
+    tot_s, tot_c = rc["total_stateless_tokens"], rc["total_cached_tokens"]
+    t10 = rows[-1]
+    sp10 = t10["stateless_ttft_ms_median"] / t10["cached_ttft_ms_median"]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.2), dpi=180)
     fig.patch.set_facecolor(BG)
@@ -63,18 +67,18 @@ def make_fig1_stateless_vs_prefix_cache(data):
     # Left panel: Prefill Tokens Computed per Turn
     x = np.arange(len(turns))
     w = 0.38
-    ax1.bar(x - w / 2, s_toks, width=w, color=RED, alpha=0.88, label="Stateless Re-Prefill (5,549 total tokens)")
-    ax1.bar(x + w / 2, c_toks, width=w, color=GREEN, alpha=0.92, label="Prefix KV Cache Reuse (963 total tokens)")
+    ax1.bar(x - w / 2, s_toks, width=w, color=RED, alpha=0.88, label=f"Stateless Re-Prefill ({tot_s:,} total tokens)")
+    ax1.bar(x + w / 2, c_toks, width=w, color=GREEN, alpha=0.92, label=f"Prefix KV Cache Reuse ({tot_c:,} total tokens)")
     ax1.set_xticks(x)
     ax1.set_xticklabels([f"T{t}" for t in turns], fontsize=10, fontweight="bold")
     ax1.set_ylabel("Prefill Tokens Processed by GPU", fontsize=11, fontweight="bold")
-    ax1.set_title("A. Redundant Prefill Tokens (5.76x Total Waste)", fontsize=13, fontweight="bold", pad=12, color=TEXT)
+    ax1.set_title(f"A. Prefill Tokens per Turn ({tot_s / tot_c:.2f}x More Without Cache)", fontsize=13, fontweight="bold", pad=12, color=TEXT)
     ax1.set_ylim(0, 1150)
     ax1.grid(axis="y", linestyle="--", alpha=0.45)
     ax1.legend(loc="upper left", frameon=True, facecolor=BG, edgecolor=GRID, fontsize=9.5)
 
     ax1.annotate(
-        f"Turn 10:\n963 vs 73 tok\n(890 cached)",
+        f"Turn 10:\n{t10['context_tokens']} vs {t10['delta_tokens']} tok\n({t10['reused_prefix_tokens']} reused)",
         xy=(9 - w / 2, s_toks[-1]),
         xytext=(5.8, 960),
         color=AMBER,
@@ -84,19 +88,19 @@ def make_fig1_stateless_vs_prefix_cache(data):
     )
 
     # Right panel: Time-To-First-Token (TTFT ms) per Turn
-    ax2.plot(turns, s_ttft, marker="o", linewidth=2.8, markersize=7, color=RED, label="Stateless Re-Prefill TTFT (ms)")
-    ax2.plot(turns, c_ttft, marker="s", linewidth=2.8, markersize=7, color=GREEN, label="Prefix KV Cache TTFT (ms)")
+    ax2.plot(turns, s_ttft, marker="o", linewidth=2.8, markersize=7, color=RED, label="Stateless Re-Prefill TTFT (ms, median of 5)")
+    ax2.plot(turns, c_ttft, marker="s", linewidth=2.8, markersize=7, color=GREEN, label="Prefix KV Cache TTFT (ms, median of 5)")
     ax2.fill_between(turns, c_ttft, s_ttft, color=RED, alpha=0.14)
     ax2.set_xticks(turns)
     ax2.set_xticklabels([f"T{t}" for t in turns], fontsize=10, fontweight="bold")
     ax2.set_ylabel("Time-To-First-Token (TTFT ms)", fontsize=11, fontweight="bold")
-    ax2.set_title("B. Measured Turn Latency on A100 (2.08x Faster at Turn 10)", fontsize=13, fontweight="bold", pad=12, color=TEXT)
+    ax2.set_title(f"B. Time to First Token on A100 ({sp10:.2f}x Faster at Turn 10)", fontsize=13, fontweight="bold", pad=12, color=TEXT)
     ax2.set_ylim(40, 160)
     ax2.grid(True, linestyle="--", alpha=0.45)
     ax2.legend(loc="upper left", frameon=True, facecolor=BG, edgecolor=GRID, fontsize=9.5)
 
     ax2.annotate(
-        f"137.9 ms\n(Re-Prefill all 963 tok)",
+        f"{t10['stateless_ttft_ms_median']:.1f} ms\n(re-prefill all {t10['context_tokens']} tok)",
         xy=(10, s_ttft[-1]),
         xytext=(6.9, 143),
         color=RED,
@@ -105,7 +109,7 @@ def make_fig1_stateless_vs_prefix_cache(data):
         arrowprops=dict(arrowstyle="->", color=RED, lw=1.6),
     )
     ax2.annotate(
-        f"66.3 ms (2.08x faster)\nOnly 73 delta tok computed",
+        f"{t10['cached_ttft_ms_median']:.1f} ms ({sp10:.2f}x faster)\nonly {t10['delta_tokens']} new tok prefilled",
         xy=(10, c_ttft[-1]),
         xytext=(5.8, 47),
         color=GREEN,
@@ -115,7 +119,7 @@ def make_fig1_stateless_vs_prefix_cache(data):
     )
 
     fig.suptitle(
-        "LLM APIs Have Zero Memory: 10-Turn Stateless Re-Prefill vs. Prefix KV Cache (Qwen3-8B, NVIDIA A100)",
+        "LLM APIs Have Zero Memory: 10-Turn Re-Prefill vs. Prefix KV Cache (Qwen3-8B, A100, HF eager, batch 1)",
         fontsize=14.5,
         fontweight="bold",
         y=0.98,
@@ -160,7 +164,7 @@ def make_fig2_chatml_templates_and_attention(data):
     b2 = ax1.bar(x + w / 2, leaks, width=w, color=RED, label="Role Leak / Run-On Failure (%)")
     ax1.set_xticks(x)
     ax1.set_xticklabels(labels, fontsize=10, fontweight="bold")
-    ax1.set_ylabel("Percentage of API Calls (%)", fontsize=11, fontweight="bold")
+    ax1.set_ylabel("% of the 5 Test Questions", fontsize=11, fontweight="bold")
     ax1.set_title("A. Why Raw Strings Fail: Chat Template Accuracy", fontsize=13, fontweight="bold", pad=12)
     ax1.set_ylim(0, 118)
     ax1.grid(axis="y", linestyle="--", alpha=0.45)
@@ -178,7 +182,7 @@ def make_fig2_chatml_templates_and_attention(data):
     ax2.fill_between(layers, 0, attn_by_layer, color=CYAN, alpha=0.16)
     ax2.set_xlabel("Transformer Layer Index (0 to 35)", fontsize=11, fontweight="bold")
     ax2.set_ylabel("Attention Mass on ChatML Control Tokens (%)", fontsize=11, fontweight="bold")
-    ax2.set_title("B. Final-Token Attention Routed to Special Control IDs", fontsize=13, fontweight="bold", pad=12)
+    ax2.set_title("B. Where the Final Token's Attention Goes (one prompt)", fontsize=13, fontweight="bold", pad=12)
     ax2.set_ylim(0, 102)
     ax2.grid(True, linestyle="--", alpha=0.45)
     ax2.legend(loc="lower right", frameon=True, facecolor=BG, edgecolor=GRID, fontsize=9.5)
@@ -186,9 +190,9 @@ def make_fig2_chatml_templates_and_attention(data):
     peak_layer = int(np.argmax(attn_by_layer))
     peak_val = attn_by_layer[peak_layer]
     ax2.annotate(
-        f"Layer {peak_layer}: {peak_val:.1f}% attention\non <|im_start|> / <|im_end|>",
+        f"Layer {peak_layer}: {peak_val:.1f}% of attention\non 4 special-token IDs (7 of 38 positions, incl. pos 0)",
         xy=(peak_layer, peak_val),
-        xytext=(15, 92),
+        xytext=(8.5, 26),
         color=AMBER,
         fontsize=9.5,
         fontweight="bold",
@@ -222,14 +226,14 @@ def make_fig3_prefill_vs_decode(data):
     fig.patch.set_facecolor(BG)
 
     x = np.arange(len(p_lens))
-    ax1.plot(x, prefill_tps, marker="o", linewidth=3.0, markersize=8, color=CYAN, label="Phase 1: Parallel Prefill (Compute-Bound)")
-    ax1.plot(x, decode_tps, marker="s", linewidth=3.0, markersize=8, color=AMBER, label="Phase 2: Serial Decode (HBM Memory-Bound)")
+    ax1.plot(x, prefill_tps, marker="o", linewidth=3.0, markersize=8, color=CYAN, label="Phase 1: Parallel Prefill")
+    ax1.plot(x, decode_tps, marker="s", linewidth=3.0, markersize=8, color=AMBER, label="Phase 2: Serial Decode (batch 1)")
     ax1.set_yscale("log")
     ax1.set_xticks(x)
     ax1.set_xticklabels([str(p) for p in p_lens], fontsize=10.5, fontweight="bold")
     ax1.set_xlabel("Prompt Length (Input Tokens)", fontsize=11, fontweight="bold")
     ax1.set_ylabel("Throughput (Tokens / sec, Log Scale)", fontsize=11, fontweight="bold")
-    ax1.set_title("A. 493.7x Speed Gap: Parallel Prefill vs. Serial Decode", fontsize=13, fontweight="bold", pad=12)
+    ax1.set_title("A. 493.7x Per-Token Gap at N=1,024 (HF eager, batch 1)", fontsize=13, fontweight="bold", pad=12)
     ax1.set_ylim(8, 20000)
     ax1.grid(True, which="both", linestyle="--", alpha=0.45)
     ax1.legend(loc="center right", frameon=True, facecolor=BG, edgecolor=GRID, fontsize=9.5)
@@ -244,7 +248,7 @@ def make_fig3_prefill_vs_decode(data):
         arrowprops=dict(arrowstyle="->", color=CYAN, lw=1.6),
     )
     ax1.annotate(
-        "Flat ~15.8 tok/s across all lengths\n(Streams 15.26 GB weights every token)",
+        "Flat 15.5-15.9 tok/s at every length\n(~255 GB/s effective, ~16% of the 1,555 GB/s spec)",
         xy=(2, decode_tps[2]),
         xytext=(0.7, 28),
         color=AMBER,
@@ -302,19 +306,19 @@ def make_fig4_json_reliability_across_temps(data):
     fig.patch.set_facecolor(BG)
 
     ax1.plot(temps, naive_pass, marker="x", markersize=9, linewidth=3.0, color=RED, label='Naive Prompt ("...as JSON") — 0.0% Pass (100% Crash)')
-    ax1.plot(temps, strict_pass, marker="o", markersize=8, linewidth=2.6, linestyle="--", color=AMBER, label="Strict System Prompt (100% on Simple 3-Key Schema, No Guarantee)")
-    ax1.plot(temps, mask_pass, marker="s", markersize=7, linewidth=2.8, color=GREEN, label="Constrained Decoding FSM Mask (100.0% Mathematical Guarantee)")
+    ax1.plot(temps, strict_pass, marker="o", markersize=16, markerfacecolor="none", markeredgewidth=2.4, linewidth=2.6, linestyle="--", color=AMBER, label="Strict System Prompt: 80/80 (a request, no guarantee)")
+    ax1.plot(temps, mask_pass, marker="s", markersize=7, linewidth=2.8, color=GREEN, label="-inf Logit Mask: 80/80 (cannot emit off-grammar tokens)")
     ax1.set_xticks(temps)
     ax1.set_xticklabels([f"T={t:.1f}" for t in temps], fontsize=10.5, fontweight="bold")
     ax1.set_xlabel("Sampling Temperature (T)", fontsize=11, fontweight="bold")
     ax1.set_ylabel("Strict json.loads() + Schema Pass Rate (%)", fontsize=11, fontweight="bold")
-    ax1.set_title("A. Naive JSON Prompt Crashes 100% of json.loads() Calls", fontsize=13, fontweight="bold", pad=12)
+    ax1.set_title("A. Naive Prompt 0/80; Strict Prompt and Mask 80/80 Each", fontsize=13, fontweight="bold", pad=12)
     ax1.set_ylim(-6, 112)
     ax1.grid(True, linestyle="--", alpha=0.45)
     ax1.legend(loc="center right", frameon=True, facecolor=BG, edgecolor=GRID, fontsize=8.8)
 
     ax1.annotate(
-        'Naive prompt wraps every output in\n```json ... ``` markdown fences!\njson.loads() raises JSONDecodeError (80/80 crashes)',
+        'Naive prompt wrapped every reply in a\n```json ... ``` Markdown fence (JSON inside was fine),\nso strict json.loads() failed 80/80',
         xy=(0.7, 0.0),
         xytext=(0.18, 28),
         color=RED,
@@ -334,7 +338,7 @@ def make_fig4_json_reliability_across_temps(data):
     bars = ax2.barh(y, raw_logits, color=colors, height=0.55, alpha=0.9)
     ax2.set_yticks(y)
     ax2.set_yticklabels(raw_toks, fontsize=11, fontweight="bold", family="monospace")
-    ax2.set_xlabel("Raw Pre-Softmax Logit Score at Decode Step 0", fontsize=11, fontweight="bold")
+    ax2.set_xlabel("Raw Logit at Decode Step 0 (strict prompt, case 0, T=0)", fontsize=11, fontweight="bold")
     ax2.set_title("B. Step 0 Logit Masking: 151,934 Invalid Tokens Set to -inf", fontsize=13, fontweight="bold", pad=12)
     ax2.set_xlim(0, 66)
     ax2.grid(axis="x", linestyle="--", alpha=0.45)
@@ -345,7 +349,7 @@ def make_fig4_json_reliability_across_temps(data):
         ax2.text(lg + 1.0, bar.get_y() + bar.get_height() / 2, f"{lg:.1f}  [{status}]", va="center", color=col, fontsize=9.2, fontweight="bold")
 
     fig.suptitle(
-        "Why json.loads() Crashes on Naive Prompts & How Constrained Decoding Guarantees Valid JSON",
+        "Why Naive JSON Prompts Fail Strict json.loads() and What a -inf Logit Mask Adds",
         fontsize=14.5,
         fontweight="bold",
         y=0.98,

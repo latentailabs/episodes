@@ -1,0 +1,264 @@
+{
+ "call1_tokens": 55,
+ "turns": [
+  {
+   "turn": 1,
+   "context_tokens": 113,
+   "reused_prefix_tokens": 0,
+   "delta_tokens": 113,
+   "stateless_ttft_ms_median": 64.09,
+   "cached_ttft_ms_median": 63.71,
+   "stateless_runs_ms": [
+    64.19,
+    64.14,
+    64.09,
+    63.8,
+    64.08
+   ],
+   "cached_runs_ms": [
+    63.71,
+    64.13,
+    63.97,
+    62.95,
+    63.08
+   ],
+   "last_logit_max_abs_diff": 0.0,
+   "argmax_match": true
+  },
+  {
+   "turn": 2,
+   "context_tokens": 219,
+   "reused_prefix_tokens": 109,
+   "delta_tokens": 110,
+   "stateless_ttft_ms_median": 62.97,
+   "cached_ttft_ms_median": 64.48,
+   "stateless_runs_ms": [
+    63.69,
+    66.41,
+    62.74,
+    62.91,
+    62.97
+   ],
+   "cached_runs_ms": [
+    66.47,
+    65.4,
+    64.44,
+    64.48,
+    64.15
+   ],
+   "last_logit_max_abs_diff": 0.75,
+   "argmax_match": true
+  },
+  {
+   "turn": 3,
+   "context_tokens": 308,
+   "reused_prefix_tokens": 215,
+   "delta_tokens": 93,
+   "stateless_ttft_ms_median": 66.97,
+   "cached_ttft_ms_median": 64.17,
+   "stateless_runs_ms": [
+    66.97,
+    70.83,
+    67.01,
+    66.66,
+    66.44
+   ],
+   "cached_runs_ms": [
+    65.8,
+    62.77,
+    64.67,
+    64.17,
+    62.47
+   ],
+   "last_logit_max_abs_diff": 1.0,
+   "argmax_match": true
+  },
+  {
+   "turn": 4,
+   "context_tokens": 414,
+   "reused_prefix_tokens": 304,
+   "delta_tokens": 110,
+   "stateless_ttft_ms_median": 65.64,
+   "cached_ttft_ms_median": 64.95,
+   "stateless_runs_ms": [
+    66.25,
+    65.17,
+    65.64,
+    65.31,
+    65.82
+   ],
+   "cached_runs_ms": [
+    65.59,
+    64.33,
+    64.95,
+    64.57,
+    65.29
+   ],
+   "last_logit_max_abs_diff": 0.5,
+   "argmax_match": true
+  },
+  {
+   "turn": 5,
+   "context_tokens": 516,
+   "reused_prefix_tokens": 410,
+   "delta_tokens": 106,
+   "stateless_ttft_ms_median": 72.09,
+   "cached_ttft_ms_median": 64.37,
+   "stateless_runs_ms": [
+    72.63,
+    72.03,
+    72.09,
+    72.08,
+    72.23
+   ],
+   "cached_runs_ms": [
+    64.76,
+    63.73,
+    63.39,
+    64.88,
+    64.37
+   ],
+   "last_logit_max_abs_diff": 0.5625,
+   "argmax_match": true
+  },
+  {
+   "turn": 6,
+   "context_tokens": 608,
+   "reused_prefix_tokens": 512,
+   "delta_tokens": 96,
+   "stateless_ttft_ms_median": 76.87,
+   "cached_ttft_ms_median": 63.87,
+   "stateless_runs_ms": [
+    77.2,
+    76.84,
+    77.01,
+    76.85,
+    76.87
+   ],
+   "cached_runs_ms": [
+    64.89,
+    63.87,
+    63.84,
+    64.13,
+    63.84
+   ],
+   "last_logit_max_abs_diff": 0.5312,
+   "argmax_match": true
+  },
+  {
+   "turn": 7,
+   "context_tokens": 714,
+   "reused_prefix_tokens": 604,
+   "delta_tokens": 110,
+   "stateless_ttft_ms_median": 86.7,
+   "cached_ttft_ms_median": 64.23,
+   "stateless_runs_ms": [
+    86.98,
+    86.7,
+    86.55,
+    86.67,
+    86.82
+   ],
+   "cached_runs_ms": [
+    63.81,
+    63.53,
+    64.59,
+    64.23,
+    64.97
+   ],
+   "last_logit_max_abs_diff": 0.75,
+   "argmax_match": true
+  },
+  {
+   "turn": 8,
+   "context_tokens": 804,
+   "reused_prefix_tokens": 710,
+   "delta_tokens": 94,
+   "stateless_ttft_ms_median": 113.31,
+   "cached_ttft_ms_median": 64.68,
+   "stateless_runs_ms": [
+    113.31,
+    113.4,
+    113.4,
+    113.31,
+    113.11
+   ],
+   "cached_runs_ms": [
+    65.58,
+    65.26,
+    64.56,
+    64.3,
+    64.68
+   ],
+   "last_logit_max_abs_diff": 0.5625,
+   "argmax_match": true
+  },
+  {
+   "turn": 9,
+   "context_tokens": 890,
+   "reused_prefix_tokens": 800,
+   "delta_tokens": 90,
+   "stateless_ttft_ms_median": 121.06,
+   "cached_ttft_ms_median": 63.66,
+   "stateless_runs_ms": [
+    121.05,
+    121.34,
+    121.11,
+    121.06,
+    120.96
+   ],
+   "cached_runs_ms": [
+    64.42,
+    63.66,
+    64.45,
+    63.48,
+    63.4
+   ],
+   "last_logit_max_abs_diff": 0.875,
+   "argmax_match": true
+  },
+  {
+   "turn": 10,
+   "context_tokens": 963,
+   "reused_prefix_tokens": 886,
+   "delta_tokens": 77,
+   "stateless_ttft_ms_median": 138.64,
+   "cached_ttft_ms_median": 64.18,
+   "stateless_runs_ms": [
+    138.64,
+    138.84,
+    138.9,
+    138.58,
+    138.39
+   ],
+   "cached_runs_ms": [
+    65.06,
+    63.52,
+    63.47,
+    64.42,
+    64.18
+   ],
+   "last_logit_max_abs_diff": 1.1875,
+   "argmax_match": true
+  }
+ ],
+ "total_stateless_tokens": 5549,
+ "total_cached_tokens": 999,
+ "total_stateless_ms": 868.34,
+ "total_cached_ms": 642.3,
+ "gpu": "NVIDIA A100-SXM4-40GB",
+ "torch": "2.11.0+cu130",
+ "replies": [
+  "Node-a100-01: GPU temperature 64C, HBM used 31.4",
+  "Node-a100-02: GPU temperature 71C, HBM used 38.9",
+  "postgres-primary: replica lag 14 ms, connections 412/500, buffer hit 9",
+  "redis-cache-01: memory 11.2 GB/16.0 GB, evicted 0",
+  "api-gateway-eu: p50 18 ms, p99 142 ms,",
+  "kafka-broker-03: under-replicated 0, lag 840, disk 4",
+  "vector-index-qdrant: indexed 12.4M, p95 recall 0.982",
+  "worker-celery-gpu: queue depth 19, failed 1, retry 0.2%",
+  "s3-checkpoint-store: size 4.8 TB, put p99 68 ms, read",
+  "node-a100-02: HBM 38.9 GB, Postgres replica lag 1"
+ ],
+ "call1_tokens_note": "script computed 36 without the system message by mistake; with the original system+user messages (measure_api_call.py turn1_msgs) Call 1 is 55 tokens (Qwen3 tokenizer, checked locally; same method gives 47 for isolated Call 2, matching the JSON)"
+}
