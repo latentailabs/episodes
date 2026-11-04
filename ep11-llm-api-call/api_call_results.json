@@ -1,0 +1,1232 @@
+{
+  "gpu_environment": {
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "vram_gb": 39.49,
+    "pytorch_version": "2.11.0+cu130",
+    "model_id": "Qwen/Qwen3-8B",
+    "precision": "bfloat16"
+  },
+  "m1_stateless_and_prefix_cache": {
+    "stateless_proof": {
+      "turn1_user": "My name is Arun and our production Postgres database runs on port 5439. Acknowledge briefly.",
+      "turn1_assistant": "Acknowledged, Arun. Your Postgres database runs on port 5439.",
+      "turn2_user": "What is my name and what port does our production Postgres database run on?",
+      "turn2_isolated_tokens": 47,
+      "turn2_isolated_reply": "Your name is [Your Name] and the production Postgres database runs on port 5432.",
+      "turn2_isolated_remembers_port_5439": false,
+      "turn2_with_history_tokens": 100,
+      "turn2_with_history_reply": "Your name is Arun, and your production Postgres database runs on port 5439.",
+      "turn2_with_history_remembers_port_5439": true
+    },
+    "ten_turn_benchmark": {
+      "stateless_reprefill_turns": [
+        {
+          "turn": 1,
+          "context_tokens": 113,
+          "prefill_tokens_computed": 113,
+          "ttft_ms": 65.57
+        },
+        {
+          "turn": 2,
+          "context_tokens": 219,
+          "prefill_tokens_computed": 219,
+          "ttft_ms": 65.38
+        },
+        {
+          "turn": 3,
+          "context_tokens": 308,
+          "prefill_tokens_computed": 308,
+          "ttft_ms": 68.08
+        },
+        {
+          "turn": 4,
+          "context_tokens": 414,
+          "prefill_tokens_computed": 414,
+          "ttft_ms": 71.85
+        },
+        {
+          "turn": 5,
+          "context_tokens": 516,
+          "prefill_tokens_computed": 516,
+          "ttft_ms": 72.72
+        },
+        {
+          "turn": 6,
+          "context_tokens": 608,
+          "prefill_tokens_computed": 608,
+          "ttft_ms": 76.63
+        },
+        {
+          "turn": 7,
+          "context_tokens": 714,
+          "prefill_tokens_computed": 714,
+          "ttft_ms": 86.27
+        },
+        {
+          "turn": 8,
+          "context_tokens": 804,
+          "prefill_tokens_computed": 804,
+          "ttft_ms": 112.74
+        },
+        {
+          "turn": 9,
+          "context_tokens": 890,
+          "prefill_tokens_computed": 890,
+          "ttft_ms": 120.55
+        },
+        {
+          "turn": 10,
+          "context_tokens": 963,
+          "prefill_tokens_computed": 963,
+          "ttft_ms": 137.92
+        }
+      ],
+      "prefix_cached_turns": [
+        {
+          "turn": 1,
+          "context_tokens": 113,
+          "delta_tokens_computed": 113,
+          "cached_tokens_reused": 0,
+          "ttft_ms": 67.49
+        },
+        {
+          "turn": 2,
+          "context_tokens": 219,
+          "delta_tokens_computed": 106,
+          "cached_tokens_reused": 113,
+          "ttft_ms": 65.37
+        },
+        {
+          "turn": 3,
+          "context_tokens": 308,
+          "delta_tokens_computed": 89,
+          "cached_tokens_reused": 219,
+          "ttft_ms": 66.65
+        },
+        {
+          "turn": 4,
+          "context_tokens": 414,
+          "delta_tokens_computed": 106,
+          "cached_tokens_reused": 308,
+          "ttft_ms": 64.7
+        },
+        {
+          "turn": 5,
+          "context_tokens": 516,
+          "delta_tokens_computed": 102,
+          "cached_tokens_reused": 414,
+          "ttft_ms": 65.79
+        },
+        {
+          "turn": 6,
+          "context_tokens": 608,
+          "delta_tokens_computed": 92,
+          "cached_tokens_reused": 516,
+          "ttft_ms": 65.81
+        },
+        {
+          "turn": 7,
+          "context_tokens": 714,
+          "delta_tokens_computed": 106,
+          "cached_tokens_reused": 608,
+          "ttft_ms": 65.74
+        },
+        {
+          "turn": 8,
+          "context_tokens": 804,
+          "delta_tokens_computed": 90,
+          "cached_tokens_reused": 714,
+          "ttft_ms": 64.38
+        },
+        {
+          "turn": 9,
+          "context_tokens": 890,
+          "delta_tokens_computed": 86,
+          "cached_tokens_reused": 804,
+          "ttft_ms": 66.18
+        },
+        {
+          "turn": 10,
+          "context_tokens": 963,
+          "delta_tokens_computed": 73,
+          "cached_tokens_reused": 890,
+          "ttft_ms": 66.29
+        }
+      ],
+      "total_stateless_prefill_tokens": 5549,
+      "total_cached_prefill_tokens": 963,
+      "redundant_token_ratio": 5.76,
+      "total_stateless_ttft_ms": 877.71,
+      "total_cached_ttft_ms": 658.38,
+      "ttft_speedup_total": 1.33,
+      "turn10_stateless_ttft_ms": 137.92,
+      "turn10_cached_ttft_ms": 66.29,
+      "turn10_ttft_speedup": 2.08
+    }
+  },
+  "m2_chat_templates_and_special_tokens": {
+    "chatml_formatted_string": "<|im_start|>system\nAnswer with the 3-digit HTTP status code only.<|im_end|>\n<|im_start|>user\nWhat is the HTTP status code for Not Found?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "chatml_token_count": 38,
+    "special_token_ids": {
+      "<|im_start|>": 151644,
+      "<|im_end|>": 151645,
+      "<think>": 151667,
+      "</think>": 151668
+    },
+    "token_breakdown": [
+      {
+        "pos": 0,
+        "id": 151644,
+        "piece": "'<|im_start|>'"
+      },
+      {
+        "pos": 1,
+        "id": 8948,
+        "piece": "'system'"
+      },
+      {
+        "pos": 2,
+        "id": 198,
+        "piece": "'\\n'"
+      },
+      {
+        "pos": 3,
+        "id": 16141,
+        "piece": "'Answer'"
+      },
+      {
+        "pos": 4,
+        "id": 448,
+        "piece": "' with'"
+      },
+      {
+        "pos": 5,
+        "id": 279,
+        "piece": "' the'"
+      },
+      {
+        "pos": 6,
+        "id": 220,
+        "piece": "' '"
+      },
+      {
+        "pos": 7,
+        "id": 18,
+        "piece": "'3'"
+      },
+      {
+        "pos": 8,
+        "id": 48342,
+        "piece": "'-digit'"
+      },
+      {
+        "pos": 9,
+        "id": 10130,
+        "piece": "' HTTP'"
+      },
+      {
+        "pos": 10,
+        "id": 2639,
+        "piece": "' status'"
+      },
+      {
+        "pos": 11,
+        "id": 2038,
+        "piece": "' code'"
+      },
+      {
+        "pos": 12,
+        "id": 1172,
+        "piece": "' only'"
+      },
+      {
+        "pos": 13,
+        "id": 13,
+        "piece": "'.'"
+      },
+      {
+        "pos": 14,
+        "id": 151645,
+        "piece": "'<|im_end|>'"
+      },
+      {
+        "pos": 15,
+        "id": 198,
+        "piece": "'\\n'"
+      },
+      {
+        "pos": 16,
+        "id": 151644,
+        "piece": "'<|im_start|>'"
+      },
+      {
+        "pos": 17,
+        "id": 872,
+        "piece": "'user'"
+      },
+      {
+        "pos": 18,
+        "id": 198,
+        "piece": "'\\n'"
+      },
+      {
+        "pos": 19,
+        "id": 3838,
+        "piece": "'What'"
+      },
+      {
+        "pos": 20,
+        "id": 374,
+        "piece": "' is'"
+      },
+      {
+        "pos": 21,
+        "id": 279,
+        "piece": "' the'"
+      },
+      {
+        "pos": 22,
+        "id": 10130,
+        "piece": "' HTTP'"
+      },
+      {
+        "pos": 23,
+        "id": 2639,
+        "piece": "' status'"
+      },
+      {
+        "pos": 24,
+        "id": 2038,
+        "piece": "' code'"
+      },
+      {
+        "pos": 25,
+        "id": 369,
+        "piece": "' for'"
+      },
+      {
+        "pos": 26,
+        "id": 2806,
+        "piece": "' Not'"
+      },
+      {
+        "pos": 27,
+        "id": 12315,
+        "piece": "' Found'"
+      },
+      {
+        "pos": 28,
+        "id": 30,
+        "piece": "'?'"
+      },
+      {
+        "pos": 29,
+        "id": 151645,
+        "piece": "'<|im_end|>'"
+      },
+      {
+        "pos": 30,
+        "id": 198,
+        "piece": "'\\n'"
+      },
+      {
+        "pos": 31,
+        "id": 151644,
+        "piece": "'<|im_start|>'"
+      },
+      {
+        "pos": 32,
+        "id": 77091,
+        "piece": "'assistant'"
+      },
+      {
+        "pos": 33,
+        "id": 198,
+        "piece": "'\\n'"
+      },
+      {
+        "pos": 34,
+        "id": 151667,
+        "piece": "'<think>'"
+      },
+      {
+        "pos": 35,
+        "id": 271,
+        "piece": "'\\n\\n'"
+      },
+      {
+        "pos": 36,
+        "id": 151668,
+        "piece": "'</think>'"
+      },
+      {
+        "pos": 37,
+        "id": 271,
+        "piece": "'\\n\\n'"
+      }
+    ],
+    "template_mode_comparison": {
+      "raw_no_template": {
+        "clean_concise_accuracy_pct": 0.0,
+        "continuation_or_role_leak_pct": 40.0,
+        "avg_output_tokens": 32.0,
+        "examples": [
+          {
+            "question": "What is the HTTP status code for Not Found?",
+            "expected": "404",
+            "output_text": "What is the HTTP status code for Not Found?\n\nThe HTTP status code for \"Not Found\" is **404**. \n\nThis status code indicates that",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "What is the default TCP port for HTTPS?",
+            "expected": "443",
+            "output_text": "Also, what is the default port for HTTP? Additionally, what is the default port for SSH? Could you explain what a port is in networking? Wha",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "What is 17 multiplied by 6?",
+            "expected": "102",
+            "output_text": "What is 17 multiplied by 7? What is 17 multiplied by 8? What is 17 multiplied by 9? What is",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "What is the chemical symbol for Gold?",
+            "expected": "Au",
+            "output_text": "What is the atomic number of Gold? What is the atomic weight of Gold? What is the electron configuration of Gold? What is the melting point ",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "How many bits are in one byte?",
+            "expected": "8",
+            "output_text": "Also, can you explain the relationship between bits and bytes?\n\nOne byte consists of 8 bits. A bit is the smallest unit of data in computing",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          }
+        ]
+      },
+      "wrong_llama2_inst_tags": {
+        "clean_concise_accuracy_pct": 0.0,
+        "continuation_or_role_leak_pct": 100.0,
+        "avg_output_tokens": 32.0,
+        "examples": [
+          {
+            "question": "What is the HTTP status code for Not Found?",
+            "expected": "404",
+            "output_text": "404\n\nThe HTTP status code for \"Not Found\" is 404. This code is sent by a server when the requested resource cannot",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "What is the default TCP port for HTTPS?",
+            "expected": "443",
+            "output_text": "443\n\nThe default TCP port for HTTPS is 443. This port is commonly used for secure communication over the internet, ensuring data encryption",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "What is 17 multiplied by 6?",
+            "expected": "102",
+            "output_text": "102\n[/INST] [INST] <<SYS>>\nAnswer with the exact value only, maximum 3 words.\n<</SYS>>\n\nWhat is",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "What is the chemical symbol for Gold?",
+            "expected": "Au",
+            "output_text": "Au\n[/INST] [INST] <<SYS>>\nAnswer with the exact value only, maximum 3 words.\n<</SYS>>\n\nWhat is the chemical symbol",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          },
+          {
+            "question": "How many bits are in one byte?",
+            "expected": "8",
+            "output_text": "8\n[/INST]\n\n[/INST] 8\n\n[/INST] 8\n\n[/INST] 8\n\n[/INST] 8\n\n[/INST",
+            "output_tokens": 32,
+            "clean_concise_match": false
+          }
+        ]
+      },
+      "correct_chatml_template": {
+        "clean_concise_accuracy_pct": 100.0,
+        "continuation_or_role_leak_pct": 0.0,
+        "avg_output_tokens": 3.6,
+        "examples": [
+          {
+            "question": "What is the HTTP status code for Not Found?",
+            "expected": "404",
+            "output_text": "404",
+            "output_tokens": 4,
+            "clean_concise_match": true
+          },
+          {
+            "question": "What is the default TCP port for HTTPS?",
+            "expected": "443",
+            "output_text": "443",
+            "output_tokens": 4,
+            "clean_concise_match": true
+          },
+          {
+            "question": "What is 17 multiplied by 6?",
+            "expected": "102",
+            "output_text": "102",
+            "output_tokens": 4,
+            "clean_concise_match": true
+          },
+          {
+            "question": "What is the chemical symbol for Gold?",
+            "expected": "Au",
+            "output_text": "Au",
+            "output_tokens": 2,
+            "clean_concise_match": true
+          },
+          {
+            "question": "How many bits are in one byte?",
+            "expected": "8",
+            "output_text": "8 bits.",
+            "output_tokens": 4,
+            "clean_concise_match": true
+          }
+        ]
+      }
+    },
+    "control_token_attention_pct_by_layer": [
+      6.79,
+      22.07,
+      20.51,
+      20.41,
+      26.17,
+      20.21,
+      11.18,
+      73.83,
+      77.34,
+      77.34,
+      72.66,
+      66.02,
+      64.84,
+      69.14,
+      66.8,
+      65.62,
+      48.05,
+      49.22,
+      40.04,
+      62.11,
+      56.64,
+      49.8,
+      64.84,
+      52.34,
+      54.3,
+      67.58,
+      67.19,
+      83.98,
+      80.47,
+      88.67,
+      91.41,
+      87.5,
+      87.89,
+      85.94,
+      76.17,
+      71.09
+    ],
+    "mean_control_token_attention_pct": 59.06
+  },
+  "m3_prefill_vs_decode_two_phases": {
+    "model_weight_gb_bf16": 15.26,
+    "sweep": [
+      {
+        "prompt_tokens": 64,
+        "decode_tokens": 64,
+        "ttft_ms": 69.34,
+        "prefill_tok_per_s": 923.0,
+        "decode_total_ms": 4115.69,
+        "itl_ms_per_tok": 64.31,
+        "decode_tok_per_s": 15.55,
+        "prefill_to_decode_speed_ratio": 59.4,
+        "effective_hbm_bw_gb_s": 237.3
+      },
+      {
+        "prompt_tokens": 256,
+        "decode_tokens": 64,
+        "ttft_ms": 69.45,
+        "prefill_tok_per_s": 3686.2,
+        "decode_total_ms": 4033.32,
+        "itl_ms_per_tok": 63.02,
+        "decode_tok_per_s": 15.87,
+        "prefill_to_decode_speed_ratio": 232.3,
+        "effective_hbm_bw_gb_s": 242.1
+      },
+      {
+        "prompt_tokens": 512,
+        "decode_tokens": 64,
+        "ttft_ms": 78.01,
+        "prefill_tok_per_s": 6563.5,
+        "decode_total_ms": 4043.16,
+        "itl_ms_per_tok": 63.17,
+        "decode_tok_per_s": 15.83,
+        "prefill_to_decode_speed_ratio": 414.6,
+        "effective_hbm_bw_gb_s": 241.6
+      },
+      {
+        "prompt_tokens": 1024,
+        "decode_tokens": 64,
+        "ttft_ms": 133.47,
+        "prefill_tok_per_s": 7672.2,
+        "decode_total_ms": 4118.54,
+        "itl_ms_per_tok": 64.35,
+        "decode_tok_per_s": 15.54,
+        "prefill_to_decode_speed_ratio": 493.7,
+        "effective_hbm_bw_gb_s": 237.1
+      },
+      {
+        "prompt_tokens": 2048,
+        "decode_tokens": 64,
+        "ttft_ms": 316.0,
+        "prefill_tok_per_s": 6481.1,
+        "decode_total_ms": 4052.39,
+        "itl_ms_per_tok": 63.32,
+        "decode_tok_per_s": 15.79,
+        "prefill_to_decode_speed_ratio": 410.4,
+        "effective_hbm_bw_gb_s": 241.0
+      }
+    ]
+  },
+  "m4_m5_structured_outputs_and_logit_masking": {
+    "modes": {
+      "naive_prompt": [
+        {
+          "temperature": 0.0,
+          "trials": 16,
+          "valid_json_pass_pct": 0.0,
+          "json_loads_crash_pct": 100.0,
+          "median_latency_ms": 2052.65,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 16,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": null,
+          "sample_failures": [
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"payment-gw\",\n  \"port\": 9443,\n  \"healthy\": true\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"redis-cache\",\n  \"port\": 6379,\n  \"healthy\": false\n}\n```"
+            }
+          ]
+        },
+        {
+          "temperature": 0.3,
+          "trials": 16,
+          "valid_json_pass_pct": 0.0,
+          "json_loads_crash_pct": 100.0,
+          "median_latency_ms": 2056.13,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 16,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": null,
+          "sample_failures": [
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"payment-gw\",\n  \"port\": 9443,\n  \"healthy\": true\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"redis-cache\",\n  \"port\": 6379,\n  \"healthy\": false\n}\n```"
+            }
+          ]
+        },
+        {
+          "temperature": 0.7,
+          "trials": 16,
+          "valid_json_pass_pct": 0.0,
+          "json_loads_crash_pct": 100.0,
+          "median_latency_ms": 2053.48,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 16,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": null,
+          "sample_failures": [
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"payment-gw\",\n  \"port\": 9443,\n  \"healthy\": true\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"redis-cache\",\n  \"port\": 6379,\n  \"healthy\": false\n}\n```"
+            }
+          ]
+        },
+        {
+          "temperature": 1.0,
+          "trials": 16,
+          "valid_json_pass_pct": 0.0,
+          "json_loads_crash_pct": 100.0,
+          "median_latency_ms": 2047.11,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 16,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": null,
+          "sample_failures": [
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"payment-gw\",\n  \"port\": 9443,\n  \"healthy\": true\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"redis-cache\",\n  \"port\": 6379,\n  \"healthy\": false\n}\n```"
+            }
+          ]
+        },
+        {
+          "temperature": 1.3,
+          "trials": 16,
+          "valid_json_pass_pct": 0.0,
+          "json_loads_crash_pct": 100.0,
+          "median_latency_ms": 2048.16,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 16,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": null,
+          "sample_failures": [
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"payment-gw\",\n  \"port\": 9443,\n  \"healthy\": true\n}\n```"
+            },
+            {
+              "reason": "markdown_fence_wrapper",
+              "raw_output": "```json\n{\n  \"service\": \"redis-cache\",\n  \"port\": 6379,\n  \"healthy\": false\n}\n```"
+            }
+          ]
+        }
+      ],
+      "system_strict_prompt": [
+        {
+          "temperature": 0.0,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 1774.48,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 0.3,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 1761.69,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 0.7,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 1798.12,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 1.0,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 1768.78,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 1.3,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 1760.75,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\n  \"service\": \"auth-api\",\n  \"port\": 8081,\n  \"healthy\": false\n}",
+          "sample_failures": []
+        }
+      ],
+      "constrained_logit_mask": [
+        {
+          "temperature": 0.0,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 2423.61,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\"service\": \"auth-api\", \"port\": 8081, \"healthy\": false}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 0.3,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 2463.14,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\"service\": \"auth-api\", \"port\": 8081, \"healthy\": false}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 0.7,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 2472.34,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\"service\": \"auth-api\", \"port\": 8081, \"healthy\": false}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 1.0,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 2451.13,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\"service\": \"auth-api\", \"port\": 8081, \"healthy\": false}",
+          "sample_failures": []
+        },
+        {
+          "temperature": 1.3,
+          "trials": 16,
+          "valid_json_pass_pct": 100.0,
+          "json_loads_crash_pct": 0.0,
+          "median_latency_ms": 2466.69,
+          "error_breakdown": {
+            "markdown_fence_wrapper": 0,
+            "conversational_preamble": 0,
+            "trailing_text_or_truncated": 0,
+            "json_syntax_error": 0,
+            "wrong_schema_keys": 0,
+            "wrong_field_types": 0
+          },
+          "sample_success": "{\"service\": \"auth-api\", \"port\": 8081, \"healthy\": false}",
+          "sample_failures": []
+        }
+      ]
+    },
+    "constrained_step_traces": [
+      {
+        "step": 0,
+        "prefix_so_far": "",
+        "valid_vocab_tokens_count": 2,
+        "raw_top5": [
+          {
+            "token": "'{\\n'",
+            "prob_pct": 97.07,
+            "logit": 51.0
+          },
+          {
+            "token": "'{\"'",
+            "prob_pct": 2.93,
+            "logit": 47.5
+          },
+          {
+            "token": "'{'",
+            "prob_pct": 0.0,
+            "logit": 39.75
+          },
+          {
+            "token": "'```'",
+            "prob_pct": 0.0,
+            "logit": 36.5
+          },
+          {
+            "token": "\"{'\"",
+            "prob_pct": 0.0,
+            "logit": 29.75
+          }
+        ],
+        "masked_top5": [
+          {
+            "token": "'{\"'",
+            "prob_pct": 99.96,
+            "logit": 47.5
+          },
+          {
+            "token": "'{'",
+            "prob_pct": 0.04,
+            "logit": 39.75
+          }
+        ]
+      },
+      {
+        "step": 1,
+        "prefix_so_far": "{\"",
+        "valid_vocab_tokens_count": 5,
+        "raw_top5": [
+          {
+            "token": "'service'",
+            "prob_pct": 100.0,
+            "logit": 58.0
+          },
+          {
+            "token": "' service'",
+            "prob_pct": 0.0,
+            "logit": 34.25
+          },
+          {
+            "token": "'\\tservice'",
+            "prob_pct": 0.0,
+            "logit": 31.62
+          },
+          {
+            "token": "'serv'",
+            "prob_pct": 0.0,
+            "logit": 30.88
+          },
+          {
+            "token": "'(service'",
+            "prob_pct": 0.0,
+            "logit": 29.75
+          }
+        ],
+        "masked_top5": [
+          {
+            "token": "'service'",
+            "prob_pct": 100.0,
+            "logit": 58.0
+          },
+          {
+            "token": "'serv'",
+            "prob_pct": 0.0,
+            "logit": 30.88
+          },
+          {
+            "token": "'ser'",
+            "prob_pct": 0.0,
+            "logit": 24.62
+          },
+          {
+            "token": "'se'",
+            "prob_pct": 0.0,
+            "logit": 20.25
+          },
+          {
+            "token": "'s'",
+            "prob_pct": 0.0,
+            "logit": 18.38
+          }
+        ]
+      },
+      {
+        "step": 2,
+        "prefix_so_far": "{\"service",
+        "valid_vocab_tokens_count": 2,
+        "raw_top5": [
+          {
+            "token": "'\":'",
+            "prob_pct": 99.93,
+            "logit": 54.25
+          },
+          {
+            "token": "'\":\"'",
+            "prob_pct": 0.07,
+            "logit": 47.0
+          },
+          {
+            "token": "'\"'",
+            "prob_pct": 0.0,
+            "logit": 31.88
+          },
+          {
+            "token": "'\":\"/'",
+            "prob_pct": 0.0,
+            "logit": 28.75
+          },
+          {
+            "token": "'\":[\"'",
+            "prob_pct": 0.0,
+            "logit": 27.12
+          }
+        ],
+        "masked_top5": [
+          {
+            "token": "'\":'",
+            "prob_pct": 100.0,
+            "logit": 54.25
+          },
+          {
+            "token": "'\"'",
+            "prob_pct": 0.0,
+            "logit": 31.88
+          }
+        ]
+      },
+      {
+        "step": 3,
+        "prefix_so_far": "{\"service\":",
+        "valid_vocab_tokens_count": 2,
+        "raw_top5": [
+          {
+            "token": "' \"'",
+            "prob_pct": 100.0,
+            "logit": 56.0
+          },
+          {
+            "token": "' \"['",
+            "prob_pct": 0.0,
+            "logit": 28.12
+          },
+          {
+            "token": "' \"\",'",
+            "prob_pct": 0.0,
+            "logit": 24.25
+          },
+          {
+            "token": "' \"('",
+            "prob_pct": 0.0,
+            "logit": 22.62
+          },
+          {
+            "token": "'=\"'",
+            "prob_pct": 0.0,
+            "logit": 22.25
+          }
+        ],
+        "masked_top5": [
+          {
+            "token": "' \"'",
+            "prob_pct": 100.0,
+            "logit": 56.0
+          },
+          {
+            "token": "' '",
+            "prob_pct": 0.0,
+            "logit": 19.62
+          }
+        ]
+      },
+      {
+        "step": 4,
+        "prefix_so_far": "{\"service\": \"",
+        "valid_vocab_tokens_count": 33,
+        "raw_top5": [
+          {
+            "token": "'auth'",
+            "prob_pct": 100.0,
+            "logit": 60.5
+          },
+          {
+            "token": "'\\tauth'",
+            "prob_pct": 0.0,
+            "logit": 36.0
+          },
+          {
+            "token": "' auth'",
+            "prob_pct": 0.0,
+            "logit": 34.75
+          },
+          {
+            "token": "'AUTH'",
+            "prob_pct": 0.0,
+            "logit": 33.25
+          },
+          {
+            "token": "'(auth'",
+            "prob_pct": 0.0,
+            "logit": 31.38
+          }
+        ],
+        "masked_top5": [
+          {
+            "token": "'auth'",
+            "prob_pct": 100.0,
+            "logit": 60.5
+          },
+          {
+            "token": "'au'",
+            "prob_pct": 0.0,
+            "logit": 25.25
+          },
+          {
+            "token": "'aut'",
+            "prob_pct": 0.0,
+            "logit": 24.62
+          },
+          {
+            "token": "'a'",
+            "prob_pct": 0.0,
+            "logit": 23.88
+          },
+          {
+            "token": "'k'",
+            "prob_pct": 0.0,
+            "logit": 18.38
+          }
+        ]
+      },
+      {
+        "step": 5,
+        "prefix_so_far": "{\"service\": \"auth",
+        "valid_vocab_tokens_count": 4,
+        "raw_top5": [
+          {
+            "token": "'-api'",
+            "prob_pct": 100.0,
+            "logit": 55.5
+          },
+          {
+            "token": "'_api'",
+            "prob_pct": 0.0,
+            "logit": 34.5
+          },
+          {
+            "token": "'Api'",
+            "prob_pct": 0.0,
+            "logit": 29.5
+          },
+          {
+            "token": "'\",'",
+            "prob_pct": 0.0,
+            "logit": 29.5
+          },
+          {
+            "token": "'.api'",
+            "prob_pct": 0.0,
+            "logit": 28.88
+          }
+        ],
+        "masked_top5": [
+          {
+            "token": "'-api'",
+            "prob_pct": 100.0,
+            "logit": 55.5
+          },
+          {
+            "token": "'-'",
+            "prob_pct": 0.0,
+            "logit": 22.5
+          },
+          {
+            "token": "'-ap'",
+            "prob_pct": 0.0,
+            "logit": 21.75
+          },
+          {
+            "token": "'-a'",
+            "prob_pct": 0.0,
+            "logit": 19.0
+          }
+        ]
+      }
+    ]
+  }
+}
