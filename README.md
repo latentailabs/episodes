@@ -5,6 +5,7 @@ Scripts and raw results behind the @LatentAILabs videos. Every number shown in a
 | Folder | Episode | Hardware | Model |
 |---|---|---|---|
 | [ep11-llm-api-call](ep11-llm-api-call/) | How AI Agents Actually Work, Ep 1: What happens in 1 LLM API call | NVIDIA A100-SXM4-40GB | Qwen/Qwen3-8B (bf16) |
+| [ep12-tool-calling](ep12-tool-calling/) | How AI Agents Actually Work, Ep 2: How LLM tool calling works | NVIDIA A100-SXM4-40GB | Qwen/Qwen3-8B (bf16) |
 
 - YouTube: https://www.youtube.com/@LatentAILabs
 - Summaries & FAQs: https://latentailabs.github.io/

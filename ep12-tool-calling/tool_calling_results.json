@@ -1,0 +1,3790 @@
+{
+  "gpu_environment": {
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "vram_gb": 39.49,
+    "pytorch_version": "2.11.0+cu130",
+    "model_id": "Qwen/Qwen3-8B",
+    "precision": "bfloat16",
+    "weight_gb": 15.26,
+    "vocab_size": 151936,
+    "num_layers": 36,
+    "hidden_size": 4096,
+    "special_token_ids": {
+      "<|im_start|>": 151644,
+      "<|im_end|>": 151645,
+      "<think>": 151667,
+      "</think>": 151668,
+      "<tool_call>": 151657,
+      "</tool_call>": 151658,
+      "<tool_response>": 151665,
+      "</tool_response>": 151666
+    }
+  },
+  "m1_two_call_handshake_and_prefix_cache": {
+    "user_query": "What port is our production auth-api Postgres database running on right now, and how many active connections does it have?",
+    "user_query_raw_tokens": 24,
+    "mode0_no_tools": {
+      "prompt_tokens": 36,
+      "generated_tokens": 64,
+      "generated_token_ids": [
+        1249,
+        8253,
+        279,
+        1482,
+        2635,
+        323,
+        1372,
+        315,
+        4541,
+        13234,
+        369,
+        697,
+        3070,
+        22627,
+        4166,
+        23904,
+        3877,
+        17818,
+        4625,
+        97219,
+        498,
+        1035,
+        11136,
+        1184,
+        311,
+        1447,
+        44364,
+        14374,
+        25521,
+        227,
+        3070,
+        16,
+        13,
+        64547,
+        279,
+        5776,
+        1019,
+        785,
+        2635,
+        369,
+        264,
+        73601,
+        4625,
+        374,
+        5990,
+        5189,
+        304,
+        279,
+        6546,
+        1034,
+        28654,
+        88470,
+        13937,
+        32881,
+        476,
+        304,
+        279,
+        3633,
+        914,
+        1483,
+        553,
+        697,
+        3766,
+        320
+      ],
+      "prefill_ms": 91.81,
+      "decode_ms": 3974.07,
+      "total_ms": 4065.88,
+      "raw_output": "To determine the current port and number of active connections for your **production auth-api Postgres database**, you would typically need to:\n\n---\n\n### \u2705 **1. Identify the Port**\nThe port for a PostgreSQL database is usually specified in the configuration file (`postgresql.conf`) or in the connection string used by your application (",
+      "clean_output": "To determine the current port and number of active connections for your **production auth-api Postgres database**, you would typically need to:\n\n---\n\n### \u2705 **1. Identify the Port**\nThe port for a PostgreSQL database is usually specified in the configuration file (`postgresql.conf`) or in the connection string used by your application ("
+    },
+    "mode1_call1_emit_tool_call": {
+      "prompt_tokens": 222,
+      "generated_tokens": 23,
+      "generated_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        1631,
+        6333,
+        17818,
+        4773,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        7936,
+        788,
+        330,
+        3242,
+        23904,
+        95642,
+        151658,
+        151645
+      ],
+      "prefill_ms": 81.8,
+      "decode_ms": 1363.05,
+      "total_ms": 1444.85,
+      "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>",
+      "clean_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call>"
+    },
+    "mode1_parsed_tool_call": {
+      "name": "query_postgres_status",
+      "arguments": {
+        "service": "auth-api"
+      }
+    },
+    "mode1_python_exec_ms": 0.005,
+    "mode1_tool_output": {
+      "service": "auth-api",
+      "port": 5439,
+      "active_connections": 412,
+      "max_connections": 500,
+      "replica_lag_ms": 1.8,
+      "healthy": true
+    },
+    "mode1_call2_compiled_prompt": "<|im_start|>system\n# Tools\n\nYou may call one or more functions to assist with the user query.\n\nYou are provided with function signatures within <tools></tools> XML tags:\n<tools>\n{\"type\": \"function\", \"function\": {\"name\": \"query_postgres_status\", \"description\": \"Query the live production Postgres database port, active connections, replica lag, and health status for a microservice.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"service\": {\"type\": \"string\", \"enum\": [\"auth-api\", \"billing-api\", \"search-api\", \"analytics-api\"], \"description\": \"Exact production microservice identifier.\"}}, \"required\": [\"service\"]}}}\n</tools>\n\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{\"name\": <function-name>, \"arguments\": <args-json-object>}\n</tool_call><|im_end|>\n<|im_start|>user\nWhat port is our production auth-api Postgres database running on right now, and how many active connections does it have?<|im_end|>\n<|im_start|>assistant\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>\n<|im_start|>user\n<tool_response>\n{\"service\": \"auth-api\", \"port\": 5439, \"active_connections\": 412, \"max_connections\": 500, \"replica_lag_ms\": 1.8, \"healthy\": true}\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "mode1_call2_stateless": {
+      "prompt_tokens": 308,
+      "generated_tokens": 50,
+      "generated_token_ids": [
+        785,
+        5670,
+        4166,
+        23904,
+        3877,
+        17818,
+        4625,
+        374,
+        5023,
+        4303,
+        389,
+        2635,
+        220,
+        20,
+        19,
+        18,
+        24,
+        323,
+        702,
+        220,
+        19,
+        16,
+        17,
+        4541,
+        13234,
+        700,
+        315,
+        264,
+        7192,
+        315,
+        220,
+        20,
+        15,
+        15,
+        13,
+        1084,
+        374,
+        9314,
+        448,
+        264,
+        36954,
+        21454,
+        315,
+        220,
+        16,
+        13,
+        23,
+        30504,
+        13,
+        151645
+      ],
+      "prefill_ms": 68.45,
+      "decode_ms": 2987.04,
+      "total_ms": 3055.5,
+      "raw_output": "The production auth-api Postgres database is currently running on port 5439 and has 412 active connections out of a maximum of 500. It is healthy with a replica lag of 1.8 milliseconds.<|im_end|>",
+      "clean_output": "The production auth-api Postgres database is currently running on port 5439 and has 412 active connections out of a maximum of 500. It is healthy with a replica lag of 1.8 milliseconds."
+    },
+    "mode1_call2_shared_prefix_tokens": 218,
+    "mode1_call2_new_delta_tokens": 90,
+    "mode1_call2_prefix_cached_prefill_ms": 66.6,
+    "mode1_two_call_total_ms": 4500.35,
+    "multi_step_tool_chain": {
+      "calls": [
+        {
+          "api_call_num": 1,
+          "stage": "Tool Call 1",
+          "total_prompt_tokens": 445,
+          "cached_prefix_tokens": 0,
+          "new_delta_tokens": 445,
+          "stateless_prefill_ms": 66.21,
+          "prefix_cached_prefill_ms": 66.21,
+          "speedup_x": 1.0
+        },
+        {
+          "api_call_num": 2,
+          "stage": "Tool Call 2",
+          "total_prompt_tokens": 531,
+          "cached_prefix_tokens": 441,
+          "new_delta_tokens": 90,
+          "stateless_prefill_ms": 76.18,
+          "prefix_cached_prefill_ms": 63.79,
+          "speedup_x": 1.19
+        },
+        {
+          "api_call_num": 3,
+          "stage": "Tool Call 3",
+          "total_prompt_tokens": 619,
+          "cached_prefix_tokens": 527,
+          "new_delta_tokens": 92,
+          "stateless_prefill_ms": 82.39,
+          "prefix_cached_prefill_ms": 65.72,
+          "speedup_x": 1.25
+        },
+        {
+          "api_call_num": 4,
+          "stage": "Tool Call 4",
+          "total_prompt_tokens": 690,
+          "cached_prefix_tokens": 615,
+          "new_delta_tokens": 75,
+          "stateless_prefill_ms": 85.27,
+          "prefix_cached_prefill_ms": 66.33,
+          "speedup_x": 1.29
+        },
+        {
+          "api_call_num": 5,
+          "stage": "Tool Call 5",
+          "total_prompt_tokens": 757,
+          "cached_prefix_tokens": 686,
+          "new_delta_tokens": 71,
+          "stateless_prefill_ms": 95.11,
+          "prefix_cached_prefill_ms": 66.18,
+          "speedup_x": 1.44
+        },
+        {
+          "api_call_num": 6,
+          "stage": "Final Synthesis Call",
+          "total_prompt_tokens": 825,
+          "cached_prefix_tokens": 753,
+          "new_delta_tokens": 72,
+          "stateless_prefill_ms": 121.47,
+          "prefix_cached_prefill_ms": 65.81,
+          "speedup_x": 1.85
+        }
+      ],
+      "cumulative_stateless_prefill_tokens": 3867,
+      "cumulative_prefix_cache_delta_tokens": 845,
+      "token_waste_ratio_x": 4.58,
+      "cumulative_stateless_prefill_ms": 526.63,
+      "cumulative_prefix_cached_prefill_ms": 394.04,
+      "prefill_speedup_x": 1.34
+    }
+  },
+  "m2_token_151657_logit_lens_and_attention": {
+    "decision_accuracy_eval": [
+      {
+        "category": "tool_required",
+        "total": 6,
+        "correct": 6,
+        "accuracy_pct": 100.0,
+        "samples": [
+          {
+            "query": "What port is our production auth-api Postgres database running on right now?",
+            "first_generated_token_id": 151657,
+            "first_generated_token_str": "<tool_call>",
+            "triggered_tool": true,
+            "correct_decision": true,
+            "raw_output_preview": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+          },
+          {
+            "query": "How many active connections does billing-api currently have on Postgres?",
+            "first_generated_token_id": 151657,
+            "first_generated_token_str": "<tool_call>",
+            "triggered_tool": true,
+            "correct_decision": true,
+            "raw_output_preview": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>"
+          },
+          {
+            "query": "Is the search-api Postgres database healthy right now and what is its replica lag?",
+            "first_generated_token_id": 151657,
+            "first_generated_token_str": "<tool_call>",
+            "triggered_tool": true,
+            "correct_decision": true,
+            "raw_output_preview": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call><|im_end|>"
+          },
+          {
+            "query": "Check the current Postgres port and connection count for analytics-api.",
+            "first_generated_token_id": 151657,
+            "first_generated_token_str": "<tool_call>",
+            "triggered_tool": true,
+            "correct_decision": true,
+            "raw_output_preview": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call><|im_end|>"
+          },
+          {
+            "query": "Query the live database health status of billing-api.",
+            "first_generated_token_id": 151657,
+            "first_generated_token_str": "<tool_call>",
+            "triggered_tool": true,
+            "correct_decision": true,
+            "raw_output_preview": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>"
+          },
+          {
+            "query": "What is the current replica lag in milliseconds on auth-api?",
+            "first_generated_token_id": 151657,
+            "first_generated_token_str": "<tool_call>",
+            "triggered_tool": true,
+            "correct_decision": true,
+            "raw_output_preview": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+          }
+        ]
+      },
+      {
+        "category": "plain_text",
+        "total": 6,
+        "correct": 6,
+        "accuracy_pct": 100.0,
+        "samples": [
+          {
+            "query": "What is the standard default TCP port for PostgreSQL in official documentation?",
+            "first_generated_token_id": 785,
+            "first_generated_token_str": "The",
+            "triggered_tool": false,
+            "correct_decision": true,
+            "raw_output_preview": "The standard default TCP port for PostgreSQL, as specified in the official documentation, is 5432.<|im_end|>"
+          },
+          {
+            "query": "What does ACID stand for in relational database systems?",
+            "first_generated_token_id": 1706,
+            "first_generated_token_str": "AC",
+            "triggered_tool": false,
+            "correct_decision": true,
+            "raw_output_preview": "ACID stands for **Atomicity, Consistency, Isolation, and Durability**. These are the four key properties of transactions"
+          },
+          {
+            "query": "Explain the difference between a primary key and a foreign key in one sentence.",
+            "first_generated_token_id": 32,
+            "first_generated_token_str": "A",
+            "triggered_tool": false,
+            "correct_decision": true,
+            "raw_output_preview": "A primary key uniquely identifies each record in a database table, while a foreign key establishes a link between data i"
+          },
+          {
+            "query": "What HTTP status code means Internal Server Error?",
+            "first_generated_token_id": 785,
+            "first_generated_token_str": "The",
+            "triggered_tool": false,
+            "correct_decision": true,
+            "raw_output_preview": "The HTTP status code that means Internal Server Error is `500`.<|im_end|>"
+          },
+          {
+            "query": "How many bits are in an IPv4 address?",
+            "first_generated_token_id": 2082,
+            "first_generated_token_str": "An",
+            "triggered_tool": false,
+            "correct_decision": true,
+            "raw_output_preview": "An IPv4 address consists of 32 bits.<|im_end|>"
+          },
+          {
+            "query": "What SQL keyword is used to filter rows after a GROUP BY clause?",
+            "first_generated_token_id": 785,
+            "first_generated_token_str": "The",
+            "triggered_tool": false,
+            "correct_decision": true,
+            "raw_output_preview": "The SQL keyword used to filter rows after a `GROUP BY` clause is `HAVING`.<|im_end|>"
+          }
+        ]
+      }
+    ],
+    "traces": {
+      "tool_trigger_prompt": {
+        "query": "What port is our production auth-api Postgres database running on right now?",
+        "prompt_tokens": 213,
+        "region_token_counts": {
+          "control_tokens": 15,
+          "tools_schema_tokens": 182,
+          "user_query_tokens": 16
+        },
+        "mean_attention_routing_pct": {
+          "control_tokens": 69.38,
+          "tools_schema": 24.35,
+          "user_query": 6.27
+        },
+        "logit_lens_by_layer": [
+          {
+            "layer": 0,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 4.88,
+            "tool_call_151657_rank": 15485,
+            "top1_token_id": 113964,
+            "top1_token_str": "\u8fd9\u90e8\u5206",
+            "top1_prob_pct": 13.6
+          },
+          {
+            "layer": 1,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 5.16,
+            "tool_call_151657_rank": 25111,
+            "top1_token_id": 53547,
+            "top1_token_str": " Sesso",
+            "top1_prob_pct": 13.88
+          },
+          {
+            "layer": 2,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 5.31,
+            "tool_call_151657_rank": 25525,
+            "top1_token_id": 113742,
+            "top1_token_str": "\u524d\u8ff0",
+            "top1_prob_pct": 6.84
+          },
+          {
+            "layer": 3,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 5.28,
+            "tool_call_151657_rank": 27393,
+            "top1_token_id": 113742,
+            "top1_token_str": "\u524d\u8ff0",
+            "top1_prob_pct": 3.17
+          },
+          {
+            "layer": 4,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.41,
+            "tool_call_151657_rank": 34451,
+            "top1_token_id": 118026,
+            "top1_token_str": "\u6210\u5c31\u611f",
+            "top1_prob_pct": 3.91
+          },
+          {
+            "layer": 5,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.05,
+            "tool_call_151657_rank": 45107,
+            "top1_token_id": 113964,
+            "top1_token_str": "\u8fd9\u90e8\u5206",
+            "top1_prob_pct": 3.32
+          },
+          {
+            "layer": 6,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.81,
+            "tool_call_151657_rank": 37429,
+            "top1_token_id": 104360,
+            "top1_token_str": "\u5de5\u4f5c\u7684",
+            "top1_prob_pct": 2.56
+          },
+          {
+            "layer": 7,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.47,
+            "tool_call_151657_rank": 38871,
+            "top1_token_id": 110967,
+            "top1_token_str": "\u5f88\u6e05\u695a",
+            "top1_prob_pct": 2.02
+          },
+          {
+            "layer": 8,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.16,
+            "tool_call_151657_rank": 41837,
+            "top1_token_id": 110967,
+            "top1_token_str": "\u5f88\u6e05\u695a",
+            "top1_prob_pct": 7.72
+          },
+          {
+            "layer": 9,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.7,
+            "tool_call_151657_rank": 40267,
+            "top1_token_id": 14374,
+            "top1_token_str": "###",
+            "top1_prob_pct": 4.55
+          },
+          {
+            "layer": 10,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.16,
+            "tool_call_151657_rank": 55158,
+            "top1_token_id": 114815,
+            "top1_token_str": "\u6ca1\u95ee\u9898",
+            "top1_prob_pct": 3.68
+          },
+          {
+            "layer": 11,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.31,
+            "tool_call_151657_rank": 41923,
+            "top1_token_id": 103684,
+            "top1_token_str": "\u9ae6",
+            "top1_prob_pct": 1.09
+          },
+          {
+            "layer": 12,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -1.24,
+            "tool_call_151657_rank": 60542,
+            "top1_token_id": 115561,
+            "top1_token_str": "\u70ed\u641c",
+            "top1_prob_pct": 4.61
+          },
+          {
+            "layer": 13,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -0.48,
+            "tool_call_151657_rank": 47836,
+            "top1_token_id": 115561,
+            "top1_token_str": "\u70ed\u641c",
+            "top1_prob_pct": 53.48
+          },
+          {
+            "layer": 14,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.89,
+            "tool_call_151657_rank": 34096,
+            "top1_token_id": 105073,
+            "top1_token_str": "\u8fd9\u4e2a\u95ee\u9898",
+            "top1_prob_pct": 3.79
+          },
+          {
+            "layer": 15,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.21,
+            "tool_call_151657_rank": 27089,
+            "top1_token_id": 65702,
+            "top1_token_str": " Inquiry",
+            "top1_prob_pct": 4.8
+          },
+          {
+            "layer": 16,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.2,
+            "tool_call_151657_rank": 17895,
+            "top1_token_id": 4352,
+            "top1_token_str": "module",
+            "top1_prob_pct": 19.49
+          },
+          {
+            "layer": 17,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.8,
+            "tool_call_151657_rank": 27249,
+            "top1_token_id": 111308,
+            "top1_token_str": "\u60a8\u597d",
+            "top1_prob_pct": 13.77
+          },
+          {
+            "layer": 18,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.16,
+            "tool_call_151657_rank": 22330,
+            "top1_token_id": 59744,
+            "top1_token_str": "_yes",
+            "top1_prob_pct": 20.77
+          },
+          {
+            "layer": 19,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.77,
+            "tool_call_151657_rank": 24743,
+            "top1_token_id": 111308,
+            "top1_token_str": "\u60a8\u597d",
+            "top1_prob_pct": 47.05
+          },
+          {
+            "layer": 20,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.8,
+            "tool_call_151657_rank": 22843,
+            "top1_token_id": 111308,
+            "top1_token_str": "\u60a8\u597d",
+            "top1_prob_pct": 11.44
+          },
+          {
+            "layer": 21,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.45,
+            "tool_call_151657_rank": 18847,
+            "top1_token_id": 65702,
+            "top1_token_str": " Inquiry",
+            "top1_prob_pct": 11.01
+          },
+          {
+            "layer": 22,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.78,
+            "tool_call_151657_rank": 17758,
+            "top1_token_id": 111308,
+            "top1_token_str": "\u60a8\u597d",
+            "top1_prob_pct": 15.74
+          },
+          {
+            "layer": 23,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.88,
+            "tool_call_151657_rank": 17698,
+            "top1_token_id": 105073,
+            "top1_token_str": "\u8fd9\u4e2a\u95ee\u9898",
+            "top1_prob_pct": 9.74
+          },
+          {
+            "layer": 24,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.83,
+            "tool_call_151657_rank": 11817,
+            "top1_token_id": 52298,
+            "top1_token_str": "ewan",
+            "top1_prob_pct": 15.67
+          },
+          {
+            "layer": 25,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.12,
+            "tool_call_151657_rank": 14132,
+            "top1_token_id": 52298,
+            "top1_token_str": "ewan",
+            "top1_prob_pct": 59.73
+          },
+          {
+            "layer": 26,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.02,
+            "tool_call_151657_rank": 17453,
+            "top1_token_id": 110875,
+            "top1_token_str": "\u6211\u5e0c\u671b",
+            "top1_prob_pct": 46.93
+          },
+          {
+            "layer": 27,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 4.22,
+            "tool_call_151657_rank": 11733,
+            "top1_token_id": 110875,
+            "top1_token_str": "\u6211\u5e0c\u671b",
+            "top1_prob_pct": 45.52
+          },
+          {
+            "layer": 28,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 4.62,
+            "tool_call_151657_rank": 8206,
+            "top1_token_id": 107996,
+            "top1_token_str": "\u6211\u53bb",
+            "top1_prob_pct": 37.72
+          },
+          {
+            "layer": 29,
+            "tool_call_151657_prob_pct": 0.01,
+            "tool_call_151657_logit": 10.31,
+            "tool_call_151657_rank": 971,
+            "top1_token_id": 107996,
+            "top1_token_str": "\u6211\u53bb",
+            "top1_prob_pct": 17.38
+          },
+          {
+            "layer": 30,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 9.94,
+            "tool_call_151657_rank": 1156,
+            "top1_token_id": 107996,
+            "top1_token_str": "\u6211\u53bb",
+            "top1_prob_pct": 14.67
+          },
+          {
+            "layer": 31,
+            "tool_call_151657_prob_pct": 0.01,
+            "tool_call_151657_logit": 10.12,
+            "tool_call_151657_rank": 492,
+            "top1_token_id": 107996,
+            "top1_token_str": "\u6211\u53bb",
+            "top1_prob_pct": 18.83
+          },
+          {
+            "layer": 32,
+            "tool_call_151657_prob_pct": 0.08,
+            "tool_call_151657_logit": 11.56,
+            "tool_call_151657_rank": 119,
+            "top1_token_id": 144927,
+            "top1_token_str": "\ud83e\udd14",
+            "top1_prob_pct": 9.96
+          },
+          {
+            "layer": 33,
+            "tool_call_151657_prob_pct": 8.05,
+            "tool_call_151657_logit": 16.62,
+            "tool_call_151657_rank": 2,
+            "top1_token_id": 115208,
+            "top1_token_str": "\u6253\u730e",
+            "top1_prob_pct": 10.33
+          },
+          {
+            "layer": 34,
+            "tool_call_151657_prob_pct": 97.07,
+            "tool_call_151657_logit": 18.88,
+            "tool_call_151657_rank": 1,
+            "top1_token_id": 151657,
+            "top1_token_str": "<tool_call>",
+            "top1_prob_pct": 97.07
+          },
+          {
+            "layer": 35,
+            "tool_call_151657_prob_pct": 100.0,
+            "tool_call_151657_logit": 36.0,
+            "tool_call_151657_rank": 1,
+            "top1_token_id": 151657,
+            "top1_token_str": "<tool_call>",
+            "top1_prob_pct": 100.0
+          }
+        ],
+        "attention_by_layer": [
+          {
+            "layer": 0,
+            "control_tokens_attn_pct": 41.55,
+            "tools_schema_attn_pct": 44.58,
+            "user_query_attn_pct": 13.86
+          },
+          {
+            "layer": 1,
+            "control_tokens_attn_pct": 50.83,
+            "tools_schema_attn_pct": 43.63,
+            "user_query_attn_pct": 5.54
+          },
+          {
+            "layer": 2,
+            "control_tokens_attn_pct": 45.46,
+            "tools_schema_attn_pct": 45.46,
+            "user_query_attn_pct": 9.1
+          },
+          {
+            "layer": 3,
+            "control_tokens_attn_pct": 42.22,
+            "tools_schema_attn_pct": 51.03,
+            "user_query_attn_pct": 6.73
+          },
+          {
+            "layer": 4,
+            "control_tokens_attn_pct": 42.09,
+            "tools_schema_attn_pct": 50.94,
+            "user_query_attn_pct": 6.96
+          },
+          {
+            "layer": 5,
+            "control_tokens_attn_pct": 48.23,
+            "tools_schema_attn_pct": 46.33,
+            "user_query_attn_pct": 5.43
+          },
+          {
+            "layer": 6,
+            "control_tokens_attn_pct": 55.97,
+            "tools_schema_attn_pct": 34.8,
+            "user_query_attn_pct": 9.22
+          },
+          {
+            "layer": 7,
+            "control_tokens_attn_pct": 89.5,
+            "tools_schema_attn_pct": 8.34,
+            "user_query_attn_pct": 2.15
+          },
+          {
+            "layer": 8,
+            "control_tokens_attn_pct": 81.3,
+            "tools_schema_attn_pct": 14.65,
+            "user_query_attn_pct": 4.06
+          },
+          {
+            "layer": 9,
+            "control_tokens_attn_pct": 80.93,
+            "tools_schema_attn_pct": 16.59,
+            "user_query_attn_pct": 2.45
+          },
+          {
+            "layer": 10,
+            "control_tokens_attn_pct": 88.84,
+            "tools_schema_attn_pct": 9.42,
+            "user_query_attn_pct": 1.77
+          },
+          {
+            "layer": 11,
+            "control_tokens_attn_pct": 87.19,
+            "tools_schema_attn_pct": 11.38,
+            "user_query_attn_pct": 1.45
+          },
+          {
+            "layer": 12,
+            "control_tokens_attn_pct": 82.91,
+            "tools_schema_attn_pct": 14.28,
+            "user_query_attn_pct": 2.79
+          },
+          {
+            "layer": 13,
+            "control_tokens_attn_pct": 81.25,
+            "tools_schema_attn_pct": 16.64,
+            "user_query_attn_pct": 2.08
+          },
+          {
+            "layer": 14,
+            "control_tokens_attn_pct": 81.15,
+            "tools_schema_attn_pct": 13.53,
+            "user_query_attn_pct": 5.31
+          },
+          {
+            "layer": 15,
+            "control_tokens_attn_pct": 81.01,
+            "tools_schema_attn_pct": 14.37,
+            "user_query_attn_pct": 4.61
+          },
+          {
+            "layer": 16,
+            "control_tokens_attn_pct": 62.11,
+            "tools_schema_attn_pct": 33.53,
+            "user_query_attn_pct": 4.34
+          },
+          {
+            "layer": 17,
+            "control_tokens_attn_pct": 83.25,
+            "tools_schema_attn_pct": 12.89,
+            "user_query_attn_pct": 3.84
+          },
+          {
+            "layer": 18,
+            "control_tokens_attn_pct": 39.3,
+            "tools_schema_attn_pct": 53.55,
+            "user_query_attn_pct": 7.16
+          },
+          {
+            "layer": 19,
+            "control_tokens_attn_pct": 73.28,
+            "tools_schema_attn_pct": 17.25,
+            "user_query_attn_pct": 9.49
+          },
+          {
+            "layer": 20,
+            "control_tokens_attn_pct": 62.47,
+            "tools_schema_attn_pct": 28.45,
+            "user_query_attn_pct": 9.1
+          },
+          {
+            "layer": 21,
+            "control_tokens_attn_pct": 54.42,
+            "tools_schema_attn_pct": 34.8,
+            "user_query_attn_pct": 10.78
+          },
+          {
+            "layer": 22,
+            "control_tokens_attn_pct": 67.72,
+            "tools_schema_attn_pct": 17.19,
+            "user_query_attn_pct": 15.1
+          },
+          {
+            "layer": 23,
+            "control_tokens_attn_pct": 66.99,
+            "tools_schema_attn_pct": 18.97,
+            "user_query_attn_pct": 14.05
+          },
+          {
+            "layer": 24,
+            "control_tokens_attn_pct": 54.45,
+            "tools_schema_attn_pct": 31.31,
+            "user_query_attn_pct": 14.26
+          },
+          {
+            "layer": 25,
+            "control_tokens_attn_pct": 81.35,
+            "tools_schema_attn_pct": 11.79,
+            "user_query_attn_pct": 6.86
+          },
+          {
+            "layer": 26,
+            "control_tokens_attn_pct": 72.33,
+            "tools_schema_attn_pct": 19.67,
+            "user_query_attn_pct": 8.04
+          },
+          {
+            "layer": 27,
+            "control_tokens_attn_pct": 71.37,
+            "tools_schema_attn_pct": 21.66,
+            "user_query_attn_pct": 6.98
+          },
+          {
+            "layer": 28,
+            "control_tokens_attn_pct": 71.94,
+            "tools_schema_attn_pct": 22.18,
+            "user_query_attn_pct": 5.88
+          },
+          {
+            "layer": 29,
+            "control_tokens_attn_pct": 69.68,
+            "tools_schema_attn_pct": 25.72,
+            "user_query_attn_pct": 4.58
+          },
+          {
+            "layer": 30,
+            "control_tokens_attn_pct": 88.99,
+            "tools_schema_attn_pct": 6.46,
+            "user_query_attn_pct": 4.51
+          },
+          {
+            "layer": 31,
+            "control_tokens_attn_pct": 80.4,
+            "tools_schema_attn_pct": 16.63,
+            "user_query_attn_pct": 2.97
+          },
+          {
+            "layer": 32,
+            "control_tokens_attn_pct": 83.59,
+            "tools_schema_attn_pct": 13.94,
+            "user_query_attn_pct": 2.45
+          },
+          {
+            "layer": 33,
+            "control_tokens_attn_pct": 73.59,
+            "tools_schema_attn_pct": 24.66,
+            "user_query_attn_pct": 1.76
+          },
+          {
+            "layer": 34,
+            "control_tokens_attn_pct": 78.72,
+            "tools_schema_attn_pct": 17.81,
+            "user_query_attn_pct": 3.48
+          },
+          {
+            "layer": 35,
+            "control_tokens_attn_pct": 81.23,
+            "tools_schema_attn_pct": 12.32,
+            "user_query_attn_pct": 6.44
+          }
+        ]
+      },
+      "plain_answer_prompt": {
+        "query": "What is the standard default TCP port for PostgreSQL in official documentation?",
+        "prompt_tokens": 211,
+        "region_token_counts": {
+          "control_tokens": 15,
+          "tools_schema_tokens": 182,
+          "user_query_tokens": 14
+        },
+        "mean_attention_routing_pct": {
+          "control_tokens": 71.02,
+          "tools_schema": 17.49,
+          "user_query": 11.5
+        },
+        "logit_lens_by_layer": [
+          {
+            "layer": 0,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 4.97,
+            "tool_call_151657_rank": 15012,
+            "top1_token_id": 113964,
+            "top1_token_str": "\u8fd9\u90e8\u5206",
+            "top1_prob_pct": 14.48
+          },
+          {
+            "layer": 1,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 5.25,
+            "tool_call_151657_rank": 24583,
+            "top1_token_id": 53547,
+            "top1_token_str": " Sesso",
+            "top1_prob_pct": 11.69
+          },
+          {
+            "layer": 2,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 5.41,
+            "tool_call_151657_rank": 25043,
+            "top1_token_id": 53547,
+            "top1_token_str": " Sesso",
+            "top1_prob_pct": 5.71
+          },
+          {
+            "layer": 3,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 5.41,
+            "tool_call_151657_rank": 26514,
+            "top1_token_id": 113742,
+            "top1_token_str": "\u524d\u8ff0",
+            "top1_prob_pct": 2.45
+          },
+          {
+            "layer": 4,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 3.47,
+            "tool_call_151657_rank": 33731,
+            "top1_token_id": 118026,
+            "top1_token_str": "\u6210\u5c31\u611f",
+            "top1_prob_pct": 5.17
+          },
+          {
+            "layer": 5,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.2,
+            "tool_call_151657_rank": 42209,
+            "top1_token_id": 113964,
+            "top1_token_str": "\u8fd9\u90e8\u5206",
+            "top1_prob_pct": 2.39
+          },
+          {
+            "layer": 6,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.94,
+            "tool_call_151657_rank": 36475,
+            "top1_token_id": 104360,
+            "top1_token_str": "\u5de5\u4f5c\u7684",
+            "top1_prob_pct": 1.92
+          },
+          {
+            "layer": 7,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.8,
+            "tool_call_151657_rank": 33825,
+            "top1_token_id": 110967,
+            "top1_token_str": "\u5f88\u6e05\u695a",
+            "top1_prob_pct": 2.61
+          },
+          {
+            "layer": 8,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.22,
+            "tool_call_151657_rank": 38533,
+            "top1_token_id": 110967,
+            "top1_token_str": "\u5f88\u6e05\u695a",
+            "top1_prob_pct": 8.25
+          },
+          {
+            "layer": 9,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.68,
+            "tool_call_151657_rank": 38635,
+            "top1_token_id": 14374,
+            "top1_token_str": "###",
+            "top1_prob_pct": 3.51
+          },
+          {
+            "layer": 10,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.23,
+            "tool_call_151657_rank": 51306,
+            "top1_token_id": 114815,
+            "top1_token_str": "\u6ca1\u95ee\u9898",
+            "top1_prob_pct": 6.0
+          },
+          {
+            "layer": 11,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.49,
+            "tool_call_151657_rank": 39270,
+            "top1_token_id": 20542,
+            "top1_token_str": "chaft",
+            "top1_prob_pct": 1.38
+          },
+          {
+            "layer": 12,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -1.18,
+            "tool_call_151657_rank": 59164,
+            "top1_token_id": 74514,
+            "top1_token_str": " acronym",
+            "top1_prob_pct": 4.43
+          },
+          {
+            "layer": 13,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -0.16,
+            "tool_call_151657_rank": 43409,
+            "top1_token_id": 115561,
+            "top1_token_str": "\u70ed\u641c",
+            "top1_prob_pct": 48.91
+          },
+          {
+            "layer": 14,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.27,
+            "tool_call_151657_rank": 30483,
+            "top1_token_id": 113241,
+            "top1_token_str": "\u6280\u672f\u652f\u6301",
+            "top1_prob_pct": 6.75
+          },
+          {
+            "layer": 15,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.62,
+            "tool_call_151657_rank": 22412,
+            "top1_token_id": 65702,
+            "top1_token_str": " Inquiry",
+            "top1_prob_pct": 10.05
+          },
+          {
+            "layer": 16,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.48,
+            "tool_call_151657_rank": 16205,
+            "top1_token_id": 4352,
+            "top1_token_str": "module",
+            "top1_prob_pct": 18.62
+          },
+          {
+            "layer": 17,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.09,
+            "tool_call_151657_rank": 24699,
+            "top1_token_id": 111308,
+            "top1_token_str": "\u60a8\u597d",
+            "top1_prob_pct": 18.24
+          },
+          {
+            "layer": 18,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.3,
+            "tool_call_151657_rank": 22455,
+            "top1_token_id": 111308,
+            "top1_token_str": "\u60a8\u597d",
+            "top1_prob_pct": 14.73
+          },
+          {
+            "layer": 19,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.34,
+            "tool_call_151657_rank": 27368,
+            "top1_token_id": 65702,
+            "top1_token_str": " Inquiry",
+            "top1_prob_pct": 21.4
+          },
+          {
+            "layer": 20,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.08,
+            "tool_call_151657_rank": 29378,
+            "top1_token_id": 115546,
+            "top1_token_str": "\u62b1\u6b49",
+            "top1_prob_pct": 11.07
+          },
+          {
+            "layer": 21,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.31,
+            "tool_call_151657_rank": 26544,
+            "top1_token_id": 115546,
+            "top1_token_str": "\u62b1\u6b49",
+            "top1_prob_pct": 16.83
+          },
+          {
+            "layer": 22,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 2.52,
+            "tool_call_151657_rank": 24824,
+            "top1_token_id": 108763,
+            "top1_token_str": "\u6211\u6ca1\u6709",
+            "top1_prob_pct": 7.78
+          },
+          {
+            "layer": 23,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 1.57,
+            "tool_call_151657_rank": 26006,
+            "top1_token_id": 106431,
+            "top1_token_str": "\u65e0\u9700",
+            "top1_prob_pct": 38.2
+          },
+          {
+            "layer": 24,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.34,
+            "tool_call_151657_rank": 30090,
+            "top1_token_id": 104065,
+            "top1_token_str": "\u5e76\u6ca1\u6709",
+            "top1_prob_pct": 55.48
+          },
+          {
+            "layer": 25,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -1.11,
+            "tool_call_151657_rank": 33873,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 83.21
+          },
+          {
+            "layer": 26,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -1.77,
+            "tool_call_151657_rank": 37221,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 95.72
+          },
+          {
+            "layer": 27,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -2.69,
+            "tool_call_151657_rank": 43891,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 98.19
+          },
+          {
+            "layer": 28,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -3.53,
+            "tool_call_151657_rank": 55084,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 99.54
+          },
+          {
+            "layer": 29,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -3.88,
+            "tool_call_151657_rank": 58641,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 99.41
+          },
+          {
+            "layer": 30,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -3.61,
+            "tool_call_151657_rank": 63471,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 99.75
+          },
+          {
+            "layer": 31,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -3.16,
+            "tool_call_151657_rank": 53804,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 99.73
+          },
+          {
+            "layer": 32,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -2.88,
+            "tool_call_151657_rank": 60573,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 99.46
+          },
+          {
+            "layer": 33,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": -2.06,
+            "tool_call_151657_rank": 50503,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 99.71
+          },
+          {
+            "layer": 34,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 0.79,
+            "tool_call_151657_rank": 5542,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 98.71
+          },
+          {
+            "layer": 35,
+            "tool_call_151657_prob_pct": 0.0,
+            "tool_call_151657_logit": 12.12,
+            "tool_call_151657_rank": 226,
+            "top1_token_id": 785,
+            "top1_token_str": "The",
+            "top1_prob_pct": 100.0
+          }
+        ],
+        "attention_by_layer": [
+          {
+            "layer": 0,
+            "control_tokens_attn_pct": 40.27,
+            "tools_schema_attn_pct": 43.68,
+            "user_query_attn_pct": 16.06
+          },
+          {
+            "layer": 1,
+            "control_tokens_attn_pct": 50.66,
+            "tools_schema_attn_pct": 41.32,
+            "user_query_attn_pct": 8.02
+          },
+          {
+            "layer": 2,
+            "control_tokens_attn_pct": 44.35,
+            "tools_schema_attn_pct": 38.57,
+            "user_query_attn_pct": 17.07
+          },
+          {
+            "layer": 3,
+            "control_tokens_attn_pct": 40.23,
+            "tools_schema_attn_pct": 45.0,
+            "user_query_attn_pct": 14.77
+          },
+          {
+            "layer": 4,
+            "control_tokens_attn_pct": 41.99,
+            "tools_schema_attn_pct": 43.65,
+            "user_query_attn_pct": 14.39
+          },
+          {
+            "layer": 5,
+            "control_tokens_attn_pct": 47.77,
+            "tools_schema_attn_pct": 38.41,
+            "user_query_attn_pct": 13.83
+          },
+          {
+            "layer": 6,
+            "control_tokens_attn_pct": 54.26,
+            "tools_schema_attn_pct": 30.46,
+            "user_query_attn_pct": 15.25
+          },
+          {
+            "layer": 7,
+            "control_tokens_attn_pct": 89.58,
+            "tools_schema_attn_pct": 7.56,
+            "user_query_attn_pct": 2.84
+          },
+          {
+            "layer": 8,
+            "control_tokens_attn_pct": 83.21,
+            "tools_schema_attn_pct": 12.6,
+            "user_query_attn_pct": 4.17
+          },
+          {
+            "layer": 9,
+            "control_tokens_attn_pct": 81.56,
+            "tools_schema_attn_pct": 15.97,
+            "user_query_attn_pct": 2.47
+          },
+          {
+            "layer": 10,
+            "control_tokens_attn_pct": 89.19,
+            "tools_schema_attn_pct": 8.58,
+            "user_query_attn_pct": 2.2
+          },
+          {
+            "layer": 11,
+            "control_tokens_attn_pct": 87.34,
+            "tools_schema_attn_pct": 10.95,
+            "user_query_attn_pct": 1.73
+          },
+          {
+            "layer": 12,
+            "control_tokens_attn_pct": 83.77,
+            "tools_schema_attn_pct": 13.4,
+            "user_query_attn_pct": 2.84
+          },
+          {
+            "layer": 13,
+            "control_tokens_attn_pct": 81.57,
+            "tools_schema_attn_pct": 16.41,
+            "user_query_attn_pct": 2.02
+          },
+          {
+            "layer": 14,
+            "control_tokens_attn_pct": 81.52,
+            "tools_schema_attn_pct": 13.73,
+            "user_query_attn_pct": 4.76
+          },
+          {
+            "layer": 15,
+            "control_tokens_attn_pct": 81.3,
+            "tools_schema_attn_pct": 13.73,
+            "user_query_attn_pct": 4.96
+          },
+          {
+            "layer": 16,
+            "control_tokens_attn_pct": 62.3,
+            "tools_schema_attn_pct": 33.1,
+            "user_query_attn_pct": 4.58
+          },
+          {
+            "layer": 17,
+            "control_tokens_attn_pct": 84.97,
+            "tools_schema_attn_pct": 11.2,
+            "user_query_attn_pct": 3.82
+          },
+          {
+            "layer": 18,
+            "control_tokens_attn_pct": 41.62,
+            "tools_schema_attn_pct": 51.53,
+            "user_query_attn_pct": 6.83
+          },
+          {
+            "layer": 19,
+            "control_tokens_attn_pct": 73.67,
+            "tools_schema_attn_pct": 15.71,
+            "user_query_attn_pct": 10.62
+          },
+          {
+            "layer": 20,
+            "control_tokens_attn_pct": 69.65,
+            "tools_schema_attn_pct": 20.25,
+            "user_query_attn_pct": 10.09
+          },
+          {
+            "layer": 21,
+            "control_tokens_attn_pct": 65.93,
+            "tools_schema_attn_pct": 17.82,
+            "user_query_attn_pct": 16.24
+          },
+          {
+            "layer": 22,
+            "control_tokens_attn_pct": 63.31,
+            "tools_schema_attn_pct": 8.62,
+            "user_query_attn_pct": 28.09
+          },
+          {
+            "layer": 23,
+            "control_tokens_attn_pct": 48.51,
+            "tools_schema_attn_pct": 3.43,
+            "user_query_attn_pct": 48.06
+          },
+          {
+            "layer": 24,
+            "control_tokens_attn_pct": 62.48,
+            "tools_schema_attn_pct": 4.57,
+            "user_query_attn_pct": 32.98
+          },
+          {
+            "layer": 25,
+            "control_tokens_attn_pct": 81.22,
+            "tools_schema_attn_pct": 3.09,
+            "user_query_attn_pct": 15.71
+          },
+          {
+            "layer": 26,
+            "control_tokens_attn_pct": 73.74,
+            "tools_schema_attn_pct": 5.84,
+            "user_query_attn_pct": 20.42
+          },
+          {
+            "layer": 27,
+            "control_tokens_attn_pct": 83.97,
+            "tools_schema_attn_pct": 3.7,
+            "user_query_attn_pct": 12.36
+          },
+          {
+            "layer": 28,
+            "control_tokens_attn_pct": 72.02,
+            "tools_schema_attn_pct": 7.31,
+            "user_query_attn_pct": 20.66
+          },
+          {
+            "layer": 29,
+            "control_tokens_attn_pct": 92.06,
+            "tools_schema_attn_pct": 3.12,
+            "user_query_attn_pct": 4.79
+          },
+          {
+            "layer": 30,
+            "control_tokens_attn_pct": 89.44,
+            "tools_schema_attn_pct": 3.11,
+            "user_query_attn_pct": 7.43
+          },
+          {
+            "layer": 31,
+            "control_tokens_attn_pct": 83.59,
+            "tools_schema_attn_pct": 6.46,
+            "user_query_attn_pct": 9.95
+          },
+          {
+            "layer": 32,
+            "control_tokens_attn_pct": 90.24,
+            "tools_schema_attn_pct": 4.46,
+            "user_query_attn_pct": 5.27
+          },
+          {
+            "layer": 33,
+            "control_tokens_attn_pct": 78.04,
+            "tools_schema_attn_pct": 13.73,
+            "user_query_attn_pct": 8.26
+          },
+          {
+            "layer": 34,
+            "control_tokens_attn_pct": 79.85,
+            "tools_schema_attn_pct": 9.82,
+            "user_query_attn_pct": 10.37
+          },
+          {
+            "layer": 35,
+            "control_tokens_attn_pct": 81.43,
+            "tools_schema_attn_pct": 8.62,
+            "user_query_attn_pct": 9.96
+          }
+        ]
+      }
+    }
+  },
+  "m3_sequential_vs_parallel_tool_calls": {
+    "sequential_5_calls": {
+      "api_calls_count": 5,
+      "total_prefill_tokens": 2135,
+      "total_decode_tokens": 257,
+      "total_latency_ms": 16038.95,
+      "calls": [
+        {
+          "call_num": 1,
+          "role": "Sequential Tool Call #1 (auth-api)",
+          "prompt_tokens": 254,
+          "generated_tokens": 92,
+          "prefill_ms": 73.62,
+          "decode_ms": 5701.17,
+          "total_ms": 5774.79,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "call_num": 2,
+          "role": "Sequential Tool Call #2 (billing-api)",
+          "prompt_tokens": 340,
+          "generated_tokens": 23,
+          "prefill_ms": 69.92,
+          "decode_ms": 1360.42,
+          "total_ms": 1430.34,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "call_num": 3,
+          "role": "Sequential Tool Call #3 (search-api)",
+          "prompt_tokens": 428,
+          "generated_tokens": 23,
+          "prefill_ms": 69.54,
+          "decode_ms": 1367.92,
+          "total_ms": 1437.47,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "call_num": 4,
+          "role": "Sequential Tool Call #4 (analytics-api)",
+          "prompt_tokens": 514,
+          "generated_tokens": 23,
+          "prefill_ms": 73.51,
+          "decode_ms": 1358.47,
+          "total_ms": 1431.98,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "call_num": 5,
+          "role": "Sequential Final Synthesis Call",
+          "prompt_tokens": 599,
+          "generated_tokens": 96,
+          "prefill_ms": 81.44,
+          "decode_ms": 5882.93,
+          "total_ms": 5964.37,
+          "raw_output": "The Postgres database status for each service is as follows:\n\n- **auth-api**: Healthy, with 412 active connections (max 500), replica lag of 1.8 ms.\n- **billing-api**: Unhealthy, with 489 active connections (max 500), replica lag of 142.5 ms.\n- **search-api**: Healthy, with 128 active connections (max 500),",
+          "clean_output": "The Postgres database status for each service is as follows:\n\n- **auth-api**: Healthy, with 412 active connections (max 500), replica lag of 1.8 ms.\n- **billing-api**: Unhealthy, with 489 active connections (max 500), replica lag of 142.5 ms.\n- **search-api**: Healthy, with 128 active connections (max 500),"
+        }
+      ]
+    },
+    "parallel_2_calls": {
+      "api_calls_count": 2,
+      "tools_emitted_in_call1": 4,
+      "parsed_parallel_tool_calls": [
+        {
+          "name": "query_postgres_status",
+          "arguments": {
+            "service": "auth-api"
+          }
+        },
+        {
+          "name": "query_postgres_status",
+          "arguments": {
+            "service": "billing-api"
+          }
+        },
+        {
+          "name": "query_postgres_status",
+          "arguments": {
+            "service": "search-api"
+          }
+        },
+        {
+          "name": "query_postgres_status",
+          "arguments": {
+            "service": "analytics-api"
+          }
+        }
+      ],
+      "total_prefill_tokens": 791,
+      "total_decode_tokens": 188,
+      "total_latency_ms": 11759.25,
+      "call1": {
+        "prompt_tokens": 235,
+        "generated_tokens": 92,
+        "generated_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          6333,
+          17818,
+          4773,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          7936,
+          788,
+          330,
+          3242,
+          23904,
+          95642,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          6333,
+          17818,
+          4773,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          7936,
+          788,
+          330,
+          38637,
+          23904,
+          95642,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          6333,
+          17818,
+          4773,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          7936,
+          788,
+          330,
+          1836,
+          23904,
+          95642,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          6333,
+          17818,
+          4773,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          7936,
+          788,
+          330,
+          77652,
+          23904,
+          95642,
+          151658,
+          151645
+        ],
+        "prefill_ms": 70.25,
+        "decode_ms": 5681.62,
+        "total_ms": 5751.87,
+        "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call><|im_end|>",
+        "clean_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call>"
+      },
+      "call2": {
+        "prompt_tokens": 556,
+        "generated_tokens": 96,
+        "generated_token_ids": [
+          785,
+          33531,
+          23904,
+          2473,
+          374,
+          5023,
+          52708,
+          13,
+          5692,
+          594,
+          264,
+          12126,
+          315,
+          279,
+          3877,
+          17818,
+          2639,
+          369,
+          678,
+          3516,
+          1447,
+          12,
+          3070,
+          3242,
+          23904,
+          95518,
+          43354,
+          11,
+          448,
+          220,
+          19,
+          16,
+          17,
+          4541,
+          13234,
+          320,
+          2810,
+          220,
+          20,
+          15,
+          15,
+          701,
+          36954,
+          21454,
+          315,
+          220,
+          16,
+          13,
+          23,
+          9829,
+          624,
+          12,
+          3070,
+          38637,
+          23904,
+          95518,
+          1230,
+          37028,
+          11,
+          448,
+          220,
+          19,
+          23,
+          24,
+          4541,
+          13234,
+          320,
+          2810,
+          220,
+          20,
+          15,
+          15,
+          701,
+          36954,
+          21454,
+          315,
+          220,
+          16,
+          19,
+          17,
+          13,
+          20,
+          9829,
+          624,
+          12,
+          3070,
+          1836,
+          23904,
+          95518,
+          43354,
+          11,
+          448,
+          220,
+          16,
+          17,
+          23
+        ],
+        "prefill_ms": 85.54,
+        "decode_ms": 5921.83,
+        "total_ms": 6007.38,
+        "raw_output": "The billing-api service is currently unhealthy. Here's a summary of the Postgres status for all services:\n\n- **auth-api**: Healthy, with 412 active connections (max 500), replica lag of 1.8 ms.\n- **billing-api**: Unhealthy, with 489 active connections (max 500), replica lag of 142.5 ms.\n- **search-api**: Healthy, with 128",
+        "clean_output": "The billing-api service is currently unhealthy. Here's a summary of the Postgres status for all services:\n\n- **auth-api**: Healthy, with 412 active connections (max 500), replica lag of 1.8 ms.\n- **billing-api**: Unhealthy, with 489 active connections (max 500), replica lag of 142.5 ms.\n- **search-api**: Healthy, with 128"
+      }
+    },
+    "latency_speedup_x": 1.36,
+    "prefill_token_reduction_x": 2.7
+  },
+  "m4_tool_bloat_scaling_and_confusion": {
+    "catalog_scaling": [
+      {
+        "num_tools": 1,
+        "prompt_tokens": 213,
+        "tools_schema_overhead_tokens": 188,
+        "prefill_ttft_ms": 69.85,
+        "attn_mode": "eager",
+        "kv_cache_mb": 29.95,
+        "selected_tool": "query_postgres_status",
+        "correct_tool_selected": true
+      },
+      {
+        "num_tools": 5,
+        "prompt_tokens": 889,
+        "tools_schema_overhead_tokens": 864,
+        "prefill_ttft_ms": 127.29,
+        "attn_mode": "eager",
+        "kv_cache_mb": 125.02,
+        "selected_tool": "query_postgres_status",
+        "correct_tool_selected": true
+      },
+      {
+        "num_tools": 10,
+        "prompt_tokens": 1730,
+        "tools_schema_overhead_tokens": 1705,
+        "prefill_ttft_ms": 260.61,
+        "attn_mode": "eager",
+        "kv_cache_mb": 243.28,
+        "selected_tool": "query_postgres_status",
+        "correct_tool_selected": true
+      },
+      {
+        "num_tools": 20,
+        "prompt_tokens": 3452,
+        "tools_schema_overhead_tokens": 3427,
+        "prefill_ttft_ms": 680.37,
+        "attn_mode": "eager",
+        "kv_cache_mb": 485.44,
+        "selected_tool": "query_postgres_status",
+        "correct_tool_selected": true
+      },
+      {
+        "num_tools": 30,
+        "prompt_tokens": 5176,
+        "tools_schema_overhead_tokens": 5151,
+        "prefill_ttft_ms": 1304.51,
+        "attn_mode": "eager",
+        "kv_cache_mb": 727.88,
+        "selected_tool": "query_postgres_status",
+        "correct_tool_selected": true
+      },
+      {
+        "num_tools": 50,
+        "prompt_tokens": 8624,
+        "tools_schema_overhead_tokens": 8599,
+        "prefill_ttft_ms": 792.24,
+        "attn_mode": "sdpa_fallback_after_eager_oom",
+        "kv_cache_mb": 1212.75,
+        "selected_tool": "query_postgres_status",
+        "correct_tool_selected": true
+      }
+    ],
+    "schema_quality_comparison": {
+      "disjoint_typed_schemas": {
+        "trials": 8,
+        "exact_matches": 8,
+        "accuracy_pct": 100.0,
+        "details": [
+          {
+            "query": "What port is our auth-api Postgres database running on?",
+            "expected_tool": "query_postgres_status",
+            "expected_service": "auth-api",
+            "got_tool": "query_postgres_status",
+            "got_arguments": {
+              "service": "auth-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "Check the Postgres replica lag and active SQL connections for billing-api.",
+            "expected_tool": "query_postgres_status",
+            "expected_service": "billing-api",
+            "got_tool": "query_postgres_status",
+            "got_arguments": {
+              "service": "billing-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "What is the Redis cache hit ratio and evicted key count for search-api?",
+            "expected_tool": "query_redis_cache",
+            "expected_service": "search-api",
+            "got_tool": "query_redis_cache",
+            "got_arguments": {
+              "service": "search-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "How many times has the billing-api Kubernetes pod restarted due to OOMKilled?",
+            "expected_tool": "query_k8s_pod_health",
+            "expected_service": "billing-api",
+            "got_tool": "query_k8s_pod_health",
+            "got_arguments": {
+              "service": "billing-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "What is the Kafka consumer offset lag for analytics-api?",
+            "expected_tool": "query_kafka_lag",
+            "expected_service": "analytics-api",
+            "got_tool": "query_kafka_lag",
+            "got_arguments": {
+              "service": "analytics-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "Is our search-api PostgreSQL instance healthy and what port is it on?",
+            "expected_tool": "query_postgres_status",
+            "expected_service": "search-api",
+            "got_tool": "query_postgres_status",
+            "got_arguments": {
+              "service": "search-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "Check Redis memory fragmentation for auth-api.",
+            "expected_tool": "query_redis_cache",
+            "expected_service": "auth-api",
+            "got_tool": "query_redis_cache",
+            "got_arguments": {
+              "service": "auth-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "Check Kubernetes container restarts for analytics-api.",
+            "expected_tool": "query_k8s_pod_health",
+            "expected_service": "analytics-api",
+            "got_tool": "query_k8s_pod_health",
+            "got_arguments": {
+              "service": "analytics-api"
+            },
+            "exact_match": true
+          }
+        ]
+      },
+      "overlapping_vague_schemas": {
+        "trials": 8,
+        "exact_matches": 2,
+        "accuracy_pct": 25.0,
+        "details": [
+          {
+            "query": "What port is our auth-api Postgres database running on?",
+            "expected_tool": "query_postgres_status",
+            "expected_service": "auth-api",
+            "got_tool": "query_postgres_status",
+            "got_arguments": {
+              "service": "auth-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "Check the Postgres replica lag and active SQL connections for billing-api.",
+            "expected_tool": "query_postgres_status",
+            "expected_service": "billing-api",
+            "got_tool": "check_service_status",
+            "got_arguments": {
+              "name": "billing-api"
+            },
+            "exact_match": false
+          },
+          {
+            "query": "What is the Redis cache hit ratio and evicted key count for search-api?",
+            "expected_tool": "query_redis_cache",
+            "expected_service": "search-api",
+            "got_tool": "fetch_system_metrics",
+            "got_arguments": {
+              "target": "search-api"
+            },
+            "exact_match": false
+          },
+          {
+            "query": "How many times has the billing-api Kubernetes pod restarted due to OOMKilled?",
+            "expected_tool": "query_k8s_pod_health",
+            "expected_service": "billing-api",
+            "got_tool": "fetch_system_metrics",
+            "got_arguments": {
+              "target": "billing-api"
+            },
+            "exact_match": false
+          },
+          {
+            "query": "What is the Kafka consumer offset lag for analytics-api?",
+            "expected_tool": "query_kafka_lag",
+            "expected_service": "analytics-api",
+            "got_tool": "check_service_status",
+            "got_arguments": {
+              "name": "analytics-api"
+            },
+            "exact_match": false
+          },
+          {
+            "query": "Is our search-api PostgreSQL instance healthy and what port is it on?",
+            "expected_tool": "query_postgres_status",
+            "expected_service": "search-api",
+            "got_tool": "query_postgres_status",
+            "got_arguments": {
+              "service": "search-api"
+            },
+            "exact_match": true
+          },
+          {
+            "query": "Check Redis memory fragmentation for auth-api.",
+            "expected_tool": "query_redis_cache",
+            "expected_service": "auth-api",
+            "got_tool": "get_backend_info",
+            "got_arguments": {
+              "svc": "auth-api"
+            },
+            "exact_match": false
+          },
+          {
+            "query": "Check Kubernetes container restarts for analytics-api.",
+            "expected_tool": "query_k8s_pod_health",
+            "expected_service": "analytics-api",
+            "got_tool": "NONE",
+            "got_arguments": {},
+            "exact_match": false
+          }
+        ]
+      }
+    }
+  },
+  "m5_constrained_tools_and_self_correction": {
+    "unconstrained_vs_fsm": {
+      "trials": 20,
+      "unconstrained_valid_count": 0,
+      "unconstrained_valid_pct": 0.0,
+      "constrained_valid_count": 20,
+      "constrained_valid_pct": 100.0,
+      "sample_unconstrained_runs": [
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "authentication",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"authentication\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "authentication",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"authentication\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "authentication",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"authentication\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "authentication",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"authentication\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "authentication",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"authentication\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Query the Postgres database for the billing and payments service.",
+          "expected_service": "billing-api",
+          "got_service": "billing and payments",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing and payments\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Query the Postgres database for the billing and payments service.",
+          "expected_service": "billing-api",
+          "got_service": "billing and payments",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing and payments\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Query the Postgres database for the billing and payments service.",
+          "expected_service": "billing-api",
+          "got_service": "billing and payments",
+          "valid": false,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing and payments\"}}\n</tool_call><|im_end|>"
+        }
+      ],
+      "sample_constrained_runs": [
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "auth-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "auth-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "auth-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "auth-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Check the Postgres database status for our authentication service right now.",
+          "expected_service": "auth-api",
+          "got_service": "auth-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Query the Postgres database for the billing and payments service.",
+          "expected_service": "billing-api",
+          "got_service": "billing-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Query the Postgres database for the billing and payments service.",
+          "expected_service": "billing-api",
+          "got_service": "billing-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>"
+        },
+        {
+          "query": "Query the Postgres database for the billing and payments service.",
+          "expected_service": "billing-api",
+          "got_service": "billing-api",
+          "valid": true,
+          "raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>"
+        }
+      ],
+      "fsm_step_trace": [
+        {
+          "step": 0,
+          "prefix_so_far": "",
+          "allowed_vocab_count": 3,
+          "masked_to_neg_inf_count": 151933,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 151657,
+              "token_str": "<tool_call>",
+              "raw_logit": 33.75,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 151668,
+              "token_str": "</think>",
+              "raw_logit": 17.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 42779,
+              "token_str": " touchdowns",
+              "raw_logit": 15.88,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 40,
+              "token_str": "I",
+              "raw_logit": 15.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 151665,
+              "token_str": "<tool_response>",
+              "raw_logit": 15.19,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 151657,
+              "token_str": "<tool_call>",
+              "post_logit": 33.75,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 27,
+              "token_str": "<",
+              "post_logit": 10.31,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 62752,
+              "token_str": "<t",
+              "post_logit": 0.75,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "prefix_so_far": "<tool_call>",
+          "allowed_vocab_count": 1,
+          "masked_to_neg_inf_count": 151935,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 198,
+              "token_str": "\n",
+              "raw_logit": 55.25,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 319,
+              "token_str": "\r\n",
+              "raw_logit": 27.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 271,
+              "token_str": "\n\n",
+              "raw_logit": 24.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 715,
+              "token_str": " \n",
+              "raw_logit": 21.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 2303,
+              "token_str": "  \n",
+              "raw_logit": 20.12,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 198,
+              "token_str": "\n",
+              "post_logit": 55.25,
+              "post_prob_pct": 100.0
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "prefix_so_far": "<tool_call>\n",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 4913,
+              "token_str": "{\"",
+              "raw_logit": 47.75,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 16864,
+              "token_str": "({\"",
+              "raw_logit": 27.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 5212,
+              "token_str": " {\"",
+              "raw_logit": 26.12,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 15783,
+              "token_str": "={\"",
+              "raw_logit": 24.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 88863,
+              "token_str": ">{\"",
+              "raw_logit": 22.38,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 4913,
+              "token_str": "{\"",
+              "post_logit": 47.75,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 90,
+              "token_str": "{",
+              "post_logit": 8.62,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "prefix_so_far": "<tool_call>\n{\"",
+          "allowed_vocab_count": 4,
+          "masked_to_neg_inf_count": 151932,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 606,
+              "token_str": "name",
+              "raw_logit": 64.0,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 829,
+              "token_str": " name",
+              "raw_logit": 34.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 16370,
+              "token_str": "arguments",
+              "raw_logit": 33.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 7936,
+              "token_str": "service",
+              "raw_logit": 28.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 2644,
+              "token_str": ".name",
+              "raw_logit": 28.62,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 606,
+              "token_str": "name",
+              "post_logit": 64.0,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 12400,
+              "token_str": "nam",
+              "post_logit": 21.88,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 3376,
+              "token_str": "na",
+              "post_logit": 21.0,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 77,
+              "token_str": "n",
+              "post_logit": 20.12,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "prefix_so_far": "<tool_call>\n{\"name",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 788,
+              "token_str": "\":",
+              "raw_logit": 71.0,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 56533,
+              "token_str": "\u201d:",
+              "raw_logit": 35.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 1210,
+              "token_str": "':",
+              "raw_logit": 35.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 3252,
+              "token_str": "\":\"",
+              "raw_logit": 34.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 11693,
+              "token_str": "\\\":",
+              "raw_logit": 33.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 788,
+              "token_str": "\":",
+              "post_logit": 71.0,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 1,
+              "token_str": "\"",
+              "post_logit": 29.0,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "prefix_so_far": "<tool_call>\n{\"name\":",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "raw_logit": 57.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 3239,
+              "token_str": " query",
+              "raw_logit": 24.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 9000,
+              "token_str": " \"_",
+              "raw_logit": 23.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 13265,
+              "token_str": " \"__",
+              "raw_logit": 22.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 364,
+              "token_str": " '",
+              "raw_logit": 22.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "post_logit": 57.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 220,
+              "token_str": " ",
+              "post_logit": 20.88,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"",
+          "allowed_vocab_count": 5,
+          "masked_to_neg_inf_count": 151931,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 1631,
+              "token_str": "query",
+              "raw_logit": 59.75,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 3239,
+              "token_str": " query",
+              "raw_logit": 32.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 10741,
+              "token_str": "(query",
+              "raw_logit": 29.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 43070,
+              "token_str": "postgres",
+              "raw_logit": 29.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 2859,
+              "token_str": "Query",
+              "raw_logit": 29.5,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 1631,
+              "token_str": "query",
+              "post_logit": 59.75,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 15959,
+              "token_str": "quer",
+              "post_logit": 26.62,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 80,
+              "token_str": "q",
+              "post_logit": 24.25,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 446,
+              "token_str": "qu",
+              "post_logit": 23.5,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 591,
+              "token_str": "que",
+              "post_logit": 20.75,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query",
+          "allowed_vocab_count": 5,
+          "masked_to_neg_inf_count": 151931,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 6333,
+              "token_str": "_post",
+              "raw_logit": 51.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 3877,
+              "token_str": " Post",
+              "raw_logit": 29.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 4133,
+              "token_str": "Post",
+              "raw_logit": 29.12,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 20222,
+              "token_str": "_posts",
+              "raw_logit": 28.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 23442,
+              "token_str": ".Post",
+              "raw_logit": 27.62,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 6333,
+              "token_str": "_post",
+              "post_logit": 51.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 6479,
+              "token_str": "_pos",
+              "post_logit": 27.5,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 620,
+              "token_str": "_p",
+              "post_logit": 24.62,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 62,
+              "token_str": "_",
+              "post_logit": 22.38,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 61814,
+              "token_str": "_po",
+              "post_logit": 16.75,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_post",
+          "allowed_vocab_count": 4,
+          "masked_to_neg_inf_count": 151932,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 17818,
+              "token_str": "gres",
+              "raw_logit": 46.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 15525,
+              "token_str": "gre",
+              "raw_logit": 31.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 10637,
+              "token_str": "gers",
+              "raw_logit": 28.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 901,
+              "token_str": "gr",
+              "raw_logit": 27.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 34073,
+              "token_str": "gos",
+              "raw_logit": 26.5,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 17818,
+              "token_str": "gres",
+              "post_logit": 46.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 15525,
+              "token_str": "gre",
+              "post_logit": 31.75,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 901,
+              "token_str": "gr",
+              "post_logit": 27.38,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 70,
+              "token_str": "g",
+              "post_logit": 23.25,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 9,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres",
+          "allowed_vocab_count": 6,
+          "masked_to_neg_inf_count": 151930,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 4773,
+              "token_str": "_status",
+              "raw_logit": 46.25,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 2522,
+              "token_str": "Status",
+              "raw_logit": 31.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 2829,
+              "token_str": "status",
+              "raw_logit": 29.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 8104,
+              "token_str": " Status",
+              "raw_logit": 28.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 34998,
+              "token_str": "-status",
+              "raw_logit": 27.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 4773,
+              "token_str": "_status",
+              "post_logit": 46.25,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 16271,
+              "token_str": "_stat",
+              "post_logit": 24.88,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 643,
+              "token_str": "_s",
+              "post_logit": 22.38,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 1261,
+              "token_str": "_st",
+              "post_logit": 21.0,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 62,
+              "token_str": "_",
+              "post_logit": 18.25,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 10,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 497,
+              "token_str": "\",",
+              "raw_logit": 71.0,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 516,
+              "token_str": "',",
+              "raw_logit": 42.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 756,
+              "token_str": "\",\n",
+              "raw_logit": 38.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 9336,
+              "token_str": "\u201d,",
+              "raw_logit": 36.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 3670,
+              "token_str": " \",",
+              "raw_logit": 33.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 497,
+              "token_str": "\",",
+              "post_logit": 71.0,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 1,
+              "token_str": "\"",
+              "post_logit": 22.62,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 11,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\",",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "raw_logit": 42.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 1036,
+              "token_str": " \u201c",
+              "raw_logit": 18.12,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 364,
+              "token_str": " '",
+              "raw_logit": 17.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 9000,
+              "token_str": " \"_",
+              "raw_logit": 16.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 428,
+              "token_str": "=\"",
+              "raw_logit": 16.0,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "post_logit": 42.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 220,
+              "token_str": " ",
+              "post_logit": 15.44,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 12,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"",
+          "allowed_vocab_count": 5,
+          "masked_to_neg_inf_count": 151931,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 16370,
+              "token_str": "arguments",
+              "raw_logit": 58.0,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 30467,
+              "token_str": "(arguments",
+              "raw_logit": 34.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 5977,
+              "token_str": " arguments",
+              "raw_logit": 33.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 52415,
+              "token_str": ".arguments",
+              "raw_logit": 32.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 19139,
+              "token_str": "Arguments",
+              "raw_logit": 30.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 16370,
+              "token_str": "arguments",
+              "post_logit": 58.0,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 14479,
+              "token_str": "argument",
+              "post_logit": 27.62,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 277,
+              "token_str": "ar",
+              "post_logit": 24.38,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 858,
+              "token_str": "arg",
+              "post_logit": 23.38,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 64,
+              "token_str": "a",
+              "post_logit": 20.88,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 13,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 788,
+              "token_str": "\":",
+              "raw_logit": 57.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 1210,
+              "token_str": "':",
+              "raw_logit": 28.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 4660,
+              "token_str": "\":\n",
+              "raw_logit": 26.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 56533,
+              "token_str": "\u201d:",
+              "raw_logit": 26.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 22317,
+              "token_str": "\":{\"",
+              "raw_logit": 24.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 788,
+              "token_str": "\":",
+              "post_logit": 57.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 1,
+              "token_str": "\"",
+              "post_logit": 13.44,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 14,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\":",
+          "allowed_vocab_count": 3,
+          "masked_to_neg_inf_count": 151933,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 5212,
+              "token_str": " {\"",
+              "raw_logit": 51.25,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 54734,
+              "token_str": " \"{\\\"",
+              "raw_logit": 32.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 4913,
+              "token_str": "{\"",
+              "raw_logit": 27.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "raw_logit": 26.62,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 4383,
+              "token_str": " [\"",
+              "raw_logit": 25.38,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 5212,
+              "token_str": " {\"",
+              "post_logit": 51.25,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 220,
+              "token_str": " ",
+              "post_logit": 22.12,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 314,
+              "token_str": " {",
+              "post_logit": 17.75,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 15,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"",
+          "allowed_vocab_count": 5,
+          "masked_to_neg_inf_count": 151931,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 7936,
+              "token_str": "service",
+              "raw_logit": 61.75,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 2473,
+              "token_str": " service",
+              "raw_logit": 35.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 52934,
+              "token_str": "\tservice",
+              "raw_logit": 33.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 21656,
+              "token_str": "(service",
+              "raw_logit": 32.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 16370,
+              "token_str": "arguments",
+              "raw_logit": 32.25,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 7936,
+              "token_str": "service",
+              "post_logit": 61.75,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 30775,
+              "token_str": "serv",
+              "post_logit": 30.62,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 799,
+              "token_str": "ser",
+              "post_logit": 26.25,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 325,
+              "token_str": "se",
+              "post_logit": 21.75,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 82,
+              "token_str": "s",
+              "post_logit": 20.75,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 16,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 788,
+              "token_str": "\":",
+              "raw_logit": 65.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 56533,
+              "token_str": "\u201d:",
+              "raw_logit": 30.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 497,
+              "token_str": "\",",
+              "raw_logit": 30.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 3252,
+              "token_str": "\":\"",
+              "raw_logit": 30.12,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 1210,
+              "token_str": "':",
+              "raw_logit": 30.0,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 788,
+              "token_str": "\":",
+              "post_logit": 65.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 1,
+              "token_str": "\"",
+              "post_logit": 26.75,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 17,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\":",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "raw_logit": 60.0,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 3521,
+              "token_str": " \"/",
+              "raw_logit": 28.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 9000,
+              "token_str": " \"_",
+              "raw_logit": 27.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 13265,
+              "token_str": " \"__",
+              "raw_logit": 27.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 5933,
+              "token_str": " \".",
+              "raw_logit": 26.75,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 330,
+              "token_str": " \"",
+              "post_logit": 60.0,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 220,
+              "token_str": " ",
+              "post_logit": 24.0,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 18,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"",
+          "allowed_vocab_count": 18,
+          "masked_to_neg_inf_count": 151918,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 45890,
+              "token_str": "authentication",
+              "raw_logit": 57.5,
+              "raw_prob_pct": 99.98
+            },
+            {
+              "token_id": 3242,
+              "token_str": "auth",
+              "raw_logit": 48.75,
+              "raw_prob_pct": 0.02
+            },
+            {
+              "token_id": 16653,
+              "token_str": " authentication",
+              "raw_logit": 40.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 19297,
+              "token_str": "Authentication",
+              "raw_logit": 39.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 39554,
+              "token_str": "authorization",
+              "raw_logit": 37.5,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 3242,
+              "token_str": "auth",
+              "post_logit": 48.75,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 2863,
+              "token_str": "au",
+              "post_logit": 27.62,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 2717,
+              "token_str": "aut",
+              "post_logit": 26.38,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 64,
+              "token_str": "a",
+              "post_logit": 25.12,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 276,
+              "token_str": "an",
+              "post_logit": 23.38,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 19,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth",
+          "allowed_vocab_count": 4,
+          "masked_to_neg_inf_count": 151932,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 95642,
+              "token_str": "\"}}\n",
+              "raw_logit": 37.25,
+              "raw_prob_pct": 58.71
+            },
+            {
+              "token_id": 23461,
+              "token_str": "-service",
+              "raw_logit": 36.75,
+              "raw_prob_pct": 35.61
+            },
+            {
+              "token_id": 7936,
+              "token_str": "service",
+              "raw_logit": 34.75,
+              "raw_prob_pct": 4.82
+            },
+            {
+              "token_id": 12267,
+              "token_str": "_service",
+              "raw_logit": 32.25,
+              "raw_prob_pct": 0.4
+            },
+            {
+              "token_id": 2473,
+              "token_str": " service",
+              "raw_logit": 31.75,
+              "raw_prob_pct": 0.24
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 12,
+              "token_str": "-",
+              "post_logit": 21.12,
+              "post_prob_pct": 86.56
+            },
+            {
+              "token_id": 23904,
+              "token_str": "-api",
+              "post_logit": 19.25,
+              "post_prob_pct": 13.27
+            },
+            {
+              "token_id": 7409,
+              "token_str": "-a",
+              "post_logit": 14.88,
+              "post_prob_pct": 0.17
+            },
+            {
+              "token_id": 45156,
+              "token_str": "-ap",
+              "post_logit": 8.31,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 20,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-",
+          "allowed_vocab_count": 3,
+          "masked_to_neg_inf_count": 151933,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 15,
+              "token_str": "0",
+              "raw_logit": 26.88,
+              "raw_prob_pct": 52.64
+            },
+            {
+              "token_id": 13267,
+              "token_str": "serve",
+              "raw_logit": 26.5,
+              "raw_prob_pct": 36.18
+            },
+            {
+              "token_id": 1860,
+              "token_str": "Service",
+              "raw_logit": 23.88,
+              "raw_prob_pct": 2.62
+            },
+            {
+              "token_id": 778,
+              "token_str": "ss",
+              "raw_logit": 23.38,
+              "raw_prob_pct": 1.59
+            },
+            {
+              "token_id": 16,
+              "token_str": "1",
+              "raw_logit": 23.25,
+              "raw_prob_pct": 1.4
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 2068,
+              "token_str": "api",
+              "post_logit": 8.38,
+              "post_prob_pct": 99.99
+            },
+            {
+              "token_id": 391,
+              "token_str": "ap",
+              "post_logit": -1.16,
+              "post_prob_pct": 0.01
+            },
+            {
+              "token_id": 64,
+              "token_str": "a",
+              "post_logit": -4.59,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 21,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api",
+          "allowed_vocab_count": 4,
+          "masked_to_neg_inf_count": 151932,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 95642,
+              "token_str": "\"}}\n",
+              "raw_logit": 44.5,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 23461,
+              "token_str": "-service",
+              "raw_logit": 32.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 12,
+              "token_str": "-",
+              "raw_logit": 29.75,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 1448,
+              "token_str": "-m",
+              "raw_logit": 28.25,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 26300,
+              "token_str": "-server",
+              "raw_logit": 27.88,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 95642,
+              "token_str": "\"}}\n",
+              "post_logit": 44.5,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 30975,
+              "token_str": "\"}}",
+              "post_logit": 27.88,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 9207,
+              "token_str": "\"}",
+              "post_logit": 27.62,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 1,
+              "token_str": "\"",
+              "post_logit": 22.12,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 22,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n",
+          "allowed_vocab_count": 3,
+          "masked_to_neg_inf_count": 151933,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 151658,
+              "token_str": "</tool_call>",
+              "raw_logit": 39.25,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 151666,
+              "token_str": "</tool_response>",
+              "raw_logit": 20.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 151665,
+              "token_str": "<tool_response>",
+              "raw_logit": 20.0,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 151657,
+              "token_str": "<tool_call>",
+              "raw_logit": 19.5,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 120909,
+              "token_str": "\u6222",
+              "raw_logit": 17.0,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 151658,
+              "token_str": "</tool_call>",
+              "post_logit": 39.25,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 522,
+              "token_str": "</",
+              "post_logit": 7.41,
+              "post_prob_pct": 0.0
+            },
+            {
+              "token_id": 27,
+              "token_str": "<",
+              "post_logit": 3.81,
+              "post_prob_pct": 0.0
+            }
+          ]
+        },
+        {
+          "step": 23,
+          "prefix_so_far": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call>",
+          "allowed_vocab_count": 2,
+          "masked_to_neg_inf_count": 151934,
+          "top5_raw_before_mask": [
+            {
+              "token_id": 151645,
+              "token_str": "<|im_end|>",
+              "raw_logit": 36.75,
+              "raw_prob_pct": 100.0
+            },
+            {
+              "token_id": 151668,
+              "token_str": "</think>",
+              "raw_logit": 20.12,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 151665,
+              "token_str": "<tool_response>",
+              "raw_logit": 16.38,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 151657,
+              "token_str": "<tool_call>",
+              "raw_logit": 15.81,
+              "raw_prob_pct": 0.0
+            },
+            {
+              "token_id": 13,
+              "token_str": ".",
+              "raw_logit": 15.62,
+              "raw_prob_pct": 0.0
+            }
+          ],
+          "top_after_mask": [
+            {
+              "token_id": 151645,
+              "token_str": "<|im_end|>",
+              "post_logit": 36.75,
+              "post_prob_pct": 100.0
+            },
+            {
+              "token_id": 27,
+              "token_str": "<",
+              "post_logit": 0.83,
+              "post_prob_pct": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    "error_self_correction": {
+      "opaque_error_no_options": {
+        "trials": 8,
+        "recovered_count": 0,
+        "recovery_rate_pct": 0.0,
+        "cases": [
+          {
+            "query": "What port is our auth service Postgres DB running on?",
+            "initial_wrong_service_arg": "auth_service",
+            "tool_error_returned": "KeyError: 'auth_service' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"auth_service\" does not exist in the SERVICE_DB. Please check the service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1292.3,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Check Postgres connections for billing_backend.",
+            "initial_wrong_service_arg": "billing_backend",
+            "tool_error_returned": "KeyError: 'billing_backend' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"billing_backend\" was not found in the SERVICE_DB. Please verify the service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1291.49,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Is our search_service Postgres DB healthy?",
+            "initial_wrong_service_arg": "search_service",
+            "tool_error_returned": "KeyError: 'search_service' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"search_service\" does not have a corresponding entry in the SERVICE_DB. Please verify the service name or check if the database configuration is correct.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1678.35,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "What is the Postgres replica lag on analytics_db?",
+            "initial_wrong_service_arg": "analytics_db",
+            "tool_error_returned": "KeyError: 'analytics_db' not found in SERVICE_DB.",
+            "retry_raw_output": "The service name \"analytics_db\" is not recognized in the SERVICE_DB configuration. Please verify the correct service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1426.08,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Query Postgres port and health for authentication-service.",
+            "initial_wrong_service_arg": "authentication-service",
+            "tool_error_returned": "KeyError: 'authentication-service' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"authentication-service\" was not found in the SERVICE_DB. Please verify the service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1262.79,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Check Postgres active connections on payments-api.",
+            "initial_wrong_service_arg": "payments-api",
+            "tool_error_returned": "KeyError: 'payments-api' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"payments-api\" is not recognized in the SERVICE_DB. Please verify the service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1264.0,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Query Postgres status for catalog-search.",
+            "initial_wrong_service_arg": "catalog-search",
+            "tool_error_returned": "KeyError: 'catalog-search' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"catalog-search\" was not found in the SERVICE_DB. Please verify the service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1283.18,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Check Postgres status for metrics-analytics.",
+            "initial_wrong_service_arg": "metrics-analytics",
+            "tool_error_returned": "KeyError: 'metrics-analytics' not found in SERVICE_DB.",
+            "retry_raw_output": "The service \"metrics-analytics\" was not found in the SERVICE_DB. Please verify the service name and try again.<|im_end|>",
+            "retry_corrected_service_arg": "NONE",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1294.69,
+            "final_verified_answer": ""
+          }
+        ]
+      },
+      "actionable_error_with_valid_enums": {
+        "trials": 8,
+        "recovered_count": 7,
+        "recovery_rate_pct": 87.5,
+        "cases": [
+          {
+            "query": "What port is our auth service Postgres DB running on?",
+            "initial_wrong_service_arg": "auth_service",
+            "tool_error_returned": "KeyError: Unknown service 'auth_service'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "auth-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1211.25,
+            "final_verified_answer": "The Postgres DB for the auth service is running on port **5439**. It has **412 active connections** out of a maximum of **500**, with a replica lag of **1.8 ms**. The database is currently **healthy**."
+          },
+          {
+            "query": "Check Postgres connections for billing_backend.",
+            "initial_wrong_service_arg": "billing_backend",
+            "tool_error_returned": "KeyError: Unknown service 'billing_backend'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"billing-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "billing-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1223.57,
+            "final_verified_answer": "The Postgres status for the `billing-api` service is as follows:\n\n- **Port:** 5440\n- **Active Connections:** 489\n- **Max Connections:** 500\n- **Replica Lag (ms):** 142.5\n- **Healthy:** False\n\nThe service is currently not healthy, and there is some replica lag"
+          },
+          {
+            "query": "Is our search_service Postgres DB healthy?",
+            "initial_wrong_service_arg": "search_service",
+            "tool_error_returned": "KeyError: Unknown service 'search_service'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "search-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1213.59,
+            "final_verified_answer": "The Postgres DB for the `search-api` service is healthy. Here's the current status:\n\n- **Port:** 5441\n- **Active Connections:** 128\n- **Max Connections:** 500\n- **Replica Lag (ms):** 0.9\n- **Healthy:** \u2705 True"
+          },
+          {
+            "query": "What is the Postgres replica lag on analytics_db?",
+            "initial_wrong_service_arg": "analytics_db",
+            "tool_error_returned": "KeyError: Unknown service 'analytics_db'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "analytics-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1216.25,
+            "final_verified_answer": "The Postgres replica lag for the `analytics-api` service is **3.4 milliseconds**, and the database is currently healthy."
+          },
+          {
+            "query": "Query Postgres port and health for authentication-service.",
+            "initial_wrong_service_arg": "authentication-service",
+            "tool_error_returned": "KeyError: Unknown service 'authentication-service'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "auth-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1213.72,
+            "final_verified_answer": "The Postgres status for the `auth-api` service is as follows:\n\n- **Port**: 5439\n- **Active Connections**: 412\n- **Max Connections**: 500\n- **Replica Lag (ms)**: 1.8\n- **Healthy**: \u2705 True\n\nLet me know if you need further assistance!"
+          },
+          {
+            "query": "Check Postgres active connections on payments-api.",
+            "initial_wrong_service_arg": "payments-api",
+            "tool_error_returned": "KeyError: Unknown service 'payments-api'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"auth-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "auth-api",
+            "recovered_successfully": false,
+            "retry_latency_ms": 1226.55,
+            "final_verified_answer": ""
+          },
+          {
+            "query": "Query Postgres status for catalog-search.",
+            "initial_wrong_service_arg": "catalog-search",
+            "tool_error_returned": "KeyError: Unknown service 'catalog-search'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"search-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "search-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1216.07,
+            "final_verified_answer": "The Postgres status for the `search-api` service is as follows:\n\n- **Port:** 5441\n- **Active Connections:** 128\n- **Max Connections:** 500\n- **Replica Lag (ms):** 0.9\n- **Healthy:** \u2705 True\n\nLet me know if you need further assistance!"
+          },
+          {
+            "query": "Check Postgres status for metrics-analytics.",
+            "initial_wrong_service_arg": "metrics-analytics",
+            "tool_error_returned": "KeyError: Unknown service 'metrics-analytics'. Valid service names are: ['auth-api', 'billing-api', 'search-api', 'analytics-api']. Please call query_postgres_status again with the matching valid service name.",
+            "retry_raw_output": "<tool_call>\n{\"name\": \"query_postgres_status\", \"arguments\": {\"service\": \"analytics-api\"}}\n</tool_call><|im_end|>",
+            "retry_corrected_service_arg": "analytics-api",
+            "recovered_successfully": true,
+            "retry_latency_ms": 1224.89,
+            "final_verified_answer": "The Postgres status for the **analytics-api** service is as follows:\n\n- **Port:** 5442\n- **Active Connections:** 64\n- **Max Connections:** 500\n- **Replica Lag (ms):** 3.4\n- **Healthy:** \u2705 True\n\nLet me know if you need further assistance!"
+          }
+        ]
+      }
+    }
+  }
+}
