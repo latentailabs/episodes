@@ -1,0 +1,2012 @@
+{
+  "gpu_environment": {
+    "model_id": "Qwen/Qwen3-8B",
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "gpu_vram_gb_decimal": 42.41,
+    "gpu_vram_gib_binary": 39.49,
+    "torch_version": "2.14.1+cu130",
+    "dtype": "bfloat16",
+    "num_parameters": 8190735360,
+    "model_weights_gib": 15.26,
+    "model_weights_gb_decimal": 16.38,
+    "num_layers": 36,
+    "num_attention_heads": 32,
+    "num_kv_heads": 8,
+    "head_dim": 128,
+    "hidden_size": 4096,
+    "vocab_size": 151936,
+    "kv_bytes_per_token": 147456,
+    "kv_kib_per_token": 144.0,
+    "control_tokens": {
+      "<|im_start|>": 151644,
+      "<|im_end|>": 151645,
+      "<think>": 151667,
+      "</think>": 151668,
+      "<tool_call>": 151657,
+      "</tool_call>": 151658,
+      "<tool_response>": 151665,
+      "</tool_response>": 151666
+    },
+    "sqlite_db_path": "/tmp/incident_telemetry_ep13.db",
+    "sqlite_tables": [
+      "alerts",
+      "service_dependencies",
+      "db_metrics",
+      "deployments",
+      "error_logs"
+    ]
+  },
+  "m1_agent_while_loop_and_history_tax": {
+    "num_steps": 6,
+    "canonical_trajectory": [
+      {
+        "step": 1,
+        "think_text": "Okay, let's tackle this critical production incident. The user wants a step-by-step investigation using the SQLite telemetry tables. First, I need to identify the failing service. The first tool to call is query_active_alerts to get any active alerts and their error rates. That should point me to the problematic service.\n\nOnce I have the active alerts, the next step is to check the dependencies. If the failing service is checkout-api, I should use query_service_dependencies",
+        "body_text": "<tool_call>\n{\"name\": \"query_active_alerts\", \"arguments\": {}}\n</tool_call>",
+        "raw_output": "<think>\nOkay, let's tackle this critical production incident. The user wants a step-by-step investigation using the SQLite telemetry tables. First, I need to identify the failing service. The first tool to call is query_active_alerts to get any active alerts and their error rates. That should point me to the problematic service.\n\nOnce I have the active alerts, the next step is to check the dependencies. If the failing service is checkout-api, I should use query_service_dependencies\n</think>\n\n<tool_call>\n{\"name\": \"query_active_alerts\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "think_tokens": 97,
+        "tool_call_tokens": 17,
+        "output_tokens": 116,
+        "has_tool_call": true,
+        "tool_name": "query_active_alerts",
+        "tool_args": {},
+        "sqlite_response": {
+          "alerts": [
+            {
+              "alert_id": "INC-4091",
+              "service": "checkout-api",
+              "symptom": "HTTP 502 Bad Gateway spike on POST /v1/orders",
+              "error_rate_pct": 38.4,
+              "triggered_at_utc": "2026-11-10T08:12:00Z",
+              "severity": "CRITICAL"
+            },
+            {
+              "alert_id": "INC-4092",
+              "service": "search-api",
+              "symptom": "Elevated p99 latency (640 ms)",
+              "error_rate_pct": 1.2,
+              "triggered_at_utc": "2026-11-10T07:55:00Z",
+              "severity": "WARNING"
+            }
+          ],
+          "count": 2
+        },
+        "sqlite_exec_ms": 0.5376
+      },
+      {
+        "step": 2,
+        "think_text": "Okay, let's start with the active alerts. The first alert is a critical issue with checkout-api having a 38.4% error rate. The second is a warning for search-api. Since the user mentioned a critical incident, the checkout-api is the main focus. Next, I need to check the service dependencies for checkout-api to see which databases it relies on. The query_service_dependencies function will show the downstream services, likely inventory-db. Then,",
+        "body_text": "<tool_call>\n{\"name\": \"query_service_dependencies\", \"arguments\": {\"service\": \"checkout-api\"}}\n</tool_call>",
+        "raw_output": "<think>\nOkay, let's start with the active alerts. The first alert is a critical issue with checkout-api having a 38.4% error rate. The second is a warning for search-api. Since the user mentioned a critical incident, the checkout-api is the main focus. Next, I need to check the service dependencies for checkout-api to see which databases it relies on. The query_service_dependencies function will show the downstream services, likely inventory-db. Then,\n</think>\n\n<tool_call>\n{\"name\": \"query_service_dependencies\", \"arguments\": {\"service\": \"checkout-api\"}}\n</tool_call><|im_end|>",
+        "think_tokens": 97,
+        "tool_call_tokens": 21,
+        "output_tokens": 120,
+        "has_tool_call": true,
+        "tool_name": "query_service_dependencies",
+        "tool_args": {
+          "service": "checkout-api"
+        },
+        "sqlite_response": {
+          "service": "checkout-api",
+          "dependencies": [
+            {
+              "parent_service": "checkout-api",
+              "downstream_target": "inventory-db",
+              "dep_type": "postgresql",
+              "timeout_ms": 2000,
+              "critical": 1
+            },
+            {
+              "parent_service": "checkout-api",
+              "downstream_target": "payment-gateway",
+              "dep_type": "grpc",
+              "timeout_ms": 1500,
+              "critical": 1
+            },
+            {
+              "parent_service": "checkout-api",
+              "downstream_target": "promo-cache",
+              "dep_type": "redis",
+              "timeout_ms": 250,
+              "critical": 0
+            }
+          ]
+        },
+        "sqlite_exec_ms": 0.3462
+      },
+      {
+        "step": 3,
+        "think_text": "Okay, let's see. The user is dealing with a critical incident. The first step was to check active alerts, which showed a 502 Bad Gateway spike on checkout-api. Then, they checked service dependencies for checkout-api, revealing that inventory-db is a critical PostgreSQL dependency.\n\nNext, I need to look into the metrics of inventory-db since it's a critical downstream target. The query_db_metrics function will give info on active connections, lock waits,",
+        "body_text": "<tool_call>\n{\"name\": \"query_db_metrics\", \"arguments\": {\"db_name\": \"inventory-db\"}}\n</tool_call>",
+        "raw_output": "<think>\nOkay, let's see. The user is dealing with a critical incident. The first step was to check active alerts, which showed a 502 Bad Gateway spike on checkout-api. Then, they checked service dependencies for checkout-api, revealing that inventory-db is a critical PostgreSQL dependency.\n\nNext, I need to look into the metrics of inventory-db since it's a critical downstream target. The query_db_metrics function will give info on active connections, lock waits,\n</think>\n\n<tool_call>\n{\"name\": \"query_db_metrics\", \"arguments\": {\"db_name\": \"inventory-db\"}}\n</tool_call><|im_end|>",
+        "think_tokens": 97,
+        "tool_call_tokens": 22,
+        "output_tokens": 121,
+        "has_tool_call": true,
+        "tool_name": "query_db_metrics",
+        "tool_args": {
+          "db_name": "inventory-db"
+        },
+        "sqlite_response": {
+          "db_name": "inventory-db",
+          "port": 5439,
+          "active_connections": 488,
+          "max_connections": 500,
+          "lock_wait_ms": 4820.5,
+          "active_row_locks": 142,
+          "cpu_pct": 96.4,
+          "status": "DEGRADED_LOCK_CONTENTION"
+        },
+        "sqlite_exec_ms": 0.3962
+      },
+      {
+        "step": 4,
+        "think_text": "Okay, let's see. The user is dealing with a critical incident. The first step was to check active alerts, which showed a 502 error spike on checkout-api. Then, querying service dependencies for checkout-api revealed that inventory-db is a critical PostgreSQL dependency. Next, checking inventory-db's metrics showed degraded lock contention with high active row locks and CPU usage. Now, the next step is to look at recent deployments for inventory-db to find the offending",
+        "body_text": "<tool_call>\n{\"name\": \"query_recent_deployments\", \"arguments\": {\"target\": \"inventory-db\"}}\n</tool_call>",
+        "raw_output": "<think>\nOkay, let's see. The user is dealing with a critical incident. The first step was to check active alerts, which showed a 502 error spike on checkout-api. Then, querying service dependencies for checkout-api revealed that inventory-db is a critical PostgreSQL dependency. Next, checking inventory-db's metrics showed degraded lock contention with high active row locks and CPU usage. Now, the next step is to look at recent deployments for inventory-db to find the offending\n</think>\n\n<tool_call>\n{\"name\": \"query_recent_deployments\", \"arguments\": {\"target\": \"inventory-db\"}}\n</tool_call><|im_end|>",
+        "think_tokens": 97,
+        "tool_call_tokens": 22,
+        "output_tokens": 121,
+        "has_tool_call": true,
+        "tool_name": "query_recent_deployments",
+        "tool_args": {
+          "target": "inventory-db"
+        },
+        "sqlite_response": {
+          "target": "inventory-db",
+          "deployments": [
+            {
+              "release_id": "rel-2026-114",
+              "target": "inventory-db",
+              "author": "ci-bot",
+              "deployed_at_utc": "2026-11-10T07:54:00Z",
+              "summary": "Migration 114: Add unindexed batch stock_reservations FOR UPDATE query",
+              "rollback_cmd": "pg_migrate rollback --target inventory-db --to rel-2026-113"
+            }
+          ]
+        },
+        "sqlite_exec_ms": 0.3552
+      },
+      {
+        "step": 5,
+        "think_text": "Okay, let's see. The user is dealing with a critical incident. The first step was to check active alerts, which showed a 502 error spike on checkout-api. Then, looking at service dependencies, checkout-api depends on inventory-db, which is a PostgreSQL database. The db metrics for inventory-db show degraded status due to lock contention. The recent deployments for inventory-db include a migration that added an unindexed query. That probably caused the lock waits",
+        "body_text": "<tool_call>\n{\"name\": \"query_error_logs\", \"arguments\": {\"service\": \"inventory-db\", \"date_prefix\": \"2026-11-10\"}}\n</tool_call>",
+        "raw_output": "<think>\nOkay, let's see. The user is dealing with a critical incident. The first step was to check active alerts, which showed a 502 error spike on checkout-api. Then, looking at service dependencies, checkout-api depends on inventory-db, which is a PostgreSQL database. The db metrics for inventory-db show degraded status due to lock contention. The recent deployments for inventory-db include a migration that added an unindexed query. That probably caused the lock waits\n</think>\n\n<tool_call>\n{\"name\": \"query_error_logs\", \"arguments\": {\"service\": \"inventory-db\", \"date_prefix\": \"2026-11-10\"}}\n</tool_call><|im_end|>",
+        "think_tokens": 97,
+        "tool_call_tokens": 37,
+        "output_tokens": 136,
+        "has_tool_call": true,
+        "tool_name": "query_error_logs",
+        "tool_args": {
+          "service": "inventory-db",
+          "date_prefix": "2026-11-10"
+        },
+        "sqlite_response": {
+          "service": "inventory-db",
+          "date_prefix": "2026-11-10",
+          "logs": [
+            {
+              "ts_utc": "2026-11-10T08:11:52Z",
+              "error_code": "PG_LOCK_TIMEOUT_55P03",
+              "message": "canceling statement due to lock timeout on table stock_reservations (rel-2026-114 unindexed scan)"
+            },
+            {
+              "ts_utc": "2026-11-10T08:11:58Z",
+              "error_code": "PG_DEADLOCK_40P01",
+              "message": "deadlock detected waiting for ShareLock on transaction 99412 in stock_reservations"
+            }
+          ],
+          "row_count": 2
+        },
+        "sqlite_exec_ms": 0.3623
+      },
+      {
+        "step": 6,
+        "think_text": "Okay, let's break this down. The user has a critical incident with the checkout-api service. The initial alert shows a 502 Bad Gateway spike, which probably means the service is failing to get responses from its dependencies. \n\nFirst, I checked the active alerts and found that checkout-api is the critical service. Then, looking at its dependencies, inventory-db is a PostgreSQL database that's critical. The next step was to check the metrics for inventory-db",
+        "body_text": "The root cause is a **lock contention** in the **inventory-db** PostgreSQL database caused by **release rel-2026-114**, which introduced an unindexed `FOR UPDATE` query on the `stock_reservations` table. This led to **PG_LOCK_TIMEOUT_55P03** and **PG_DEADLOCK_40P01** errors, degrading the database and causing the checkout-api service to fail with HTTP 502 errors. \n\n**Offending release:** `rel-2026-114`  \n**PostgreSQL error",
+        "raw_output": "<think>\nOkay, let's break this down. The user has a critical incident with the checkout-api service. The initial alert shows a 502 Bad Gateway spike, which probably means the service is failing to get responses from its dependencies. \n\nFirst, I checked the active alerts and found that checkout-api is the critical service. Then, looking at its dependencies, inventory-db is a PostgreSQL database that's critical. The next step was to check the metrics for inventory-db\n</think>\n\nThe root cause is a **lock contention** in the **inventory-db** PostgreSQL database caused by **release rel-2026-114**, which introduced an unindexed `FOR UPDATE` query on the `stock_reservations` table. This led to **PG_LOCK_TIMEOUT_55P03** and **PG_DEADLOCK_40P01** errors, degrading the database and causing the checkout-api service to fail with HTTP 502 errors. \n\n**Offending release:** `rel-2026-114`  \n**PostgreSQL error",
+        "think_tokens": 97,
+        "tool_call_tokens": 0,
+        "output_tokens": 220,
+        "has_tool_call": false,
+        "tool_name": null,
+        "final_answer": "The root cause is a **lock contention** in the **inventory-db** PostgreSQL database caused by **release rel-2026-114**, which introduced an unindexed `FOR UPDATE` query on the `stock_reservations` table. This led to **PG_LOCK_TIMEOUT_55P03** and **PG_DEADLOCK_40P01** errors, degrading the database and causing the checkout-api service to fail with HTTP 502 errors. \n\n**Offending release:** `rel-2026-114`  \n**PostgreSQL error"
+      }
+    ],
+    "history_and_kv_modes": {
+      "mode_a_keep_full_think_stateless": {
+        "cumulative_prompt_tokens_sent": 8794,
+        "cumulative_prefill_tokens_computed": 8794,
+        "final_step_prompt_tokens": 2143,
+        "final_step_kv_mib": 332.3,
+        "final_step_kv_mb_decimal": 348.44,
+        "cumulative_prefill_ms": 820.38,
+        "cumulative_decode_ms": 42001.96,
+        "total_gpu_ms": 42822.34,
+        "steps": [
+          {
+            "step": 1,
+            "tool_called": "query_active_alerts",
+            "prompt_tokens": 795,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 795,
+            "output_tokens": 116,
+            "think_tokens": 97,
+            "tool_call_tokens": 17,
+            "total_seq_tokens": 911,
+            "kv_cache_mib": 128.11,
+            "kv_cache_mb_decimal": 134.33,
+            "prefill_ms": 88.54,
+            "decode_ms": 5866.06,
+            "step_total_ms": 5954.6
+          },
+          {
+            "step": 2,
+            "tool_called": "query_service_dependencies",
+            "prompt_tokens": 1099,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1099,
+            "output_tokens": 120,
+            "think_tokens": 97,
+            "tool_call_tokens": 21,
+            "total_seq_tokens": 1218,
+            "kv_cache_mib": 171.28,
+            "kv_cache_mb_decimal": 179.6,
+            "prefill_ms": 102.16,
+            "decode_ms": 5991.3,
+            "step_total_ms": 6093.45
+          },
+          {
+            "step": 3,
+            "tool_called": "query_db_metrics",
+            "prompt_tokens": 1361,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1361,
+            "output_tokens": 121,
+            "think_tokens": 97,
+            "tool_call_tokens": 22,
+            "total_seq_tokens": 1481,
+            "kv_cache_mib": 208.27,
+            "kv_cache_mb_decimal": 218.38,
+            "prefill_ms": 123.31,
+            "decode_ms": 6095.05,
+            "step_total_ms": 6218.36
+          },
+          {
+            "step": 4,
+            "tool_called": "query_recent_deployments",
+            "prompt_tokens": 1573,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1573,
+            "output_tokens": 121,
+            "think_tokens": 97,
+            "tool_call_tokens": 22,
+            "total_seq_tokens": 1694,
+            "kv_cache_mib": 238.22,
+            "kv_cache_mb_decimal": 249.79,
+            "prefill_ms": 139.64,
+            "decode_ms": 6047.21,
+            "step_total_ms": 6186.86
+          },
+          {
+            "step": 5,
+            "tool_called": "query_error_logs",
+            "prompt_tokens": 1823,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1823,
+            "output_tokens": 136,
+            "think_tokens": 97,
+            "tool_call_tokens": 37,
+            "total_seq_tokens": 1959,
+            "kv_cache_mib": 275.48,
+            "kv_cache_mb_decimal": 288.87,
+            "prefill_ms": 171.18,
+            "decode_ms": 6888.95,
+            "step_total_ms": 7060.13
+          },
+          {
+            "step": 6,
+            "tool_called": "FINAL_SYNTHESIS",
+            "prompt_tokens": 2143,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 2143,
+            "output_tokens": 220,
+            "think_tokens": 97,
+            "tool_call_tokens": 0,
+            "total_seq_tokens": 2363,
+            "kv_cache_mib": 332.3,
+            "kv_cache_mb_decimal": 348.44,
+            "prefill_ms": 195.55,
+            "decode_ms": 11113.4,
+            "step_total_ms": 11308.95
+          }
+        ]
+      },
+      "mode_b_strip_prior_think_stateless": {
+        "cumulative_prompt_tokens_sent": 7331,
+        "cumulative_prefill_tokens_computed": 7331,
+        "final_step_prompt_tokens": 1655,
+        "final_step_kv_mib": 263.67,
+        "final_step_kv_mb_decimal": 276.48,
+        "cumulative_prefill_ms": 693.93,
+        "cumulative_decode_ms": 42054.65,
+        "total_gpu_ms": 42748.58,
+        "steps": [
+          {
+            "step": 1,
+            "tool_called": "query_active_alerts",
+            "prompt_tokens": 795,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 795,
+            "output_tokens": 116,
+            "think_tokens": 97,
+            "tool_call_tokens": 17,
+            "total_seq_tokens": 911,
+            "kv_cache_mib": 128.11,
+            "kv_cache_mb_decimal": 134.33,
+            "prefill_ms": 89.86,
+            "decode_ms": 5813.53,
+            "step_total_ms": 5903.4
+          },
+          {
+            "step": 2,
+            "tool_called": "query_service_dependencies",
+            "prompt_tokens": 1001,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1001,
+            "output_tokens": 120,
+            "think_tokens": 97,
+            "tool_call_tokens": 21,
+            "total_seq_tokens": 1120,
+            "kv_cache_mib": 157.5,
+            "kv_cache_mb_decimal": 165.15,
+            "prefill_ms": 96.17,
+            "decode_ms": 6003.17,
+            "step_total_ms": 6099.35
+          },
+          {
+            "step": 3,
+            "tool_called": "query_db_metrics",
+            "prompt_tokens": 1166,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1166,
+            "output_tokens": 121,
+            "think_tokens": 97,
+            "tool_call_tokens": 22,
+            "total_seq_tokens": 1286,
+            "kv_cache_mib": 180.84,
+            "kv_cache_mb_decimal": 189.63,
+            "prefill_ms": 111.74,
+            "decode_ms": 6054.82,
+            "step_total_ms": 6166.56
+          },
+          {
+            "step": 4,
+            "tool_called": "query_recent_deployments",
+            "prompt_tokens": 1281,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1281,
+            "output_tokens": 121,
+            "think_tokens": 97,
+            "tool_call_tokens": 22,
+            "total_seq_tokens": 1402,
+            "kv_cache_mib": 197.16,
+            "kv_cache_mb_decimal": 206.73,
+            "prefill_ms": 121.08,
+            "decode_ms": 6159.22,
+            "step_total_ms": 6280.3
+          },
+          {
+            "step": 5,
+            "tool_called": "query_error_logs",
+            "prompt_tokens": 1433,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1433,
+            "output_tokens": 136,
+            "think_tokens": 97,
+            "tool_call_tokens": 37,
+            "total_seq_tokens": 1569,
+            "kv_cache_mib": 220.64,
+            "kv_cache_mb_decimal": 231.36,
+            "prefill_ms": 133.02,
+            "decode_ms": 6865.87,
+            "step_total_ms": 6998.9
+          },
+          {
+            "step": 6,
+            "tool_called": "FINAL_SYNTHESIS",
+            "prompt_tokens": 1655,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 1655,
+            "output_tokens": 220,
+            "think_tokens": 97,
+            "tool_call_tokens": 0,
+            "total_seq_tokens": 1875,
+            "kv_cache_mib": 263.67,
+            "kv_cache_mb_decimal": 276.48,
+            "prefill_ms": 142.05,
+            "decode_ms": 11158.03,
+            "step_total_ms": 11300.09
+          }
+        ]
+      },
+      "mode_c_strip_prior_think_prefix_kv": {
+        "cumulative_prompt_tokens_sent": 7331,
+        "cumulative_prefill_tokens_computed": 1655,
+        "final_step_prompt_tokens": 1655,
+        "final_step_kv_mib": 263.67,
+        "final_step_kv_mb_decimal": 276.48,
+        "cumulative_prefill_ms": 521.55,
+        "cumulative_decode_ms": 42207.46,
+        "total_gpu_ms": 42729.01,
+        "steps": [
+          {
+            "step": 1,
+            "tool_called": "query_active_alerts",
+            "prompt_tokens": 795,
+            "cached_prefix_tokens": 0,
+            "prefill_computed_tokens": 795,
+            "output_tokens": 116,
+            "think_tokens": 97,
+            "tool_call_tokens": 17,
+            "total_seq_tokens": 911,
+            "kv_cache_mib": 128.11,
+            "kv_cache_mb_decimal": 134.33,
+            "prefill_ms": 90.56,
+            "decode_ms": 5883.28,
+            "step_total_ms": 5973.83
+          },
+          {
+            "step": 2,
+            "tool_called": "query_service_dependencies",
+            "prompt_tokens": 1001,
+            "cached_prefix_tokens": 795,
+            "prefill_computed_tokens": 206,
+            "output_tokens": 120,
+            "think_tokens": 97,
+            "tool_call_tokens": 21,
+            "total_seq_tokens": 1120,
+            "kv_cache_mib": 157.5,
+            "kv_cache_mb_decimal": 165.15,
+            "prefill_ms": 187.61,
+            "decode_ms": 5954.18,
+            "step_total_ms": 6141.79
+          },
+          {
+            "step": 3,
+            "tool_called": "query_db_metrics",
+            "prompt_tokens": 1166,
+            "cached_prefix_tokens": 1001,
+            "prefill_computed_tokens": 165,
+            "output_tokens": 121,
+            "think_tokens": 97,
+            "tool_call_tokens": 22,
+            "total_seq_tokens": 1286,
+            "kv_cache_mib": 180.84,
+            "kv_cache_mb_decimal": 189.63,
+            "prefill_ms": 58.96,
+            "decode_ms": 6135.45,
+            "step_total_ms": 6194.42
+          },
+          {
+            "step": 4,
+            "tool_called": "query_recent_deployments",
+            "prompt_tokens": 1281,
+            "cached_prefix_tokens": 1166,
+            "prefill_computed_tokens": 115,
+            "output_tokens": 121,
+            "think_tokens": 97,
+            "tool_call_tokens": 22,
+            "total_seq_tokens": 1402,
+            "kv_cache_mib": 197.16,
+            "kv_cache_mb_decimal": 206.73,
+            "prefill_ms": 62.49,
+            "decode_ms": 6135.78,
+            "step_total_ms": 6198.27
+          },
+          {
+            "step": 5,
+            "tool_called": "query_error_logs",
+            "prompt_tokens": 1433,
+            "cached_prefix_tokens": 1281,
+            "prefill_computed_tokens": 152,
+            "output_tokens": 136,
+            "think_tokens": 97,
+            "tool_call_tokens": 37,
+            "total_seq_tokens": 1569,
+            "kv_cache_mib": 220.64,
+            "kv_cache_mb_decimal": 231.36,
+            "prefill_ms": 61.94,
+            "decode_ms": 6901.6,
+            "step_total_ms": 6963.55
+          },
+          {
+            "step": 6,
+            "tool_called": "FINAL_SYNTHESIS",
+            "prompt_tokens": 1655,
+            "cached_prefix_tokens": 1433,
+            "prefill_computed_tokens": 222,
+            "output_tokens": 220,
+            "think_tokens": 97,
+            "tool_call_tokens": 0,
+            "total_seq_tokens": 1875,
+            "kv_cache_mib": 263.67,
+            "kv_cache_mb_decimal": 276.48,
+            "prefill_ms": 59.99,
+            "decode_ms": 11197.17,
+            "step_total_ms": 11257.16
+          }
+        ]
+      }
+    },
+    "comparisons": {
+      "prefill_tokens_full_think_vs_prefix_kv_ratio": 5.31,
+      "prefill_tokens_stateless_stripped_vs_prefix_kv_ratio": 4.43,
+      "final_step_kv_saved_mib_by_stripping_prior_think": 68.63,
+      "prefill_ms_speedup_full_think_vs_prefix_kv": 1.57
+    }
+  },
+  "m2_react_vs_act_only_and_logit_lens": {
+    "red_herring_benchmark": {
+      "act_only_no_think": {
+        "num_tasks": 8,
+        "correct_count": 3,
+        "accuracy_pct": 37.5,
+        "truncated_in_think_count": 0,
+        "mean_output_tokens": 33.6,
+        "mean_think_tokens": 3.0,
+        "mean_latency_ms": 1751.78,
+        "tasks": [
+          {
+            "id": "T1",
+            "expected": "query_recent_deployments(target=inventory-db)",
+            "got_tool": "query_recent_deployments",
+            "got_arg": "checkout-api",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 26,
+            "total_ms": 1363.16
+          },
+          {
+            "id": "T2",
+            "expected": "query_db_metrics(db_name=inventory-db)",
+            "got_tool": "query_db_metrics",
+            "got_arg": "promo-cache",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 26,
+            "total_ms": 1348.58
+          },
+          {
+            "id": "T3",
+            "expected": "query_error_logs(service=inventory-db)",
+            "got_tool": "query_error_logs",
+            "got_arg": "inventory-db",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 41,
+            "total_ms": 2152.98
+          },
+          {
+            "id": "T4",
+            "expected": "query_service_dependencies(service=checkout-api)",
+            "got_tool": "query_service_dependencies",
+            "got_arg": "search-api",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 25,
+            "total_ms": 1338.15
+          },
+          {
+            "id": "T5",
+            "expected": "query_db_metrics(db_name=catalog-index)",
+            "got_tool": "query_db_metrics",
+            "got_arg": "catalog-index",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 26,
+            "total_ms": 1348.7
+          },
+          {
+            "id": "T6",
+            "expected": "query_recent_deployments(target=inventory-db)",
+            "got_tool": "query_recent_deployments",
+            "got_arg": "checkout-api",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 73,
+            "total_ms": 3749.68
+          },
+          {
+            "id": "T7",
+            "expected": "query_recent_deployments(target=payment-gateway)",
+            "got_tool": "query_recent_deployments",
+            "got_arg": "payment-gateway",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 27,
+            "total_ms": 1416.15
+          },
+          {
+            "id": "T8",
+            "expected": "query_error_logs(service=inventory-db)",
+            "got_tool": "query_error_logs",
+            "got_arg": "search-api",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 3,
+            "output_tokens": 25,
+            "total_ms": 1296.82
+          }
+        ]
+      },
+      "react_unbounded_200_tok_cap": {
+        "num_tasks": 8,
+        "correct_count": 0,
+        "accuracy_pct": 0.0,
+        "truncated_in_think_count": 8,
+        "mean_output_tokens": 200.0,
+        "mean_think_tokens": 0.0,
+        "mean_latency_ms": 10356.71,
+        "tasks": [
+          {
+            "id": "T1",
+            "expected": "query_recent_deployments(target=inventory-db)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10360.65
+          },
+          {
+            "id": "T2",
+            "expected": "query_db_metrics(db_name=inventory-db)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10352.38
+          },
+          {
+            "id": "T3",
+            "expected": "query_error_logs(service=inventory-db)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10345.07
+          },
+          {
+            "id": "T4",
+            "expected": "query_service_dependencies(service=checkout-api)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10402.15
+          },
+          {
+            "id": "T5",
+            "expected": "query_db_metrics(db_name=catalog-index)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10369.66
+          },
+          {
+            "id": "T6",
+            "expected": "query_recent_deployments(target=inventory-db)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10351.04
+          },
+          {
+            "id": "T7",
+            "expected": "query_recent_deployments(target=payment-gateway)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10370.15
+          },
+          {
+            "id": "T8",
+            "expected": "query_error_logs(service=inventory-db)",
+            "got_tool": null,
+            "got_arg": null,
+            "correct": false,
+            "truncated_in_think": true,
+            "think_tokens": 0,
+            "output_tokens": 200,
+            "total_ms": 10302.61
+          }
+        ]
+      },
+      "react_bounded_think": {
+        "num_tasks": 8,
+        "correct_count": 5,
+        "accuracy_pct": 62.5,
+        "truncated_in_think_count": 0,
+        "mean_output_tokens": 164.8,
+        "mean_think_tokens": 137.0,
+        "mean_latency_ms": 8511.21,
+        "tasks": [
+          {
+            "id": "T1",
+            "expected": "query_recent_deployments(target=inventory-db)",
+            "got_tool": "query_recent_deployments",
+            "got_arg": "checkout-api",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 161,
+            "total_ms": 8327.22
+          },
+          {
+            "id": "T2",
+            "expected": "query_db_metrics(db_name=inventory-db)",
+            "got_tool": "query_db_metrics",
+            "got_arg": "inventory-db",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 161,
+            "total_ms": 8345.47
+          },
+          {
+            "id": "T3",
+            "expected": "query_error_logs(service=inventory-db)",
+            "got_tool": "query_error_logs",
+            "got_arg": "inventory-db",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 176,
+            "total_ms": 9094.08
+          },
+          {
+            "id": "T4",
+            "expected": "query_service_dependencies(service=checkout-api)",
+            "got_tool": "query_service_dependencies",
+            "got_arg": "checkout-api",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 160,
+            "total_ms": 8212.69
+          },
+          {
+            "id": "T5",
+            "expected": "query_db_metrics(db_name=catalog-index)",
+            "got_tool": "query_db_metrics",
+            "got_arg": "inventory-db",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 161,
+            "total_ms": 8320.09
+          },
+          {
+            "id": "T6",
+            "expected": "query_recent_deployments(target=inventory-db)",
+            "got_tool": "query_recent_deployments",
+            "got_arg": "inventory-db",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 161,
+            "total_ms": 8335.14
+          },
+          {
+            "id": "T7",
+            "expected": "query_recent_deployments(target=payment-gateway)",
+            "got_tool": "query_recent_deployments",
+            "got_arg": "payment-gateway",
+            "correct": true,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 162,
+            "total_ms": 8379.83
+          },
+          {
+            "id": "T8",
+            "expected": "query_error_logs(service=inventory-db)",
+            "got_tool": "query_error_logs",
+            "got_arg": "search-api",
+            "correct": false,
+            "truncated_in_think": false,
+            "think_tokens": 137,
+            "output_tokens": 176,
+            "total_ms": 9075.15
+          }
+        ]
+      }
+    },
+    "logit_lens_after_think_close": {
+      "mid_loop_continue_tool_call": [
+        {
+          "layer": 0,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 5.75,
+          "rank_151657": 13100,
+          "top1_token_id": 105130,
+          "top1_token_str": "\u90e8\u4f4d",
+          "top1_prob_pct": 5.28
+        },
+        {
+          "layer": 1,
+          "p_tool_call_151657_pct": 0.0001,
+          "logit_151657": 5.91,
+          "rank_151657": 20409,
+          "top1_token_id": 53547,
+          "top1_token_str": " Sesso",
+          "top1_prob_pct": 16.48
+        },
+        {
+          "layer": 2,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 6.28,
+          "rank_151657": 18883,
+          "top1_token_id": 118570,
+          "top1_token_str": "\u8c03\u67e5\u663e\u793a",
+          "top1_prob_pct": 5.4
+        },
+        {
+          "layer": 3,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 6.34,
+          "rank_151657": 20053,
+          "top1_token_id": 88487,
+          "top1_token_str": "nehmer",
+          "top1_prob_pct": 6.98
+        },
+        {
+          "layer": 4,
+          "p_tool_call_151657_pct": 0.0006,
+          "logit_151657": 5.16,
+          "rank_151657": 17146,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 1.96
+        },
+        {
+          "layer": 5,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 3.52,
+          "rank_151657": 24806,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 1.62
+        },
+        {
+          "layer": 6,
+          "p_tool_call_151657_pct": 0.0007,
+          "logit_151657": 3.27,
+          "rank_151657": 21059,
+          "top1_token_id": 110967,
+          "top1_token_str": "\u5f88\u6e05\u695a",
+          "top1_prob_pct": 1.21
+        },
+        {
+          "layer": 7,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 2.91,
+          "rank_151657": 24261,
+          "top1_token_id": 113964,
+          "top1_token_str": "\u8fd9\u90e8\u5206",
+          "top1_prob_pct": 1.28
+        },
+        {
+          "layer": 8,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 2.92,
+          "rank_151657": 20821,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 8.12
+        },
+        {
+          "layer": 9,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 2.62,
+          "rank_151657": 20947,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 3.68
+        },
+        {
+          "layer": 10,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 2.86,
+          "rank_151657": 21398,
+          "top1_token_id": 114815,
+          "top1_token_str": "\u6ca1\u95ee\u9898",
+          "top1_prob_pct": 4.53
+        },
+        {
+          "layer": 11,
+          "p_tool_call_151657_pct": 0.0004,
+          "logit_151657": 2.69,
+          "rank_151657": 21694,
+          "top1_token_id": 104520,
+          "top1_token_str": "\u89e3\u51b3\u65b9\u6848",
+          "top1_prob_pct": 2.93
+        },
+        {
+          "layer": 12,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 1.42,
+          "rank_151657": 27037,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 2.0
+        },
+        {
+          "layer": 13,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 1.95,
+          "rank_151657": 27417,
+          "top1_token_id": 44834,
+          "top1_token_str": "\ufffd\u8ff0",
+          "top1_prob_pct": 8.59
+        },
+        {
+          "layer": 14,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 2.3,
+          "rank_151657": 25688,
+          "top1_token_id": 117612,
+          "top1_token_str": "\u7559\u8a00\u677f",
+          "top1_prob_pct": 1.93
+        },
+        {
+          "layer": 15,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 2.7,
+          "rank_151657": 22998,
+          "top1_token_id": 91438,
+          "top1_token_str": "ecast",
+          "top1_prob_pct": 2.05
+        },
+        {
+          "layer": 16,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 3.06,
+          "rank_151657": 19365,
+          "top1_token_id": 72174,
+          "top1_token_str": "apikey",
+          "top1_prob_pct": 4.56
+        },
+        {
+          "layer": 17,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 2.88,
+          "rank_151657": 22173,
+          "top1_token_id": 121753,
+          "top1_token_str": "\u5686",
+          "top1_prob_pct": 8.31
+        },
+        {
+          "layer": 18,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 3.0,
+          "rank_151657": 18070,
+          "top1_token_id": 72032,
+          "top1_token_str": " GENERATED",
+          "top1_prob_pct": 4.47
+        },
+        {
+          "layer": 19,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 3.7,
+          "rank_151657": 14391,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 11.27
+        },
+        {
+          "layer": 20,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 3.41,
+          "rank_151657": 12860,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 6.04
+        },
+        {
+          "layer": 21,
+          "p_tool_call_151657_pct": 0.0006,
+          "logit_151657": 3.61,
+          "rank_151657": 11096,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 4.08
+        },
+        {
+          "layer": 22,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 3.0,
+          "rank_151657": 14349,
+          "top1_token_id": 61519,
+          "top1_token_str": "\ufeff\n",
+          "top1_prob_pct": 13.03
+        },
+        {
+          "layer": 23,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 3.17,
+          "rank_151657": 13843,
+          "top1_token_id": 115988,
+          "top1_token_str": "\u5168\u9762\u843d\u5b9e",
+          "top1_prob_pct": 9.52
+        },
+        {
+          "layer": 24,
+          "p_tool_call_151657_pct": 0.0004,
+          "logit_151657": 3.23,
+          "rank_151657": 9890,
+          "top1_token_id": 115988,
+          "top1_token_str": "\u5168\u9762\u843d\u5b9e",
+          "top1_prob_pct": 13.3
+        },
+        {
+          "layer": 25,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 2.58,
+          "rank_151657": 10130,
+          "top1_token_id": 9641,
+          "top1_token_str": "fetch",
+          "top1_prob_pct": 14.32
+        },
+        {
+          "layer": 26,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 3.08,
+          "rank_151657": 12258,
+          "top1_token_id": 9641,
+          "top1_token_str": "fetch",
+          "top1_prob_pct": 10.28
+        },
+        {
+          "layer": 27,
+          "p_tool_call_151657_pct": 0.0004,
+          "logit_151657": 4.62,
+          "rank_151657": 7472,
+          "top1_token_id": 38265,
+          "top1_token_str": "\u8be2",
+          "top1_prob_pct": 18.01
+        },
+        {
+          "layer": 28,
+          "p_tool_call_151657_pct": 0.0007,
+          "logit_151657": 5.53,
+          "rank_151657": 4062,
+          "top1_token_id": 9641,
+          "top1_token_str": "fetch",
+          "top1_prob_pct": 9.27
+        },
+        {
+          "layer": 29,
+          "p_tool_call_151657_pct": 0.0328,
+          "logit_151657": 12.25,
+          "rank_151657": 294,
+          "top1_token_id": 145072,
+          "top1_token_str": "\u26a0",
+          "top1_prob_pct": 6.25
+        },
+        {
+          "layer": 30,
+          "p_tool_call_151657_pct": 0.0405,
+          "logit_151657": 11.81,
+          "rank_151657": 246,
+          "top1_token_id": 145072,
+          "top1_token_str": "\u26a0",
+          "top1_prob_pct": 17.39
+        },
+        {
+          "layer": 31,
+          "p_tool_call_151657_pct": 0.1406,
+          "logit_151657": 11.94,
+          "rank_151657": 88,
+          "top1_token_id": 51154,
+          "top1_token_str": "\u67e5\u8be2",
+          "top1_prob_pct": 6.36
+        },
+        {
+          "layer": 32,
+          "p_tool_call_151657_pct": 0.6487,
+          "logit_151657": 13.44,
+          "rank_151657": 21,
+          "top1_token_id": 74988,
+          "top1_token_str": " QSql",
+          "top1_prob_pct": 7.9
+        },
+        {
+          "layer": 33,
+          "p_tool_call_151657_pct": 25.6306,
+          "logit_151657": 17.88,
+          "rank_151657": 1,
+          "top1_token_id": 151657,
+          "top1_token_str": "<tool_call>",
+          "top1_prob_pct": 25.63
+        },
+        {
+          "layer": 34,
+          "p_tool_call_151657_pct": 97.5997,
+          "logit_151657": 19.12,
+          "rank_151657": 1,
+          "top1_token_id": 151657,
+          "top1_token_str": "<tool_call>",
+          "top1_prob_pct": 97.6
+        },
+        {
+          "layer": 35,
+          "p_tool_call_151657_pct": 100.0,
+          "logit_151657": 37.25,
+          "rank_151657": 1,
+          "top1_token_id": 151657,
+          "top1_token_str": "<tool_call>",
+          "top1_prob_pct": 100.0
+        }
+      ],
+      "loop_exit_final_answer": [
+        {
+          "layer": 0,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 5.81,
+          "rank_151657": 12764,
+          "top1_token_id": 113964,
+          "top1_token_str": "\u8fd9\u90e8\u5206",
+          "top1_prob_pct": 3.79
+        },
+        {
+          "layer": 1,
+          "p_tool_call_151657_pct": 0.0001,
+          "logit_151657": 6.09,
+          "rank_151657": 20169,
+          "top1_token_id": 53547,
+          "top1_token_str": " Sesso",
+          "top1_prob_pct": 19.02
+        },
+        {
+          "layer": 2,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 6.66,
+          "rank_151657": 16227,
+          "top1_token_id": 118570,
+          "top1_token_str": "\u8c03\u67e5\u663e\u793a",
+          "top1_prob_pct": 5.78
+        },
+        {
+          "layer": 3,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 6.81,
+          "rank_151657": 17009,
+          "top1_token_id": 88487,
+          "top1_token_str": "nehmer",
+          "top1_prob_pct": 8.21
+        },
+        {
+          "layer": 4,
+          "p_tool_call_151657_pct": 0.0008,
+          "logit_151657": 5.53,
+          "rank_151657": 14303,
+          "top1_token_id": 118965,
+          "top1_token_str": "\u8ddf\u4e0d\u4e0a",
+          "top1_prob_pct": 2.41
+        },
+        {
+          "layer": 5,
+          "p_tool_call_151657_pct": 0.0007,
+          "logit_151657": 4.03,
+          "rank_151657": 18708,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 1.97
+        },
+        {
+          "layer": 6,
+          "p_tool_call_151657_pct": 0.001,
+          "logit_151657": 3.75,
+          "rank_151657": 15258,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 1.09
+        },
+        {
+          "layer": 7,
+          "p_tool_call_151657_pct": 0.0008,
+          "logit_151657": 3.38,
+          "rank_151657": 16513,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 1.8
+        },
+        {
+          "layer": 8,
+          "p_tool_call_151657_pct": 0.0008,
+          "logit_151657": 3.3,
+          "rank_151657": 14139,
+          "top1_token_id": 14374,
+          "top1_token_str": "###",
+          "top1_prob_pct": 7.83
+        },
+        {
+          "layer": 9,
+          "p_tool_call_151657_pct": 0.0009,
+          "logit_151657": 3.16,
+          "rank_151657": 13536,
+          "top1_token_id": 27986,
+          "top1_token_str": " NONINFRINGEMENT",
+          "top1_prob_pct": 2.71
+        },
+        {
+          "layer": 10,
+          "p_tool_call_151657_pct": 0.0006,
+          "logit_151657": 2.86,
+          "rank_151657": 16912,
+          "top1_token_id": 114815,
+          "top1_token_str": "\u6ca1\u95ee\u9898",
+          "top1_prob_pct": 3.61
+        },
+        {
+          "layer": 11,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 2.92,
+          "rank_151657": 17554,
+          "top1_token_id": 117239,
+          "top1_token_str": "\u79d1\u6280\u56ed",
+          "top1_prob_pct": 10.17
+        },
+        {
+          "layer": 12,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 1.33,
+          "rank_151657": 26954,
+          "top1_token_id": 59030,
+          "top1_token_str": " workaround",
+          "top1_prob_pct": 2.01
+        },
+        {
+          "layer": 13,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 1.81,
+          "rank_151657": 22805,
+          "top1_token_id": 44834,
+          "top1_token_str": "\ufffd\u8ff0",
+          "top1_prob_pct": 3.12
+        },
+        {
+          "layer": 14,
+          "p_tool_call_151657_pct": 0.0004,
+          "logit_151657": 2.2,
+          "rank_151657": 19818,
+          "top1_token_id": 115546,
+          "top1_token_str": "\u62b1\u6b49",
+          "top1_prob_pct": 2.59
+        },
+        {
+          "layer": 15,
+          "p_tool_call_151657_pct": 0.0004,
+          "logit_151657": 2.61,
+          "rank_151657": 16745,
+          "top1_token_id": 81833,
+          "top1_token_str": " autogenerated",
+          "top1_prob_pct": 2.47
+        },
+        {
+          "layer": 16,
+          "p_tool_call_151657_pct": 0.0003,
+          "logit_151657": 2.81,
+          "rank_151657": 18495,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 8.67
+        },
+        {
+          "layer": 17,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 2.22,
+          "rank_151657": 23797,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 6.85
+        },
+        {
+          "layer": 18,
+          "p_tool_call_151657_pct": 0.0001,
+          "logit_151657": 1.69,
+          "rank_151657": 29077,
+          "top1_token_id": 111230,
+          "top1_token_str": "\u7684\u7b54\u6848",
+          "top1_prob_pct": 4.44
+        },
+        {
+          "layer": 19,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 2.7,
+          "rank_151657": 20299,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 7.41
+        },
+        {
+          "layer": 20,
+          "p_tool_call_151657_pct": 0.0004,
+          "logit_151657": 2.95,
+          "rank_151657": 14740,
+          "top1_token_id": 111308,
+          "top1_token_str": "\u60a8\u597d",
+          "top1_prob_pct": 5.66
+        },
+        {
+          "layer": 21,
+          "p_tool_call_151657_pct": 0.0005,
+          "logit_151657": 3.39,
+          "rank_151657": 10954,
+          "top1_token_id": 102804,
+          "top1_token_str": "\u4e3a\u60a8",
+          "top1_prob_pct": 15.28
+        },
+        {
+          "layer": 22,
+          "p_tool_call_151657_pct": 0.0002,
+          "logit_151657": 2.41,
+          "rank_151657": 14295,
+          "top1_token_id": 107952,
+          "top1_token_str": "\u60a8\u53ef\u4ee5",
+          "top1_prob_pct": 22.8
+        },
+        {
+          "layer": 23,
+          "p_tool_call_151657_pct": 0.0001,
+          "logit_151657": 2.58,
+          "rank_151657": 14182,
+          "top1_token_id": 116077,
+          "top1_token_str": "\u62a5\u544a\u663e\u793a",
+          "top1_prob_pct": 54.93
+        },
+        {
+          "layer": 24,
+          "p_tool_call_151657_pct": 0.0001,
+          "logit_151657": 2.19,
+          "rank_151657": 12685,
+          "top1_token_id": 116077,
+          "top1_token_str": "\u62a5\u544a\u663e\u793a",
+          "top1_prob_pct": 69.99
+        },
+        {
+          "layer": 25,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": 1.29,
+          "rank_151657": 13655,
+          "top1_token_id": 116077,
+          "top1_token_str": "\u62a5\u544a\u663e\u793a",
+          "top1_prob_pct": 53.94
+        },
+        {
+          "layer": 26,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": 0.43,
+          "rank_151657": 17120,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 79.83
+        },
+        {
+          "layer": 27,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -0.07,
+          "rank_151657": 17570,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 85.16
+        },
+        {
+          "layer": 28,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -1.01,
+          "rank_151657": 23327,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 97.28
+        },
+        {
+          "layer": 29,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -0.56,
+          "rank_151657": 17910,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 96.14
+        },
+        {
+          "layer": 30,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -0.84,
+          "rank_151657": 23762,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 98.7
+        },
+        {
+          "layer": 31,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -1.02,
+          "rank_151657": 24546,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 98.57
+        },
+        {
+          "layer": 32,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -1.21,
+          "rank_151657": 33151,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 99.03
+        },
+        {
+          "layer": 33,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -1.09,
+          "rank_151657": 32146,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 98.93
+        },
+        {
+          "layer": 34,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": -0.23,
+          "rank_151657": 13465,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 97.51
+        },
+        {
+          "layer": 35,
+          "p_tool_call_151657_pct": 0.0,
+          "logit_151657": 3.36,
+          "rank_151657": 7777,
+          "top1_token_id": 785,
+          "top1_token_str": "The",
+          "top1_prob_pct": 100.0
+        }
+      ]
+    }
+  },
+  "m3_react_vs_plan_and_execute": {
+    "sequential_react": {
+      "llm_calls": 5,
+      "cumulative_prefill_tokens": 5379,
+      "cumulative_output_tokens": 598,
+      "cumulative_think_tokens": 385,
+      "prefill_ms": 524.0,
+      "decode_ms": 31094.52,
+      "total_gpu_ms": 31618.51,
+      "calls": [
+        {
+          "call_index": 1,
+          "role": "react_step_1_query_active_alerts",
+          "prompt_tokens": 740,
+          "output_tokens": 96,
+          "think_tokens": 77,
+          "prefill_ms": 70.69,
+          "decode_ms": 5052.46,
+          "total_ms": 5123.14,
+          "sqlite_ms": 0.3583
+        },
+        {
+          "call_index": 2,
+          "role": "react_step_2_query_db_metrics",
+          "prompt_tokens": 946,
+          "output_tokens": 101,
+          "think_tokens": 77,
+          "prefill_ms": 99.68,
+          "decode_ms": 5220.95,
+          "total_ms": 5320.63,
+          "sqlite_ms": 0.3161
+        },
+        {
+          "call_index": 3,
+          "role": "react_step_3_query_recent_deployments",
+          "prompt_tokens": 1061,
+          "output_tokens": 101,
+          "think_tokens": 77,
+          "prefill_ms": 103.49,
+          "decode_ms": 5222.8,
+          "total_ms": 5326.29,
+          "sqlite_ms": 0.3677
+        },
+        {
+          "call_index": 4,
+          "role": "react_step_4_query_error_logs",
+          "prompt_tokens": 1213,
+          "output_tokens": 100,
+          "think_tokens": 77,
+          "prefill_ms": 116.08,
+          "decode_ms": 5144.02,
+          "total_ms": 5260.1,
+          "sqlite_ms": 0.3589
+        },
+        {
+          "call_index": 5,
+          "role": "react_final_synthesis",
+          "prompt_tokens": 1419,
+          "output_tokens": 200,
+          "think_tokens": 77,
+          "prefill_ms": 134.06,
+          "decode_ms": 10454.29,
+          "total_ms": 10588.35,
+          "final_answer": "The incident audit for checkout-api reveals a critical 502 Bad Gateway error caused by **inventory-db degradation** due to:  \n1. **Lock contention** (142 active row locks, 4820ms lock wait time)  \n2. **Deadlock errors** (PG_DEADLOCK_40P01) and **lock timeouts** (PG_LOCK_TIMEOUT_55P03) on `stock_reservations` table  \n3. **Recent deployment** (rel-2026-114) added an unindexed `FOR UPDATE` query causing"
+        }
+      ]
+    },
+    "plan_and_execute_dag": {
+      "llm_calls": 2,
+      "cumulative_prefill_tokens": 892,
+      "cumulative_output_tokens": 290,
+      "planner_call": {
+        "prompt_tokens": 133,
+        "output_tokens": 160,
+        "prefill_ms": 78.55,
+        "decode_ms": 8409.21,
+        "total_ms": 8487.76
+      },
+      "dag_sqlite_exec_ms": 0.9937,
+      "solver_call": {
+        "prompt_tokens": 759,
+        "output_tokens": 130,
+        "prefill_ms": 74.1,
+        "decode_ms": 6824.23,
+        "total_ms": 6898.33,
+        "final_answer": "**Root Cause Diagnosis:** The checkout-api is experiencing a 502 Bad Gateway spike due to lock contention"
+      },
+      "total_gpu_ms": 15386.09
+    },
+    "ratios": {
+      "prefill_token_reduction_x": 6.03,
+      "output_token_reduction_x": 2.06,
+      "gpu_latency_speedup_x": 2.06
+    }
+  },
+  "m4_infinite_loop_traps_and_repetition_penalty": {
+    "max_loop_steps": 6,
+    "repetition_penalty_sweep": [
+      {
+        "repetition_penalty": 1.0,
+        "steps_taken": 4,
+        "duplicate_tool_calls": 2,
+        "json_syntax_errors": 0,
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 3,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 4,
+            "status": "STOPPED_WITHOUT_TOOL",
+            "raw": "The error logs for inventory-db on date_prefix '2026-11-09' are still not returning any results. It seems there might be"
+          }
+        ]
+      },
+      {
+        "repetition_penalty": 1.05,
+        "steps_taken": 4,
+        "duplicate_tool_calls": 2,
+        "json_syntax_errors": 0,
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 3,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 4,
+            "status": "STOPPED_WITHOUT_TOOL",
+            "raw": "The error logs for inventory-db on date_prefix '2026-11-09' are still not returning any results. It seems there might be"
+          }
+        ]
+      },
+      {
+        "repetition_penalty": 1.1,
+        "steps_taken": 4,
+        "duplicate_tool_calls": 2,
+        "json_syntax_errors": 0,
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 3,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 4,
+            "status": "STOPPED_WITHOUT_TOOL",
+            "raw": "The error logs for inventory-db on date_prefix '2026-11-09' are still not returning any results. It seems there might be"
+          }
+        ]
+      },
+      {
+        "repetition_penalty": 1.15,
+        "steps_taken": 4,
+        "duplicate_tool_calls": 2,
+        "json_syntax_errors": 0,
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 3,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 4,
+            "status": "STOPPED_WITHOUT_TOOL",
+            "raw": "The system has repeatedly failed to fetch error logs for `inventory-db` on the specified date prefix (`2026-11-09`). Thi"
+          }
+        ]
+      },
+      {
+        "repetition_penalty": 1.25,
+        "steps_taken": 4,
+        "duplicate_tool_calls": 2,
+        "json_syntax_errors": 0,
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 3,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 4,
+            "status": "STOPPED_WITHOUT_TOOL",
+            "raw": "The system has repeatedly failed to fetch any error logs for `inventory-db` on the specified date (`'2026-11-09'`). This"
+          }
+        ]
+      },
+      {
+        "repetition_penalty": 1.35,
+        "steps_taken": 4,
+        "duplicate_tool_calls": 2,
+        "json_syntax_errors": 0,
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 3,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "is_duplicate": true,
+            "row_count": 0
+          },
+          {
+            "step": 4,
+            "status": "STOPPED_WITHOUT_TOOL",
+            "raw": "The system has repeatedly failed to fetch any error logs for `inventory-db` on the specified date (`'2026-11-09'`). This"
+          }
+        ]
+      }
+    ]
+  },
+  "m5_loop_guardrails_and_reflexion": {
+    "mode_0_unprotected_loop": {
+      "scenarios": 8,
+      "solved_count": 5,
+      "recovery_rate_pct": 62.5,
+      "mean_steps": 3.0,
+      "total_tokens": 20944,
+      "total_gpu_ms": 44327.71,
+      "cases": [
+        {
+          "id": "L1",
+          "trap": "empty_date_filter",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1511,
+          "gpu_ms": 4074.75
+        },
+        {
+          "id": "L2",
+          "trap": "empty_date_filter",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1513,
+          "gpu_ms": 4026.68
+        },
+        {
+          "id": "L3",
+          "trap": "empty_date_filter",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1517,
+          "gpu_ms": 4024.81
+        },
+        {
+          "id": "L4",
+          "trap": "wrong_table_or_target",
+          "solved": false,
+          "steps_used": 4,
+          "total_tokens": 3723,
+          "gpu_ms": 6896.1
+        },
+        {
+          "id": "L5",
+          "trap": "wrong_table_or_target",
+          "solved": true,
+          "steps_used": 3,
+          "total_tokens": 2451,
+          "gpu_ms": 3752.9
+        },
+        {
+          "id": "L6",
+          "trap": "wrong_table_or_target",
+          "solved": false,
+          "steps_used": 4,
+          "total_tokens": 3613,
+          "gpu_ms": 8150.62
+        },
+        {
+          "id": "L7",
+          "trap": "empty_service_logs",
+          "solved": false,
+          "steps_used": 6,
+          "total_tokens": 5937,
+          "gpu_ms": 12183.78
+        },
+        {
+          "id": "L8",
+          "trap": "wrong_table_or_target",
+          "solved": true,
+          "steps_used": 1,
+          "total_tokens": 679,
+          "gpu_ms": 1218.07
+        }
+      ]
+    },
+    "mode_1_hash_guardrail_plus_reflexion": {
+      "scenarios": 8,
+      "solved_count": 8,
+      "recovery_rate_pct": 100.0,
+      "mean_steps": 1.88,
+      "total_tokens": 11568,
+      "total_gpu_ms": 24755.71,
+      "cases": [
+        {
+          "id": "L1",
+          "trap": "empty_date_filter",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1579,
+          "gpu_ms": 4004.23
+        },
+        {
+          "id": "L2",
+          "trap": "empty_date_filter",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1579,
+          "gpu_ms": 4029.23
+        },
+        {
+          "id": "L3",
+          "trap": "empty_date_filter",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1582,
+          "gpu_ms": 4011.53
+        },
+        {
+          "id": "L4",
+          "trap": "wrong_table_or_target",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1513,
+          "gpu_ms": 2502.43
+        },
+        {
+          "id": "L5",
+          "trap": "wrong_table_or_target",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1505,
+          "gpu_ms": 2469.89
+        },
+        {
+          "id": "L6",
+          "trap": "wrong_table_or_target",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1510,
+          "gpu_ms": 2503.63
+        },
+        {
+          "id": "L7",
+          "trap": "empty_service_logs",
+          "solved": true,
+          "steps_used": 2,
+          "total_tokens": 1601,
+          "gpu_ms": 4023.27
+        },
+        {
+          "id": "L8",
+          "trap": "wrong_table_or_target",
+          "solved": true,
+          "steps_used": 1,
+          "total_tokens": 699,
+          "gpu_ms": 1211.5
+        }
+      ]
+    }
+  }
+}

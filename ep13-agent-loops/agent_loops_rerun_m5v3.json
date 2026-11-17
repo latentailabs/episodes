@@ -1,0 +1,521 @@
+{
+  "rerun_date": "2026-11-12",
+  "gpu_environment": {
+    "model_id": "Qwen/Qwen3-8B",
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.14.1+cu130",
+    "transformers": "5.22.1",
+    "dtype": "bfloat16",
+    "attn": "sdpa",
+    "decoding": "greedy"
+  },
+  "m5v3_persistence_prompt_guardrail": {
+    "mode_0_no_guardrail": {
+      "scenarios": 8,
+      "solved_count": 0,
+      "recovery_rate_pct": 0.0,
+      "mean_llm_calls": 2.0,
+      "total_duplicate_calls": 0,
+      "total_blocked_calls": 0,
+      "total_tokens": 12126,
+      "total_gpu_ms": 31435.46,
+      "cases": [
+        {
+          "id": "L1",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1494,
+          "gpu_ms": 4658.87,
+          "final_answer": "No PostgreSQL error logs were found for the inventory-db service on the date_prefix '2026-11-09'.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "inventory-db",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "f17850bac83e",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L2",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1495,
+          "gpu_ms": 3598.42,
+          "final_answer": "No error logs were found for the checkout-api service on the date_prefix '2026-11-09'.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "checkout-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "c58c894c6931",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L3",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1506,
+          "gpu_ms": 4009.16,
+          "final_answer": "The OpenSearch slow shard error code for search-api was not found in the error logs for the date prefix '2026-11-09'.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "6ae34ddb3f57",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L4",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1520,
+          "gpu_ms": 2893.92,
+          "final_answer": "The exact rollback command for the migration causing lock contention on 'payment-gateway' is: `kubectl rollout undo deployment/payment-gateway`.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "payment-gateway"
+              },
+              "action_hash": "4d7f406c952a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L5",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1502,
+          "gpu_ms": 3292.59,
+          "final_answer": "The database \"promo-cache\" has a status of \"HEALTHY\" and does not show DEGRADED_LOCK_CONTENTION. No further action is needed for this database.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "promo-cache"
+              },
+              "action_hash": "ebc5f9893894",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L6",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1514,
+          "gpu_ms": 3776.69,
+          "final_answer": "The \"payment-gateway\" database has a status of \"HEALTHY\" and does not show a WARNING_SHARD_REBALANCE status. You may need to check other databases or services for this status.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "payment-gateway"
+              },
+              "action_hash": "11d740b1e31a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L7",
+          "trap": "empty_service_logs",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1520,
+          "gpu_ms": 4253.25,
+          "final_answer": "No error logs were found for the 'search-api' service on the date prefix '2026-11-08'. There are no deadlock transaction IDs to retrieve.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-08"
+              },
+              "action_hash": "d2273e956cc0",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L8",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": true,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1575,
+          "gpu_ms": 4952.56,
+          "final_answer": "The release_id for the Envoy TLS cert update on 'inventory-db' is not directly listed. However, the most recent deployment on 'inventory-db' has a release_id of \"rel-2026-114\". You may need to check additional logs or deployment details for the specific TLS cert update.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "inventory-db"
+              },
+              "action_hash": "c87354e26ad6",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        }
+      ]
+    },
+    "mode_1_action_hash_guardrail": {
+      "scenarios": 8,
+      "solved_count": 0,
+      "recovery_rate_pct": 0.0,
+      "mean_llm_calls": 2.0,
+      "total_duplicate_calls": 0,
+      "total_blocked_calls": 0,
+      "total_tokens": 12439,
+      "total_gpu_ms": 33977.62,
+      "cases": [
+        {
+          "id": "L1",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1571,
+          "gpu_ms": 4577.57,
+          "final_answer": "No error logs were found for `inventory-db` on the date prefix '2026-11-09'. Let's check the PostgreSQL error code by querying the active alerts for `inventory-db`.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "inventory-db",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "f17850bac83e",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L2",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1573,
+          "gpu_ms": 4500.62,
+          "final_answer": "No error logs were found for the checkout-api on the date_prefix '2026-11-09'. Let's check the upstream services of checkout-api to identify any potential timeout issues.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "checkout-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "c58c894c6931",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L3",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1579,
+          "gpu_ms": 4730.95,
+          "final_answer": "The query for the OpenSearch slow shard error code for search-api on date_prefix '2026-11-09' returned no logs. I will check the next possible date_prefix to find the error code.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "6ae34ddb3f57",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L4",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1520,
+          "gpu_ms": 2957.72,
+          "final_answer": "The exact rollback command for the migration causing lock contention on 'payment-gateway' is: `kubectl rollout undo deployment/payment-gateway`.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "payment-gateway"
+              },
+              "action_hash": "4d7f406c952a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L5",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1502,
+          "gpu_ms": 3250.55,
+          "final_answer": "The database \"promo-cache\" has a status of \"HEALTHY\" and does not show DEGRADED_LOCK_CONTENTION. No further action is needed for this database.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "promo-cache"
+              },
+              "action_hash": "ebc5f9893894",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L6",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1514,
+          "gpu_ms": 3745.4,
+          "final_answer": "The \"payment-gateway\" database has a status of \"HEALTHY\" and does not show a WARNING_SHARD_REBALANCE status. You may need to check other databases or services for this status.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "payment-gateway"
+              },
+              "action_hash": "11d740b1e31a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L7",
+          "trap": "empty_service_logs",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1605,
+          "gpu_ms": 5374.96,
+          "final_answer": "No error logs were found for 'search-api' on date_prefix '2026-11-08'. Let's check 'search-api' logs for the next day, '2026-11-09', to see if any deadlock transaction IDs were recorded.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-08"
+              },
+              "action_hash": "d2273e956cc0",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L8",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": true,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1575,
+          "gpu_ms": 4839.85,
+          "final_answer": "The release_id for the Envoy TLS cert update on 'inventory-db' is not directly listed. However, the most recent deployment on 'inventory-db' has a release_id of \"rel-2026-114\". You may need to check additional logs or deployment details for the specific TLS cert update.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "inventory-db"
+              },
+              "action_hash": "c87354e26ad6",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        }
+      ]
+    },
+    "system_prompt": "You are an SRE agent. Use the tools to find the answer to the user's question. Keep using tools until you have found the answer. Only reply without a tool call when you have the answer, then give it in one or two sentences.",
+    "method_notes": [
+      "Same system prompt in both modes; tools return the real SQLite rows.",
+      "Guardrail text is generic (no per-scenario target, date or answer).",
+      "Duplicate = same SHA-256 of canonical {name, arguments}; in mode 1 duplicates are blocked and not executed.",
+      "Solved = the target fact appears in the model's final answer (a turn with no tool call). Greedy, thinking off, 300-token cap per call, max 6 calls."
+    ]
+  }
+}

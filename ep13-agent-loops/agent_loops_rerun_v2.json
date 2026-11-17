@@ -1,0 +1,794 @@
+{
+  "rerun_date": "2026-11-12",
+  "gpu_environment": {
+    "model_id": "Qwen/Qwen3-8B",
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.14.1+cu130",
+    "transformers": "5.22.1",
+    "dtype": "bfloat16",
+    "attn": "sdpa",
+    "decoding": "greedy"
+  },
+  "m3v2_react_vs_parsed_plan_and_execute": {
+    "method_notes": [
+      "Greedy decoding; both arms stateless (full prompt re-prefilled every call, no prefix KV reuse).",
+      "Planner and ReAct calls both receive the same tool schemas.",
+      "Planner JSON is parsed and executed exactly as written; nothing hard-coded.",
+      "max_new_tokens=512 per call; ReAct think budget 75 tokens; hit_cap recorded per call.",
+      "Timing = median of 3 repeats; token counts from repeat 1."
+    ],
+    "token_counts_identical_across_repeats": true,
+    "sequential_react": {
+      "llm_calls": 5,
+      "tools_called": [
+        "query_active_alerts",
+        "query_db_metrics",
+        "query_recent_deployments",
+        "query_error_logs"
+      ],
+      "cumulative_prefill_tokens": 5174,
+      "cumulative_output_tokens": 710,
+      "total_gpu_ms": 39628.33,
+      "any_call_hit_cap": false,
+      "final_answer_checks": {
+        "release": true,
+        "error_code": true,
+        "rollback": true
+      },
+      "calls": [
+        {
+          "prompt_tokens": 699,
+          "output_tokens": 164,
+          "think_tokens": 77,
+          "hit_cap": false,
+          "prefill_ms": 1581.1,
+          "decode_ms": 8755.05,
+          "total_ms": 10336.14,
+          "call_index": 1,
+          "tool_calls_emitted": 4,
+          "tool": "query_active_alerts",
+          "args": {},
+          "sqlite_ms": 0.525
+        },
+        {
+          "prompt_tokens": 905,
+          "output_tokens": 101,
+          "think_tokens": 77,
+          "hit_cap": false,
+          "prefill_ms": 104.58,
+          "decode_ms": 5306.22,
+          "total_ms": 5410.81,
+          "call_index": 2,
+          "tool_calls_emitted": 1,
+          "tool": "query_db_metrics",
+          "args": {
+            "db_name": "inventory-db"
+          },
+          "sqlite_ms": 0.4308
+        },
+        {
+          "prompt_tokens": 1020,
+          "output_tokens": 101,
+          "think_tokens": 77,
+          "hit_cap": false,
+          "prefill_ms": 104.09,
+          "decode_ms": 5280.7,
+          "total_ms": 5384.79,
+          "call_index": 3,
+          "tool_calls_emitted": 1,
+          "tool": "query_recent_deployments",
+          "args": {
+            "target": "inventory-db"
+          },
+          "sqlite_ms": 0.3616
+        },
+        {
+          "prompt_tokens": 1172,
+          "output_tokens": 100,
+          "think_tokens": 77,
+          "hit_cap": false,
+          "prefill_ms": 119.52,
+          "decode_ms": 5278.68,
+          "total_ms": 5398.2,
+          "call_index": 4,
+          "tool_calls_emitted": 1,
+          "tool": "query_error_logs",
+          "args": {
+            "service": "inventory-db"
+          },
+          "sqlite_ms": 0.3757
+        },
+        {
+          "prompt_tokens": 1378,
+          "output_tokens": 244,
+          "think_tokens": 77,
+          "hit_cap": false,
+          "prefill_ms": 133.22,
+          "decode_ms": 12965.17,
+          "total_ms": 13098.39,
+          "call_index": 5,
+          "tool_calls_emitted": 0,
+          "final_answer": "The root cause is the **PG_LOCK_TIMEOUT_55P03** and **PG_DEADLOCK_40P01** errors in the **inventory-db** caused by **release rel-2026-114**, which introduced an unindexed batch `stock_reservations FOR UPDATE` query. This led to lock contention and degraded performance, triggering the 502 Bad Gateway errors in **checkout-api**.\n\n**Offending release**: `rel-2026-114`  \n**PostgreSQL error code**: `PG_LOCK_TIMEOUT_55P03` (and `PG_DEADLOCK_40P01`)  \n**Rollback command**: `pg_migrate rollback --target inventory-db --to rel-2026-113`"
+        }
+      ]
+    },
+    "plan_and_execute": {
+      "llm_calls": 2,
+      "plan_parse_ok": true,
+      "plan_parse_error": "",
+      "planner_raw": "{\"plan\": [{\"id\": \"#E1\", \"tool\": \"query_active_alerts\", \"args\": {}, \"depends_on\": []}, {\"id\": \"#E2\", \"tool\": \"query_db_metrics\", \"args\": {\"db_name\": \"inventory-db\"}, \"depends_on\": [\"#E1\"]}, {\"id\": \"#E3\", \"tool\": \"query_recent_deployments\", \"args\": {\"target\": \"inventory-db\"}, \"depends_on\": [\"#E2\"]}, {\"id\": \"#E4\", \"tool\": \"query_error_logs\", \"args\": {\"service\": \"inventory-db\"}, \"depends_on\": [\"#E3\"]}, {\"id\": \"#E5\", \"tool\": \"summarize_root_cause_and_rollback\", \"args\": {}, \"depends_on\": [\"#E4\"]}]}",
+      "executed_steps": [
+        {
+          "id": "#E1",
+          "tool": "query_active_alerts",
+          "args": {},
+          "valid_tool": true,
+          "depends_on": [],
+          "empty": false
+        },
+        {
+          "id": "#E2",
+          "tool": "query_db_metrics",
+          "args": {
+            "db_name": "inventory-db"
+          },
+          "valid_tool": true,
+          "depends_on": [
+            "#E1"
+          ],
+          "empty": false
+        },
+        {
+          "id": "#E3",
+          "tool": "query_recent_deployments",
+          "args": {
+            "target": "inventory-db"
+          },
+          "valid_tool": true,
+          "depends_on": [
+            "#E2"
+          ],
+          "empty": false
+        },
+        {
+          "id": "#E4",
+          "tool": "query_error_logs",
+          "args": {
+            "service": "inventory-db"
+          },
+          "valid_tool": true,
+          "depends_on": [
+            "#E3"
+          ],
+          "empty": false
+        },
+        {
+          "id": "#E5",
+          "tool": "summarize_root_cause_and_rollback",
+          "args": {},
+          "valid_tool": false,
+          "depends_on": [
+            "#E4"
+          ],
+          "empty": true
+        }
+      ],
+      "requested_tools_covered": [
+        "query_active_alerts",
+        "query_db_metrics",
+        "query_error_logs",
+        "query_recent_deployments"
+      ],
+      "dag_sqlite_exec_ms": 1.0073,
+      "planner_call": {
+        "prompt_tokens": 721,
+        "output_tokens": 172,
+        "hit_cap": false,
+        "prefill_ms": 75.25,
+        "decode_ms": 9023.37,
+        "total_ms": 9098.62
+      },
+      "solver_call": {
+        "prompt_tokens": 805,
+        "output_tokens": 209,
+        "hit_cap": false,
+        "prefill_ms": 94.32,
+        "decode_ms": 10932.43,
+        "total_ms": 11026.75
+      },
+      "solver_final_answer": "**Root Cause:**  \nThe root cause of the issue is the recent deployment (release `rel-2026-114`) to `inventory-db`, which introduced an unindexed `FOR UPDATE` query on the `stock_reservations` table. This caused severe lock contention and deadlocks, leading to lock timeouts and degraded performance. The PostgreSQL error code `PG_LOCK_TIMEOUT_55P03` and `PG_DEADLOCK_40P01` confirm the lock-related issues.\n\n**Offending Release:**  \n`rel-2026-114` - \"Migration 114: Add unindexed batch stock_reservations FOR UPDATE query\"\n\n**PostgreSQL Error Code:**  \n- `PG_LOCK_TIMEOUT_55P03` (Lock timeout)\n- `PG_DEADLOCK_40P01` (Deadlock detected)\n\n**Rollback Command:**  \n`pg_migrate rollback --target inventory-db --to rel-2026-113`",
+      "final_answer_checks": {
+        "release": true,
+        "error_code": true,
+        "rollback": true
+      },
+      "cumulative_prefill_tokens": 1526,
+      "cumulative_output_tokens": 381,
+      "total_gpu_ms": 20125.37
+    },
+    "median_total_gpu_ms": {
+      "sequential_react": 37825.26,
+      "plan_and_execute": 20125.37
+    },
+    "all_repeat_total_gpu_ms": {
+      "sequential_react": [
+        39628.33,
+        37825.26,
+        37698.07
+      ],
+      "plan_and_execute": [
+        20125.37,
+        20165.57,
+        20101.65
+      ]
+    },
+    "ratios": {
+      "prefill_token_reduction_x": 3.39,
+      "output_token_reduction_x": 1.86,
+      "median_gpu_time_speedup_x": 1.88
+    }
+  },
+  "m4b_empty_date_trap_neutral_prompt": {
+    "method_notes": [
+      "Greedy; system prompt has no retry instruction; tool returns the real SQLite rows."
+    ],
+    "runs": [
+      {
+        "repetition_penalty": 1.0,
+        "steps": 2,
+        "duplicate_calls": 0,
+        "found_error_code_in_answer": false,
+        "final_answer": "No PostgreSQL error codes were found in the inventory-db error logs for the date_prefix '2026-11-09'.",
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "status": "FINAL_ANSWER",
+            "hit_cap": false
+          }
+        ]
+      },
+      {
+        "repetition_penalty": 1.35,
+        "steps": 2,
+        "duplicate_calls": 0,
+        "found_error_code_in_answer": false,
+        "final_answer": "No errors were found in the `inventory-db` error logs for the date prefix `'2026-11-09'`. If you'd like me to check another date range or need further assistance, let me know!",
+        "trace": [
+          {
+            "step": 1,
+            "tool": "query_error_logs",
+            "args": {
+              "service": "inventory-db",
+              "date_prefix": "2026-11-09"
+            },
+            "duplicate": false,
+            "row_count": 0
+          },
+          {
+            "step": 2,
+            "status": "FINAL_ANSWER",
+            "hit_cap": false
+          }
+        ]
+      }
+    ]
+  },
+  "m5v2_generic_action_hash_guardrail": {
+    "mode_0_no_guardrail": {
+      "scenarios": 8,
+      "solved_count": 0,
+      "recovery_rate_pct": 0.0,
+      "mean_llm_calls": 2.0,
+      "total_duplicate_calls": 0,
+      "total_blocked_calls": 0,
+      "total_tokens": 11816,
+      "total_gpu_ms": 26400.8,
+      "cases": [
+        {
+          "id": "L1",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1462,
+          "gpu_ms": 3553.51,
+          "final_answer": "No PostgreSQL error logs were found for `inventory-db` on the date prefix '2026-11-09'.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "inventory-db",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "f17850bac83e",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L2",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1463,
+          "gpu_ms": 3503.95,
+          "final_answer": "No error logs were found for the checkout-api service on the date_prefix '2026-11-09'.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "checkout-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "c58c894c6931",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L3",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1467,
+          "gpu_ms": 3460.97,
+          "final_answer": "No error logs were found for the search-api service on the date_prefix '2026-11-09'.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "6ae34ddb3f57",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L4",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1488,
+          "gpu_ms": 2806.15,
+          "final_answer": "The exact rollback command for the migration causing lock contention on 'payment-gateway' is: `kubectl rollout undo deployment/payment-gateway`.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "payment-gateway"
+              },
+              "action_hash": "4d7f406c952a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L5",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1467,
+          "gpu_ms": 2988.18,
+          "final_answer": "The \"promo-cache\" database has a status of \"HEALTHY\" and does not show DEGRADED_LOCK_CONTENTION. Check another database if needed.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "promo-cache"
+              },
+              "action_hash": "ebc5f9893894",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L6",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1478,
+          "gpu_ms": 3376.71,
+          "final_answer": "The \"payment-gateway\" database has a status of \"HEALTHY\" and does not show a WARNING_SHARD_REBALANCE status. No further action is needed for this database.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "payment-gateway"
+              },
+              "action_hash": "11d740b1e31a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L7",
+          "trap": "empty_service_logs",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1489,
+          "gpu_ms": 4123.01,
+          "final_answer": "No error logs were found for 'search-api' on the date prefix '2026-11-08'. There are no entries to check for a deadlock transaction ID.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-08"
+              },
+              "action_hash": "d2273e956cc0",
+              "duplicate": false,
+              "empty": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L8",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": true,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1502,
+          "gpu_ms": 2588.32,
+          "final_answer": "The release_id for the deployment on 'inventory-db' is \"rel-2026-114\".",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "inventory-db"
+              },
+              "action_hash": "c87354e26ad6",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        }
+      ]
+    },
+    "mode_1_action_hash_guardrail": {
+      "scenarios": 8,
+      "solved_count": 0,
+      "recovery_rate_pct": 0.0,
+      "mean_llm_calls": 2.0,
+      "total_duplicate_calls": 0,
+      "total_blocked_calls": 0,
+      "total_tokens": 12143,
+      "total_gpu_ms": 30728.84,
+      "cases": [
+        {
+          "id": "L1",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1533,
+          "gpu_ms": 4103.26,
+          "final_answer": "No error logs were found for `inventory-db` on the date prefix '2026-11-09'. Let's check the error logs for a different date.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "inventory-db",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "f17850bac83e",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L2",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1557,
+          "gpu_ms": 5101.6,
+          "final_answer": "The query for error logs on `checkout-api` with date prefix `2026-11-09` returned no results. I will now check the error logs for the same service with the default date prefix `2026-11-10`.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "checkout-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "c58c894c6931",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L3",
+          "trap": "empty_date_filter",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1545,
+          "gpu_ms": 4435.85,
+          "final_answer": "The query for the OpenSearch slow shard error code for search-api on date_prefix '2026-11-09' returned no logs. I will check the error logs for a different date_prefix.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-09"
+              },
+              "action_hash": "6ae34ddb3f57",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L4",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1488,
+          "gpu_ms": 2813.77,
+          "final_answer": "The exact rollback command for the migration causing lock contention on 'payment-gateway' is: `kubectl rollout undo deployment/payment-gateway`.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "payment-gateway"
+              },
+              "action_hash": "4d7f406c952a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L5",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1467,
+          "gpu_ms": 2941.55,
+          "final_answer": "The \"promo-cache\" database has a status of \"HEALTHY\" and does not show DEGRADED_LOCK_CONTENTION. Check another database if needed.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "promo-cache"
+              },
+              "action_hash": "ebc5f9893894",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L6",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1478,
+          "gpu_ms": 3360.64,
+          "final_answer": "The \"payment-gateway\" database has a status of \"HEALTHY\" and does not show a WARNING_SHARD_REBALANCE status. No further action is needed for this database.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_db_metrics",
+              "args": {
+                "db_name": "payment-gateway"
+              },
+              "action_hash": "11d740b1e31a",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L7",
+          "trap": "empty_service_logs",
+          "solved": false,
+          "fact_seen_in_tool_results": false,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1573,
+          "gpu_ms": 5364.23,
+          "final_answer": "No error logs were found for 'search-api' on date_prefix '2026-11-08'. Let's check 'search-api' logs for the next day, '2026-11-09', to see if any deadlock transaction IDs are recorded.",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_error_logs",
+              "args": {
+                "service": "search-api",
+                "date_prefix": "2026-11-08"
+              },
+              "action_hash": "d2273e956cc0",
+              "duplicate": false,
+              "empty": true,
+              "guardrail_note": true
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        },
+        {
+          "id": "L8",
+          "trap": "wrong_target",
+          "solved": false,
+          "fact_seen_in_tool_results": true,
+          "llm_calls": 2,
+          "duplicate_calls": 0,
+          "blocked_calls": 0,
+          "total_tokens": 1502,
+          "gpu_ms": 2607.94,
+          "final_answer": "The release_id for the deployment on 'inventory-db' is \"rel-2026-114\".",
+          "steps": [
+            {
+              "step": 1,
+              "tool": "query_recent_deployments",
+              "args": {
+                "target": "inventory-db"
+              },
+              "action_hash": "c87354e26ad6",
+              "duplicate": false,
+              "empty": false
+            },
+            {
+              "step": 2,
+              "status": "FINAL_ANSWER",
+              "hit_cap": false
+            }
+          ]
+        }
+      ]
+    },
+    "method_notes": [
+      "Same system prompt in both modes; tools return the real SQLite rows.",
+      "Guardrail text is generic (no per-scenario target, date or answer).",
+      "Duplicate = same SHA-256 of canonical {name, arguments}; in mode 1 duplicates are blocked and not executed.",
+      "Solved = the target fact appears in the model's final answer (a turn with no tool call). Greedy, thinking off, 300-token cap per call, max 6 calls."
+    ]
+  }
+}
