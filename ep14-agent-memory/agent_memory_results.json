@@ -1,0 +1,1701 @@
+{
+  "m0_hardware_and_preflight": {
+    "gpu_name": "NVIDIA L4",
+    "vram_total_gib": 22.03,
+    "vram_total_gb": 23.66,
+    "pytorch_version": "2.14.1+cu130",
+    "llm_id": "Qwen/Qwen3-8B",
+    "embedding_id": "Qwen/Qwen3-Embedding-0.6B",
+    "num_parameters": 8190735360,
+    "weights_gib": 15.26,
+    "weights_gb": 16.38,
+    "num_layers": 36,
+    "num_query_heads": 32,
+    "num_kv_heads": 8,
+    "head_dim": 128,
+    "kv_bytes_per_token": 147456,
+    "kv_kib_per_token": 144.0,
+    "preflight_lcp_cache_check": {
+      "total_tokens": 44,
+      "prefix_tokens": 38,
+      "suffix_tokens": 6,
+      "max_abs_logit_diff_bf16_ulp": 0.5,
+      "logit_cosine_similarity": 0.999666,
+      "top1_token_match": true
+    }
+  },
+  "m1_sliding_window_vs_prefix_cache": {
+    "system_prefix_tokens": 150,
+    "mode_a_append_only": {
+      "mode": "mode_a_append_only_prefix_cache",
+      "cumulative_prompt_tokens": 11234,
+      "cumulative_reused_prefix_tokens": 9620,
+      "cumulative_suffix_prefill_tokens": 1614,
+      "turns_5_to_12_suffix_prefill_tokens": 971,
+      "mean_cache_hit_pct_turns_5_to_12": 88.9,
+      "cumulative_prefill_ms": 1157.76,
+      "cumulative_decode_ms": 27325.26,
+      "total_gpu_ms": 28483.02,
+      "peak_kv_cache_mib": 226.27,
+      "compaction_overhead": {
+        "calls": 0,
+        "prefill_tokens": 0,
+        "decode_tokens": 0,
+        "gpu_ms": 0.0
+      },
+      "turn12_answer": "deploy_ctl --service checkout-api --port 6432 --pool-size 48; redis-session-cache should not be restarted as it is healthy and must not be restarted.",
+      "turn12_solved_all_3_facts": true,
+      "steps": [
+        {
+          "turn": 1,
+          "prompt_tokens": 257,
+          "reused_prefix_tokens": 0,
+          "suffix_prefill_tokens": 257,
+          "cache_hit_pct": 0.0,
+          "prefill_ms": 120.697,
+          "decode_tokens": 35,
+          "decode_ms": 2247.773,
+          "kv_cache_mib": 40.78,
+          "gen_text": "Alert INC-8801 confirms checkout-api is failing with db_pool_exhausted and 4,120 ms p99 latency."
+        },
+        {
+          "turn": 2,
+          "prompt_tokens": 393,
+          "reused_prefix_tokens": 253,
+          "suffix_prefill_tokens": 140,
+          "cache_hit_pct": 64.4,
+          "prefill_ms": 90.039,
+          "decode_tokens": 26,
+          "decode_ms": 1647.39,
+          "kv_cache_mib": 60.89,
+          "gen_text": "Migration MIG-204 moved inventory-db's PgBouncer listener from port 5432 to port 6432 with max_client_conn=400."
+        },
+        {
+          "turn": 3,
+          "prompt_tokens": 511,
+          "reused_prefix_tokens": 389,
+          "suffix_prefill_tokens": 122,
+          "cache_hit_pct": 76.1,
+          "prefill_ms": 90.389,
+          "decode_tokens": 42,
+          "decode_ms": 2706.994,
+          "kv_cache_mib": 76.78,
+          "gen_text": "The checkout-api-v42 deployment is still configured with legacy DB_PORT=5432 instead of the new PgBouncer port 6432."
+        },
+        {
+          "turn": 4,
+          "prompt_tokens": 631,
+          "reused_prefix_tokens": 507,
+          "suffix_prefill_tokens": 124,
+          "cache_hit_pct": 80.3,
+          "prefill_ms": 90.587,
+          "decode_tokens": 16,
+          "decode_ms": 991.397,
+          "kv_cache_mib": 93.66,
+          "gen_text": "The redis-session-cache cluster has 0.38 ms p99 latency and 0% errors, so it is completely healthy and must not be restarted."
+        },
+        {
+          "turn": 5,
+          "prompt_tokens": 744,
+          "reused_prefix_tokens": 627,
+          "suffix_prefill_tokens": 117,
+          "cache_hit_pct": 84.3,
+          "prefill_ms": 91.102,
+          "decode_tokens": 41,
+          "decode_ms": 2651.385,
+          "kv_cache_mib": 110.11,
+          "gen_text": "PostgreSQL on inventory-db has only 19 active backends and zero listeners on legacy port 5432 while port 6432 has 4 active listeners."
+        },
+        {
+          "turn": 6,
+          "prompt_tokens": 886,
+          "reused_prefix_tokens": 740,
+          "suffix_prefill_tokens": 146,
+          "cache_hit_pct": 83.5,
+          "prefill_ms": 96.782,
+          "decode_tokens": 27,
+          "decode_ms": 1730.031,
+          "kv_cache_mib": 130.08,
+          "gen_text": "The checkout-api pods are getting connection refused on 10.24.8.19:5432 because nothing is listening on port 5432."
+        },
+        {
+          "turn": 7,
+          "prompt_tokens": 1009,
+          "reused_prefix_tokens": 882,
+          "suffix_prefill_tokens": 127,
+          "cache_hit_pct": 87.4,
+          "prefill_ms": 95.042,
+          "decode_tokens": 36,
+          "decode_ms": 2335.207,
+          "kv_cache_mib": 146.11,
+          "gen_text": "The payment-worker service is already using DB_PORT=6432 and running normally at 4.2 ms p99 latency."
+        },
+        {
+          "turn": 8,
+          "prompt_tokens": 1132,
+          "reused_prefix_tokens": 1005,
+          "suffix_prefill_tokens": 127,
+          "cache_hit_pct": 88.8,
+          "prefill_ms": 95.335,
+          "decode_tokens": 43,
+          "decode_ms": 2809.452,
+          "kv_cache_mib": 163.69,
+          "gen_text": "The TLS certificate on inventory-db port 6432 is valid through February 2027 with 1.1 ms handshake latency."
+        },
+        {
+          "turn": 9,
+          "prompt_tokens": 1239,
+          "reused_prefix_tokens": 1128,
+          "suffix_prefill_tokens": 111,
+          "cache_hit_pct": 91.0,
+          "prefill_ms": 96.095,
+          "decode_tokens": 45,
+          "decode_ms": 2946.864,
+          "kv_cache_mib": 179.3,
+          "gen_text": "Across 6 replicas, setting pool_size=48 per replica keeps total connections at 288, safely below PgBouncer's 400 limit."
+        },
+        {
+          "turn": 10,
+          "prompt_tokens": 1369,
+          "reused_prefix_tokens": 1235,
+          "suffix_prefill_tokens": 134,
+          "cache_hit_pct": 90.2,
+          "prefill_ms": 97.231,
+          "decode_tokens": 48,
+          "decode_ms": 3158.723,
+          "kv_cache_mib": 198.84,
+          "gen_text": "The checkout-api canary pod with DB_PORT=6432 and DB_POOL_SIZE=48 passed with 0% 502 errors and 11.4 ms p99 latency."
+        },
+        {
+          "turn": 11,
+          "prompt_tokens": 1493,
+          "reused_prefix_tokens": 1365,
+          "suffix_prefill_tokens": 128,
+          "cache_hit_pct": 91.4,
+          "prefill_ms": 98.475,
+          "decode_tokens": 25,
+          "decode_ms": 1611.034,
+          "kv_cache_mib": 213.89,
+          "gen_text": "Release rel-2026-43 is approved under ticket OPS-9102 with no active deployment freeze."
+        },
+        {
+          "turn": 12,
+          "prompt_tokens": 1570,
+          "reused_prefix_tokens": 1489,
+          "suffix_prefill_tokens": 81,
+          "cache_hit_pct": 94.8,
+          "prefill_ms": 95.983,
+          "decode_tokens": 38,
+          "decode_ms": 2489.008,
+          "kv_cache_mib": 226.27,
+          "gen_text": "deploy_ctl --service checkout-api --port 6432 --pool-size 48; redis-session-cache should not be restarted as it is healthy and must not be restarted."
+        }
+      ]
+    },
+    "mode_b_sliding_window": {
+      "mode": "mode_b_sliding_window_last_4",
+      "cumulative_prompt_tokens": 7630,
+      "cumulative_reused_prefix_tokens": 2861,
+      "cumulative_suffix_prefill_tokens": 4769,
+      "turns_5_to_12_suffix_prefill_tokens": 4126,
+      "mean_cache_hit_pct_turns_5_to_12": 29.2,
+      "cumulative_prefill_ms": 2280.76,
+      "cumulative_decode_ms": 27351.99,
+      "total_gpu_ms": 29632.75,
+      "peak_kv_cache_mib": 110.95,
+      "compaction_overhead": {
+        "calls": 0,
+        "prefill_tokens": 0,
+        "decode_tokens": 0,
+        "gpu_ms": 0.0
+      },
+      "turn12_answer": "deploy_ctl --service checkout-api --port 6432 --pool-size 48. redis-session-cache does not need to be restarted.",
+      "turn12_solved_all_3_facts": true,
+      "steps": [
+        {
+          "turn": 1,
+          "prompt_tokens": 257,
+          "reused_prefix_tokens": 0,
+          "suffix_prefill_tokens": 257,
+          "cache_hit_pct": 0.0,
+          "prefill_ms": 137.969,
+          "decode_tokens": 35,
+          "decode_ms": 2244.472,
+          "kv_cache_mib": 40.78,
+          "gen_text": "Alert INC-8801 confirms checkout-api is failing with db_pool_exhausted and 4,120 ms p99 latency."
+        },
+        {
+          "turn": 2,
+          "prompt_tokens": 393,
+          "reused_prefix_tokens": 253,
+          "suffix_prefill_tokens": 140,
+          "cache_hit_pct": 64.4,
+          "prefill_ms": 91.18,
+          "decode_tokens": 26,
+          "decode_ms": 1653.298,
+          "kv_cache_mib": 60.89,
+          "gen_text": "Migration MIG-204 moved inventory-db's PgBouncer listener from port 5432 to port 6432 with max_client_conn=400."
+        },
+        {
+          "turn": 3,
+          "prompt_tokens": 511,
+          "reused_prefix_tokens": 389,
+          "suffix_prefill_tokens": 122,
+          "cache_hit_pct": 76.1,
+          "prefill_ms": 90.015,
+          "decode_tokens": 42,
+          "decode_ms": 2714.966,
+          "kv_cache_mib": 76.78,
+          "gen_text": "The checkout-api-v42 deployment is still configured with legacy DB_PORT=5432 instead of the new PgBouncer port 6432."
+        },
+        {
+          "turn": 4,
+          "prompt_tokens": 631,
+          "reused_prefix_tokens": 507,
+          "suffix_prefill_tokens": 124,
+          "cache_hit_pct": 80.3,
+          "prefill_ms": 91.329,
+          "decode_tokens": 16,
+          "decode_ms": 993.687,
+          "kv_cache_mib": 93.66,
+          "gen_text": "The redis-session-cache cluster has 0.38 ms p99 latency and 0% errors, so it is completely healthy and must not be restarted."
+        },
+        {
+          "turn": 5,
+          "prompt_tokens": 744,
+          "reused_prefix_tokens": 627,
+          "suffix_prefill_tokens": 117,
+          "cache_hit_pct": 84.3,
+          "prefill_ms": 91.748,
+          "decode_tokens": 41,
+          "decode_ms": 2655.437,
+          "kv_cache_mib": 110.11,
+          "gen_text": "PostgreSQL on inventory-db has only 19 active backends and zero listeners on legacy port 5432 while port 6432 has 4 active listeners."
+        },
+        {
+          "turn": 6,
+          "prompt_tokens": 750,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 595,
+          "cache_hit_pct": 20.7,
+          "prefill_ms": 261.04,
+          "decode_tokens": 32,
+          "decode_ms": 2058.065,
+          "kv_cache_mib": 110.95,
+          "gen_text": "The checkout-api pods are getting connection refused on 10.24.8.19:5432 because nothing is listening on port 5432."
+        },
+        {
+          "turn": 7,
+          "prompt_tokens": 730,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 575,
+          "cache_hit_pct": 21.2,
+          "prefill_ms": 256.507,
+          "decode_tokens": 36,
+          "decode_ms": 2327.369,
+          "kv_cache_mib": 106.88,
+          "gen_text": "The payment-worker service is already using DB_PORT=6432 and running normally at 4.2 ms p99 latency."
+        },
+        {
+          "turn": 8,
+          "prompt_tokens": 740,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 585,
+          "cache_hit_pct": 20.9,
+          "prefill_ms": 253.856,
+          "decode_tokens": 42,
+          "decode_ms": 2727.979,
+          "kv_cache_mib": 108.56,
+          "gen_text": "The TLS certificate on inventory-db port 6432 is valid through February 2027 with 1.1 ms handshake latency."
+        },
+        {
+          "turn": 9,
+          "prompt_tokens": 727,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 572,
+          "cache_hit_pct": 21.3,
+          "prefill_ms": 256.16,
+          "decode_tokens": 38,
+          "decode_ms": 2460.691,
+          "kv_cache_mib": 107.3,
+          "gen_text": "Across 6 replicas, setting pool_size=48 per replica keeps total connections at 288, safely below PgBouncer's 400 limit."
+        },
+        {
+          "turn": 10,
+          "prompt_tokens": 740,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 585,
+          "cache_hit_pct": 20.9,
+          "prefill_ms": 251.746,
+          "decode_tokens": 48,
+          "decode_ms": 3123.98,
+          "kv_cache_mib": 110.39,
+          "gen_text": "The checkout-api canary pod with DB_PORT=6432 and DB_POOL_SIZE=48 passed with 0% 502 errors and 11.4 ms p99 latency."
+        },
+        {
+          "turn": 11,
+          "prompt_tokens": 722,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 567,
+          "cache_hit_pct": 21.5,
+          "prefill_ms": 256.044,
+          "decode_tokens": 37,
+          "decode_ms": 2395.1,
+          "kv_cache_mib": 105.47,
+          "gen_text": "Release rel-2026-43 is approved under ticket OPS-9102 with no active deployment freeze."
+        },
+        {
+          "turn": 12,
+          "prompt_tokens": 685,
+          "reused_prefix_tokens": 155,
+          "suffix_prefill_tokens": 530,
+          "cache_hit_pct": 22.6,
+          "prefill_ms": 243.168,
+          "decode_tokens": 31,
+          "decode_ms": 1996.942,
+          "kv_cache_mib": 100.83,
+          "gen_text": "deploy_ctl --service checkout-api --port 6432 --pool-size 48. redis-session-cache does not need to be restarted."
+        }
+      ]
+    },
+    "mode_c_rolling_summary": {
+      "mode": "mode_c_rolling_top_summary",
+      "cumulative_prompt_tokens": 7905,
+      "cumulative_reused_prefix_tokens": 1752,
+      "cumulative_suffix_prefill_tokens": 6153,
+      "turns_5_to_12_suffix_prefill_tokens": 4676,
+      "mean_cache_hit_pct_turns_5_to_12": 21.5,
+      "cumulative_prefill_ms": 2855.31,
+      "cumulative_decode_ms": 28078.39,
+      "total_gpu_ms": 30933.7,
+      "peak_kv_cache_mib": 115.31,
+      "compaction_overhead": {
+        "calls": 0,
+        "prefill_tokens": 0,
+        "decode_tokens": 0,
+        "gpu_ms": 0.0
+      },
+      "turn12_answer": "deploy_ctl --service checkout-api --port 6432 --pool-size 48. Redis-session-cache should not be restarted as its p99 latency is within acceptable limits.",
+      "turn12_solved_all_3_facts": true,
+      "steps": [
+        {
+          "turn": 1,
+          "prompt_tokens": 257,
+          "reused_prefix_tokens": 0,
+          "suffix_prefill_tokens": 257,
+          "cache_hit_pct": 0.0,
+          "prefill_ms": 143.102,
+          "decode_tokens": 35,
+          "decode_ms": 2248.219,
+          "kv_cache_mib": 40.78,
+          "gen_text": "Alert INC-8801 confirms checkout-api is failing with db_pool_exhausted and 4,120 ms p99 latency."
+        },
+        {
+          "turn": 2,
+          "prompt_tokens": 428,
+          "reused_prefix_tokens": 151,
+          "suffix_prefill_tokens": 277,
+          "cache_hit_pct": 35.3,
+          "prefill_ms": 147.295,
+          "decode_tokens": 26,
+          "decode_ms": 1657.822,
+          "kv_cache_mib": 65.81,
+          "gen_text": "Migration MIG-204 moved inventory-db's PgBouncer listener from port 5432 to port 6432 with max_client_conn=400."
+        },
+        {
+          "turn": 3,
+          "prompt_tokens": 564,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 404,
+          "cache_hit_pct": 28.4,
+          "prefill_ms": 200.471,
+          "decode_tokens": 42,
+          "decode_ms": 2724.637,
+          "kv_cache_mib": 84.23,
+          "gen_text": "The checkout-api-v42 deployment is still configured with legacy DB_PORT=5432 instead of the new PgBouncer port 6432."
+        },
+        {
+          "turn": 4,
+          "prompt_tokens": 699,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 539,
+          "cache_hit_pct": 22.9,
+          "prefill_ms": 254.093,
+          "decode_tokens": 20,
+          "decode_ms": 1264.473,
+          "kv_cache_mib": 103.22,
+          "gen_text": "The redis-session-cache cluster has 0.38 ms p99 latency and 0% errors, so it is completely healthy and must not be restarted."
+        },
+        {
+          "turn": 5,
+          "prompt_tokens": 696,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 536,
+          "cache_hit_pct": 23.0,
+          "prefill_ms": 246.534,
+          "decode_tokens": 38,
+          "decode_ms": 2461.783,
+          "kv_cache_mib": 103.36,
+          "gen_text": "PostgreSQL on inventory-db has only 19 active backends and zero listeners on legacy port 5432 while port 6432 has 4 active listeners."
+        },
+        {
+          "turn": 6,
+          "prompt_tokens": 710,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 550,
+          "cache_hit_pct": 22.5,
+          "prefill_ms": 254.171,
+          "decode_tokens": 30,
+          "decode_ms": 1930.427,
+          "kv_cache_mib": 105.33,
+          "gen_text": "The checkout-api pods are getting connection refused on 10.24.8.19:5432 because nothing is listening on port 5432."
+        },
+        {
+          "turn": 7,
+          "prompt_tokens": 732,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 572,
+          "cache_hit_pct": 21.9,
+          "prefill_ms": 263.122,
+          "decode_tokens": 32,
+          "decode_ms": 2063.337,
+          "kv_cache_mib": 107.16,
+          "gen_text": "The payment-worker service is already using DB_PORT=6432 and running normally at 4.2 ms p99 latency."
+        },
+        {
+          "turn": 8,
+          "prompt_tokens": 748,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 588,
+          "cache_hit_pct": 21.4,
+          "prefill_ms": 264.16,
+          "decode_tokens": 43,
+          "decode_ms": 2795.513,
+          "kv_cache_mib": 109.69,
+          "gen_text": "The TLS certificate on inventory-db port 6432 is valid through February 2027 with 1.1 ms handshake latency."
+        },
+        {
+          "turn": 9,
+          "prompt_tokens": 755,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 595,
+          "cache_hit_pct": 21.2,
+          "prefill_ms": 270.151,
+          "decode_tokens": 44,
+          "decode_ms": 2863.982,
+          "kv_cache_mib": 111.23,
+          "gen_text": "Across 6 replicas, setting pool_size=48 per replica keeps total connections at 288, safely below PgBouncer's 400 limit."
+        },
+        {
+          "turn": 10,
+          "prompt_tokens": 760,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 600,
+          "cache_hit_pct": 21.1,
+          "prefill_ms": 272.632,
+          "decode_tokens": 48,
+          "decode_ms": 3133.806,
+          "kv_cache_mib": 113.2,
+          "gen_text": "The checkout-api canary pod with DB_PORT=6432 and DB_POOL_SIZE=48 passed with 0% 502 errors and 11.4 ms p99 latency."
+        },
+        {
+          "turn": 11,
+          "prompt_tokens": 792,
+          "reused_prefix_tokens": 160,
+          "suffix_prefill_tokens": 632,
+          "cache_hit_pct": 20.2,
+          "prefill_ms": 272.488,
+          "decode_tokens": 37,
+          "decode_ms": 2398.948,
+          "kv_cache_mib": 115.31,
+          "gen_text": "Release rel-2026-43 is approved under ticket OPS-9102 with no active deployment freeze."
+        },
+        {
+          "turn": 12,
+          "prompt_tokens": 764,
+          "reused_prefix_tokens": 161,
+          "suffix_prefill_tokens": 603,
+          "cache_hit_pct": 21.1,
+          "prefill_ms": 267.087,
+          "decode_tokens": 39,
+          "decode_ms": 2535.444,
+          "kv_cache_mib": 113.06,
+          "gen_text": "deploy_ctl --service checkout-api --port 6432 --pool-size 48. Redis-session-cache should not be restarted as its p99 latency is within acceptable limits."
+        }
+      ]
+    },
+    "mode_d_threshold_compact": {
+      "mode": "mode_d_threshold_compact_turn6",
+      "cumulative_prompt_tokens": 7436,
+      "cumulative_reused_prefix_tokens": 5724,
+      "cumulative_suffix_prefill_tokens": 2489,
+      "turns_5_to_12_suffix_prefill_tokens": 1069,
+      "mean_cache_hit_pct_turns_5_to_12": 77.8,
+      "cumulative_prefill_ms": 9497.7,
+      "cumulative_decode_ms": 28646.72,
+      "total_gpu_ms": 38144.42,
+      "peak_kv_cache_mib": 137.11,
+      "compaction_overhead": {
+        "calls": 1,
+        "prefill_tokens": 777,
+        "decode_tokens": 120,
+        "gpu_ms": 8297.658
+      },
+      "turn12_answer": "deploy_ctl --service checkout-api --port 6432 --pool-size 48  \nRedis-session-cache should not be restarted as no issues were found affecting its operation.",
+      "turn12_solved_all_3_facts": true,
+      "steps": [
+        {
+          "turn": 1,
+          "prompt_tokens": 257,
+          "reused_prefix_tokens": 0,
+          "suffix_prefill_tokens": 257,
+          "cache_hit_pct": 0.0,
+          "prefill_ms": 145.888,
+          "decode_tokens": 35,
+          "decode_ms": 2251.534,
+          "kv_cache_mib": 40.78,
+          "gen_text": "Alert INC-8801 confirms checkout-api is failing with db_pool_exhausted and 4,120 ms p99 latency."
+        },
+        {
+          "turn": 2,
+          "prompt_tokens": 393,
+          "reused_prefix_tokens": 253,
+          "suffix_prefill_tokens": 140,
+          "cache_hit_pct": 64.4,
+          "prefill_ms": 94.244,
+          "decode_tokens": 26,
+          "decode_ms": 1660.155,
+          "kv_cache_mib": 60.89,
+          "gen_text": "Migration MIG-204 moved inventory-db's PgBouncer listener from port 5432 to port 6432 with max_client_conn=400."
+        },
+        {
+          "turn": 3,
+          "prompt_tokens": 511,
+          "reused_prefix_tokens": 389,
+          "suffix_prefill_tokens": 122,
+          "cache_hit_pct": 76.1,
+          "prefill_ms": 90.952,
+          "decode_tokens": 42,
+          "decode_ms": 2727.955,
+          "kv_cache_mib": 76.78,
+          "gen_text": "The checkout-api-v42 deployment is still configured with legacy DB_PORT=5432 instead of the new PgBouncer port 6432."
+        },
+        {
+          "turn": 4,
+          "prompt_tokens": 631,
+          "reused_prefix_tokens": 507,
+          "suffix_prefill_tokens": 124,
+          "cache_hit_pct": 80.3,
+          "prefill_ms": 92.487,
+          "decode_tokens": 16,
+          "decode_ms": 998.386,
+          "kv_cache_mib": 93.66,
+          "gen_text": "The redis-session-cache cluster has 0.38 ms p99 latency and 0% errors, so it is completely healthy and must not be restarted."
+        },
+        {
+          "turn": 5,
+          "prompt_tokens": 744,
+          "reused_prefix_tokens": 627,
+          "suffix_prefill_tokens": 117,
+          "cache_hit_pct": 84.3,
+          "prefill_ms": 92.66,
+          "decode_tokens": 41,
+          "decode_ms": 2668.582,
+          "kv_cache_mib": 110.11,
+          "gen_text": "PostgreSQL on inventory-db has only 19 active backends and zero listeners on legacy port 5432 while port 6432 has 4 active listeners."
+        },
+        {
+          "turn": 6,
+          "prompt_tokens": 886,
+          "reused_prefix_tokens": 740,
+          "suffix_prefill_tokens": 146,
+          "cache_hit_pct": 83.5,
+          "prefill_ms": 95.647,
+          "decode_tokens": 27,
+          "decode_ms": 1747.093,
+          "kv_cache_mib": 130.08,
+          "gen_text": "The checkout-api pods are getting connection refused on 10.24.8.19:5432 because nothing is listening on port 5432."
+        },
+        {
+          "turn": 7,
+          "prompt_tokens": 376,
+          "reused_prefix_tokens": 151,
+          "suffix_prefill_tokens": 225,
+          "cache_hit_pct": 40.2,
+          "prefill_ms": 116.148,
+          "decode_tokens": 42,
+          "decode_ms": 2731.096,
+          "kv_cache_mib": 57.09,
+          "gen_text": "The payment-worker service is already using DB_PORT=6432 and running normally at 4.2 ms p99 latency."
+        },
+        {
+          "turn": 8,
+          "prompt_tokens": 499,
+          "reused_prefix_tokens": 372,
+          "suffix_prefill_tokens": 127,
+          "cache_hit_pct": 74.5,
+          "prefill_ms": 92.378,
+          "decode_tokens": 42,
+          "decode_ms": 2736.288,
+          "kv_cache_mib": 74.67,
+          "gen_text": "The TLS certificate on inventory-db port 6432 is valid through February 2027 with 1.1 ms handshake latency."
+        },
+        {
+          "turn": 9,
+          "prompt_tokens": 606,
+          "reused_prefix_tokens": 495,
+          "suffix_prefill_tokens": 111,
+          "cache_hit_pct": 81.7,
+          "prefill_ms": 91.683,
+          "decode_tokens": 48,
+          "decode_ms": 3136.054,
+          "kv_cache_mib": 90.28,
+          "gen_text": "Across 6 replicas, setting pool_size=48 per replica keeps total connections at 288, safely below PgBouncer's 400 limit."
+        },
+        {
+          "turn": 10,
+          "prompt_tokens": 736,
+          "reused_prefix_tokens": 602,
+          "suffix_prefill_tokens": 134,
+          "cache_hit_pct": 81.8,
+          "prefill_ms": 99.699,
+          "decode_tokens": 48,
+          "decode_ms": 3147.874,
+          "kv_cache_mib": 109.83,
+          "gen_text": "The checkout-api canary pod with DB_PORT=6432 and DB_POOL_SIZE=48 passed with 0% 502 errors and 11.4 ms p99 latency."
+        },
+        {
+          "turn": 11,
+          "prompt_tokens": 860,
+          "reused_prefix_tokens": 732,
+          "suffix_prefill_tokens": 128,
+          "cache_hit_pct": 85.1,
+          "prefill_ms": 94.783,
+          "decode_tokens": 37,
+          "decode_ms": 2417.006,
+          "kv_cache_mib": 124.88,
+          "gen_text": "Release rel-2026-43 is approved under ticket OPS-9102 with no active deployment freeze."
+        },
+        {
+          "turn": 12,
+          "prompt_tokens": 937,
+          "reused_prefix_tokens": 856,
+          "suffix_prefill_tokens": 81,
+          "cache_hit_pct": 91.4,
+          "prefill_ms": 93.476,
+          "decode_tokens": 37,
+          "decode_ms": 2424.693,
+          "kv_cache_mib": 137.11,
+          "gen_text": "deploy_ctl --service checkout-api --port 6432 --pool-size 48  \nRedis-session-cache should not be restarted as no issues were found affecting its operation."
+        }
+      ]
+    },
+    "comparisons": {
+      "sliding_window_vs_append_suffix_prefill_ratio_all_12_turns": 2.95,
+      "sliding_window_vs_append_suffix_prefill_ratio_turns_5_to_12": 4.25,
+      "rolling_summary_vs_append_suffix_prefill_ratio_all_12_turns": 3.81,
+      "sliding_window_vs_threshold_compact_suffix_prefill_ratio": 1.92,
+      "threshold_compact_peak_kv_savings_pct_vs_append": 39.4
+    }
+  },
+  "m2_compaction_prose_vs_schema": {
+    "full_history": {
+      "passed_count": 7,
+      "total_tasks": 8,
+      "accuracy_pct": 87.5,
+      "correct_port_count": 8,
+      "avoided_bad_restart_count": 7,
+      "port_retained_in_summary_count": 0,
+      "neg_retained_in_summary_count": 0,
+      "mean_prompt_tokens": 1134.5,
+      "tasks": [
+        {
+          "task_id": "C1",
+          "prompt_tokens": 1109,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"checkout-api\",\n  \"target_port\": 6432,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C2",
+          "prompt_tokens": 1121,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"auth-gateway\",\n  \"target_port\": 8443,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C3",
+          "prompt_tokens": 1147,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"payment-worker\",\n  \"target_port\": 5671,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C4",
+          "prompt_tokens": 1122,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"search-indexer\",\n  \"target_port\": 9250,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C5",
+          "prompt_tokens": 1119,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"billing-cron\",\n  \"target_port\": 7432,\n  \"restart_secondary_component\": \"invoice-pdf-worker\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C6",
+          "prompt_tokens": 1133,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"notification-hub\",\n  \"target_port\": 6380,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C7",
+          "prompt_tokens": 1149,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"analytics-etl\",\n  \"target_port\": 9009,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C8",
+          "prompt_tokens": 1176,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"Order-fulfillment\",\n  \"target_port\": 15432,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        }
+      ]
+    },
+    "sliding_window_3": {
+      "passed_count": 0,
+      "total_tasks": 8,
+      "accuracy_pct": 0.0,
+      "correct_port_count": 0,
+      "avoided_bad_restart_count": 0,
+      "port_retained_in_summary_count": 0,
+      "neg_retained_in_summary_count": 0,
+      "mean_prompt_tokens": 293.4,
+      "tasks": [
+        {
+          "task_id": "C1",
+          "prompt_tokens": 284,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"checkout-api\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"redis-session-cache\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C2",
+          "prompt_tokens": 287,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"auth-gateway\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"ldap-directory-sync\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C3",
+          "prompt_tokens": 300,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"payment-worker\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"fraud-scorer-rpc\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C4",
+          "prompt_tokens": 288,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"search-indexer\",\n  \"target_port\": 9092,\n  \"restart_secondary_component\": \"kafka-clickstream\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C5",
+          "prompt_tokens": 287,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"billing-cron\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"invoice-pdf-worker\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C6",
+          "prompt_tokens": 292,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"notification-hub\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"smtp-relay-proxy\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C7",
+          "prompt_tokens": 301,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"analytics-etl\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"s3-parquet-sink\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C8",
+          "prompt_tokens": 308,
+          "summary_text": "",
+          "port_retained_in_summary": false,
+          "neg_retained_in_summary": false,
+          "turn10_output": "{\n  \"service\": \"Order-fulfillment\",\n  \"target_port\": 8080,\n  \"restart_secondary_component\": \"memcache-shipping-rates\"\n}",
+          "correct_port": false,
+          "avoided_bad_restart": false,
+          "passed": false
+        }
+      ]
+    },
+    "prose_compact_256": {
+      "passed_count": 0,
+      "total_tasks": 8,
+      "accuracy_pct": 0.0,
+      "correct_port_count": 8,
+      "avoided_bad_restart_count": 0,
+      "port_retained_in_summary_count": 8,
+      "neg_retained_in_summary_count": 8,
+      "mean_prompt_tokens": 409.6,
+      "tasks": [
+        {
+          "task_id": "C1",
+          "prompt_tokens": 399,
+          "summary_text": "{\n  \"summary\": \"The checkout-api is experiencing elevated timeout rates due to connection attempts on the legacy port 5432, which was moved to 6432 in a recent migration. The redis-session-cache is healthy and not the cause. The stack trace confirms timeouts on the old port, and the latency histogram shows all failed requests hitting the timeout ceiling. The next step is to update the checkout-api configuration to use the new port 6432.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"checkout-api\",\n  \"target_port\": 6432,\n  \"restart_secondary_component\": \"redis-session-cache\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C2",
+          "prompt_tokens": 400,
+          "summary_text": "{\n  \"summary\": \"The auth-gateway is experiencing elevated timeout rates due to its configuration still pointing to the legacy port 8080, while the token-signer's mTLS listener was recently moved to port 8443. The ldap-directory-sync service is healthy and not the cause. Stack traces and latency metrics confirm that all failed requests are timing out on the old port, indicating a misconfiguration in the auth-gateway's upstream port setting.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"auth-gateway\",\n  \"target_port\": 8443,\n  \"restart_secondary_component\": \"ldap-directory-sync\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C3",
+          "prompt_tokens": 413,
+          "summary_text": "{\n  \"summary\": \"The payment-worker is experiencing elevated timeout rates due to attempting to connect to the legacy AMQP-TLS listener port 5672, which has been moved to port 5671 by the broker upgrade BRK-308. The fraud-scorer-rpc service is healthy and not the cause. The stack trace confirms connection timeouts on the old port, and the latency histogram shows all failed requests hitting the timeout ceiling.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"payment-worker\",\n  \"target_port\": 5671,\n  \"restart_secondary_component\": \"fraud-scorer-rpc\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C4",
+          "prompt_tokens": 406,
+          "summary_text": "{\n  \"summary\": \"The search-indexer is experiencing elevated timeout rates due to attempting to connect to the legacy port 9200, which has been moved to 9250. The service is still configured to use the old port, and stack traces confirm connection timeouts on 9200. The kafka-clickstream is healthy and not the root cause. All failed requests are hitting the timeout ceiling, indicating a misconfiguration in the upstream port setting for search-indexer.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"search-indexer\",\n  \"target_port\": 9250,\n  \"restart_secondary_component\": \"kafka-clickstream\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C5",
+          "prompt_tokens": 392,
+          "summary_text": "{\n  \"summary\": \"The billing-cron service is experiencing elevated timeout rates due to connection attempts on the outdated port 5432, while the database listener has been moved to port 7432. The invoice-pdf-worker is healthy and not the cause. Stack traces and latency metrics confirm that all failed requests are timing out at the old port, indicating a misconfiguration in billing-cron's upstream port setting.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"billing-cron\",\n  \"target_port\": 7432,\n  \"restart_secondary_component\": \"invoice-pdf-worker\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C6",
+          "prompt_tokens": 398,
+          "summary_text": "{\n  \"summary\": \"The notification-hub is experiencing elevated timeout rates due to attempting to connect to the legacy plaintext port 6379, which has been moved to TLS port 6380 in the valkey-pubsub cluster. The stack trace confirms connection timeouts on the old port, and the latency histogram shows all failed requests hitting the timeout ceiling. The smtp-relay-proxy is healthy and not the cause.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"notification-hub\",\n  \"target_port\": 6380,\n  \"restart_secondary_component\": \"smtp-relay-proxy\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C7",
+          "prompt_tokens": 447,
+          "summary_text": "{\n  \"summary\": \"The analytics-etl service is experiencing elevated timeout rates due to connection attempts on the outdated HTTP port 8123, which was recently moved to port 9009 by the protocol upgrade CH-715. The service is still configured to use port 8123, leading to timeouts. The s3-parquet-sink is healthy and not the root cause. The stack trace confirms the timeout issue is originating from the analytics-etl service's connection to the upstream service on the incorrect port. The latency histogram shows all failed requests hitting the timeout ceiling, reinforcing the connection issue.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"analytics-etl\",\n  \"target_port\": 9009,\n  \"restart_secondary_component\": \"s3-parquet-sink\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C8",
+          "prompt_tokens": 422,
+          "summary_text": "{\n  \"summary\": \"The Order-fulfillment service is experiencing elevated timeout rates due to a misconfiguration where it is still attempting to connect to the legacy port 5432, while the upstream service has been moved to port 15432. The stack trace confirms connection timeouts on the old port, and the latency histogram shows all failed requests hitting the timeout ceiling. The memcache-shipping-rates service is healthy and not the root cause.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"Order-fulfillment\",\n  \"target_port\": 15432,\n  \"restart_secondary_component\": \"memcache-shipping-rates\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        }
+      ]
+    },
+    "schema_compact_256": {
+      "passed_count": 4,
+      "total_tasks": 8,
+      "accuracy_pct": 50.0,
+      "correct_port_count": 8,
+      "avoided_bad_restart_count": 4,
+      "port_retained_in_summary_count": 8,
+      "neg_retained_in_summary_count": 8,
+      "mean_prompt_tokens": 465.5,
+      "tasks": [
+        {
+          "task_id": "C1",
+          "prompt_tokens": 455,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"checkout-api\",\n    \"new_port\": 6432,\n    \"old_port\": 5432\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"checkout-api is still configured to use the legacy port 5432, while the upstream service (inventory-db) has been migrated to port 6432, causing connection timeouts.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"redis-session-cache\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update checkout-api configuration to use the new port 6432 for upstream connections.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"checkout-api\",\n  \"target_port\": 6432,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C2",
+          "prompt_tokens": 461,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"auth-gateway\",\n    \"new_ports\": [\"8443\"],\n    \"old_ports\": [\"8080\"]\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"auth-gateway is still configured to use the legacy port 8080, while the token-signer's mTLS listener was moved to port 8443, causing connection timeouts.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"ldap-directory-sync\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update auth-gateway configuration to use the new port 8443 for upstream connections.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"auth-gateway\",\n  \"target_port\": 8443,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C3",
+          "prompt_tokens": 478,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"payment-worker\",\n    \"new_ports\": \"5671\",\n    \"old_ports\": \"5672\"\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"Payment-worker is still configured to use the legacy port 5672, which has been moved to 5671 by the broker upgrade BRK-308, causing connection timeouts.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"fraud-scorer-rpc\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update the payment-worker configuration to use the new port 5671 and verify connectivity.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"payment-worker\",\n  \"target_port\": 5671,\n  \"restart_secondary_component\": \"fraud-scorer-rpc\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C4",
+          "prompt_tokens": 462,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"search-indexer\",\n    \"new_ports\": \"9250\",\n    \"old_ports\": \"9200\"\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"search-indexer is still configured to connect to the legacy port 9200, which has been moved to 9250 due to a recent cluster re-shard operation.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"kafka-clickstream\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update the search-indexer configuration to use the new port 9250 and verify connectivity.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"search-indexer\",\n  \"target_port\": 9250,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        },
+        {
+          "task_id": "C5",
+          "prompt_tokens": 429,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service_names\": [\"billing-cron\"],\n    \"new_ports\": [\"7432\"],\n    \"old_ports\": [\"5432\"]\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"billing-cron is still configured to use the legacy port 5432, which has been moved to 7432 due to a DB cutover.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": [\"invoice-pdf-worker\"],\n  \"NEXT_ACTION\": \"Update billing-cron configuration to use the new port 7432.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"billing-cron\",\n  \"target_port\": 7432,\n  \"restart_secondary_component\": \"invoice-pdf-worker\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C6",
+          "prompt_tokens": 463,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"notification-hub\",\n    \"new_port\": 6380,\n    \"old_port\": 6379\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"notification-hub is still configured to use the legacy plaintext port 6379, while the valkey-pubsub cluster listener was moved to TLS port 6380.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"smtp-relay-proxy\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update notification-hub configuration to use the new TLS port 6380.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"notification-hub\",\n  \"target_port\": 6380,\n  \"restart_secondary_component\": \"smtp-relay-proxy\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C7",
+          "prompt_tokens": 480,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"analytics-etl\",\n    \"new_port\": 9009,\n    \"old_port\": 8123\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"analytics-etl is still configured to use the legacy port 8123, while the upstream service (clickhouse-events) has been moved to port 9009, causing connection timeouts.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"s3-parquet-sink\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update analytics-etl configuration to use the new port 9009 for the upstream service.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"analytics-etl\",\n  \"target_port\": 9009,\n  \"restart_secondary_component\": \"s3-parquet-sink\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": false,
+          "passed": false
+        },
+        {
+          "task_id": "C8",
+          "prompt_tokens": 496,
+          "summary_text": "{\n  \"ACTIVE_CONFIG_AND_PORTS\": {\n    \"service\": \"Order-fulfillment\",\n    \"new_port\": 15432,\n    \"old_port\": 5432\n  },\n  \"VERIFIED_ROOT_CAUSE\": \"Order-fulfillment is still configured to use the legacy port 5432, which has been moved to 15432 by the Proxy cutover PRX-820.\",\n  \"RULED_OUT_HEALTHY_COMPONENTS\": {\n    \"service\": \"memcache-shipping-rates\",\n    \"status\": \"HEALTHY\",\n    \"action\": \"Do NOT restart\"\n  },\n  \"NEXT_ACTION\": \"Update the UPSTREAM_PORT environment variable for Order-fulfillment to 15432 and verify connectivity.\"\n}",
+          "port_retained_in_summary": true,
+          "neg_retained_in_summary": true,
+          "turn10_output": "{\n  \"service\": \"Order-fulfillment\",\n  \"target_port\": 15432,\n  \"restart_secondary_component\": \"NONE\"\n}",
+          "correct_port": true,
+          "avoided_bad_restart": true,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "m3_knowledge_updates_and_lineage": {
+    "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+    "total_sqlite_sessions": 64,
+    "top1_ranked_stale_first_count": 6,
+    "current_state_queries": {
+      "top1_cosine": {
+        "passed_count": 2,
+        "total": 8,
+        "accuracy_pct": 25.0,
+        "rows": [
+          {
+            "id": "U1",
+            "service": "checkout-api",
+            "top1_is_stale": true,
+            "context": "[Session #1 | 2026-10-04 | cos=0.855]: Architecture reference for checkout-api and inventory-db: what port and database identity does checkout-api use to connect to inventory-db? checkout-api connects to inventory-db on port 5432 using database identity app_ro.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"app_ro\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U2",
+            "service": "auth-gateway",
+            "top1_is_stale": true,
+            "context": "[Session #2 | 2026-10-05 | cos=0.848]: Architecture reference for auth-gateway and user-profile-db: what port and database identity does auth-gateway use to connect to user-profile-db? auth-gateway connects to user-profile-db on port 5432 using database identity auth_reader.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"auth_reader\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U3",
+            "service": "payment-worker",
+            "top1_is_stale": true,
+            "context": "[Session #3 | 2026-10-06 | cos=0.851]: Architecture reference for payment-worker and ledger-postgres: what port and database identity does payment-worker use to connect to ledger-postgres? payment-worker connects to ledger-postgres on port 5432 using database identity pay_legacy.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"pay_legacy\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U4",
+            "service": "search-indexer",
+            "top1_is_stale": false,
+            "context": "[Session #60 | 2026-11-05 | cos=0.852]: SECURITY ROTATION NOTICE (search-indexer -> catalog-opensearch): revoked static account basic_admin; rotated search-indexer database authentication identity for catalog-opensearch to oidc_service_acct (port remains 9250).",
+            "output": "{\n  \"port\": \"9250\",\n  \"identity\": \"oidc_service_acct\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U5",
+            "service": "billing-cron",
+            "top1_is_stale": true,
+            "context": "[Session #5 | 2026-10-08 | cos=0.858]: Architecture reference for billing-cron and timescale-metrics: what port and database identity does billing-cron use to connect to timescale-metrics? billing-cron connects to timescale-metrics on port 5432 using database identity cron_user.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"cron_user\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U6",
+            "service": "notification-hub",
+            "top1_is_stale": false,
+            "context": "[Session #62 | 2026-11-02 | cos=0.842]: SECURITY ROTATION NOTICE (notification-hub -> valkey-pubsub): revoked static account default_acl; rotated notification-hub database authentication identity for valkey-pubsub to tls_client_cert (port remains 6380).",
+            "output": "{\n  \"port\": \"6380\",\n  \"identity\": \"tls_client_cert\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U7",
+            "service": "analytics-etl",
+            "top1_is_stale": true,
+            "context": "[Session #7 | 2026-10-05 | cos=0.842]: Architecture reference for analytics-etl and clickhouse-events: what port and database identity does analytics-etl use to connect to clickhouse-events? analytics-etl connects to clickhouse-events on port 8123 using database identity etl_readonly.",
+            "output": "{\n  \"port\": \"8123\",\n  \"identity\": \"etl_readonly\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U8",
+            "service": "order-fulfillment",
+            "top1_is_stale": true,
+            "context": "[Session #8 | 2026-10-06 | cos=0.878]: Architecture reference for order-fulfillment and citus-coordinator: what port and database identity does order-fulfillment use to connect to citus-coordinator? order-fulfillment connects to citus-coordinator on port 5432 using database identity order_rw.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"order_rw\"\n}",
+            "passed": false
+          }
+        ]
+      },
+      "top5_cosine": {
+        "passed_count": 8,
+        "total": 8,
+        "accuracy_pct": 100.0,
+        "rows": [
+          {
+            "id": "U1",
+            "service": "checkout-api",
+            "top1_is_stale": true,
+            "context": "[Session #1 | 2026-10-04 | cos=0.855]: Architecture reference for checkout-api and inventory-db: what port and database identity does checkout-api use to connect to inventory-db? checkout-api connects to inventory-db on port 5432 using database identity app_ro.\n[Session #57 | 2026-11-02 | cos=0.840]: SECURITY ROTATION NOTICE (checkout-api -> inventory-db): revoked static account app_ro; rotated checkout-api database authentication identity for inventory-db to vault_iam_role (port remains 6432).\n[Session #29 | 2026-10-18 | cos=0.825]: INCIDENT CUTOVER CHANGELOG (checkout-api -> inventory-db): deprecated legacy listener 5432; cut over checkout-api upstream pooler for inventory-db to port 6432.\n[Session #64 | 2026-11-04 | cos=0.816]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #8 | 2026-10-06 | cos=0.803]: Architecture reference for order-fulfillment and citus-coordinator: what port and database identity does order-fulfillment use to connect to citus-coordinator? order-fulfillment connects to citus-coordinator on port 5432 using database identity order_rw.",
+            "output": "{\n  \"port\": \"6432\",\n  \"identity\": \"vault_iam_role\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U2",
+            "service": "auth-gateway",
+            "top1_is_stale": true,
+            "context": "[Session #2 | 2026-10-05 | cos=0.848]: Architecture reference for auth-gateway and user-profile-db: what port and database identity does auth-gateway use to connect to user-profile-db? auth-gateway connects to user-profile-db on port 5432 using database identity auth_reader.\n[Session #30 | 2026-10-19 | cos=0.841]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.\n[Session #58 | 2026-11-03 | cos=0.840]: SECURITY ROTATION NOTICE (auth-gateway -> user-profile-db): revoked static account auth_reader; rotated auth-gateway database authentication identity for user-profile-db to mtls_spiffe_id (port remains 6433).\n[Session #64 | 2026-11-04 | cos=0.824]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #57 | 2026-11-02 | cos=0.822]: SECURITY ROTATION NOTICE (checkout-api -> inventory-db): revoked static account app_ro; rotated checkout-api database authentication identity for inventory-db to vault_iam_role (port remains 6432).",
+            "output": "{\n  \"port\": \"6433\",\n  \"identity\": \"mtls_spiffe_id\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U3",
+            "service": "payment-worker",
+            "top1_is_stale": true,
+            "context": "[Session #3 | 2026-10-06 | cos=0.851]: Architecture reference for payment-worker and ledger-postgres: what port and database identity does payment-worker use to connect to ledger-postgres? payment-worker connects to ledger-postgres on port 5432 using database identity pay_legacy.\n[Session #59 | 2026-11-04 | cos=0.850]: SECURITY ROTATION NOTICE (payment-worker -> ledger-postgres): revoked static account pay_legacy; rotated payment-worker database authentication identity for ledger-postgres to kms_token_role (port remains 7432).\n[Session #31 | 2026-10-20 | cos=0.838]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.\n[Session #64 | 2026-11-04 | cos=0.818]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #1 | 2026-10-04 | cos=0.810]: Architecture reference for checkout-api and inventory-db: what port and database identity does checkout-api use to connect to inventory-db? checkout-api connects to inventory-db on port 5432 using database identity app_ro.",
+            "output": "{\n  \"port\": \"7432\",\n  \"identity\": \"kms_token_role\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U4",
+            "service": "search-indexer",
+            "top1_is_stale": false,
+            "context": "[Session #60 | 2026-11-05 | cos=0.852]: SECURITY ROTATION NOTICE (search-indexer -> catalog-opensearch): revoked static account basic_admin; rotated search-indexer database authentication identity for catalog-opensearch to oidc_service_acct (port remains 9250).\n[Session #4 | 2026-10-07 | cos=0.848]: Architecture reference for search-indexer and catalog-opensearch: what port and database identity does search-indexer use to connect to catalog-opensearch? search-indexer connects to catalog-opensearch on port 9200 using database identity basic_admin.\n[Session #32 | 2026-10-21 | cos=0.835]: INCIDENT CUTOVER CHANGELOG (search-indexer -> catalog-opensearch): deprecated legacy listener 9200; cut over search-indexer upstream pooler for catalog-opensearch to port 9250.\n[Session #64 | 2026-11-04 | cos=0.801]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #57 | 2026-11-02 | cos=0.799]: SECURITY ROTATION NOTICE (checkout-api -> inventory-db): revoked static account app_ro; rotated checkout-api database authentication identity for inventory-db to vault_iam_role (port remains 6432).",
+            "output": "{\n  \"port\": \"9250\",\n  \"identity\": \"oidc_service_acct\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U5",
+            "service": "billing-cron",
+            "top1_is_stale": true,
+            "context": "[Session #5 | 2026-10-08 | cos=0.858]: Architecture reference for billing-cron and timescale-metrics: what port and database identity does billing-cron use to connect to timescale-metrics? billing-cron connects to timescale-metrics on port 5432 using database identity cron_user.\n[Session #61 | 2026-11-06 | cos=0.847]: SECURITY ROTATION NOTICE (billing-cron -> timescale-metrics): revoked static account cron_user; rotated billing-cron database authentication identity for timescale-metrics to iam_rds_signer (port remains 15432).\n[Session #33 | 2026-10-22 | cos=0.838]: INCIDENT CUTOVER CHANGELOG (billing-cron -> timescale-metrics): deprecated legacy listener 5432; cut over billing-cron upstream pooler for timescale-metrics to port 15432.\n[Session #59 | 2026-11-04 | cos=0.811]: SECURITY ROTATION NOTICE (payment-worker -> ledger-postgres): revoked static account pay_legacy; rotated payment-worker database authentication identity for ledger-postgres to kms_token_role (port remains 7432).\n[Session #64 | 2026-11-04 | cos=0.805]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).",
+            "output": "{\n  \"port\": \"15432\",\n  \"identity\": \"iam_rds_signer\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U6",
+            "service": "notification-hub",
+            "top1_is_stale": false,
+            "context": "[Session #62 | 2026-11-02 | cos=0.842]: SECURITY ROTATION NOTICE (notification-hub -> valkey-pubsub): revoked static account default_acl; rotated notification-hub database authentication identity for valkey-pubsub to tls_client_cert (port remains 6380).\n[Session #6 | 2026-10-04 | cos=0.838]: Architecture reference for notification-hub and valkey-pubsub: what port and database identity does notification-hub use to connect to valkey-pubsub? notification-hub connects to valkey-pubsub on port 6379 using database identity default_acl.\n[Session #34 | 2026-10-18 | cos=0.837]: INCIDENT CUTOVER CHANGELOG (notification-hub -> valkey-pubsub): deprecated legacy listener 6379; cut over notification-hub upstream pooler for valkey-pubsub to port 6380.\n[Session #64 | 2026-11-04 | cos=0.822]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #30 | 2026-10-19 | cos=0.811]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.",
+            "output": "{\n  \"port\": \"6380\",\n  \"identity\": \"tls_client_cert\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U7",
+            "service": "analytics-etl",
+            "top1_is_stale": true,
+            "context": "[Session #7 | 2026-10-05 | cos=0.842]: Architecture reference for analytics-etl and clickhouse-events: what port and database identity does analytics-etl use to connect to clickhouse-events? analytics-etl connects to clickhouse-events on port 8123 using database identity etl_readonly.\n[Session #63 | 2026-11-03 | cos=0.838]: SECURITY ROTATION NOTICE (analytics-etl -> clickhouse-events): revoked static account etl_readonly; rotated analytics-etl database authentication identity for clickhouse-events to kerberos_principal (port remains 9009).\n[Session #35 | 2026-10-19 | cos=0.824]: INCIDENT CUTOVER CHANGELOG (analytics-etl -> clickhouse-events): deprecated legacy listener 8123; cut over analytics-etl upstream pooler for clickhouse-events to port 9009.\n[Session #60 | 2026-11-05 | cos=0.803]: SECURITY ROTATION NOTICE (search-indexer -> catalog-opensearch): revoked static account basic_admin; rotated search-indexer database authentication identity for catalog-opensearch to oidc_service_acct (port remains 9250).\n[Session #64 | 2026-11-04 | cos=0.798]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).",
+            "output": "{\n  \"port\": \"9009\",\n  \"identity\": \"kerberos_principal\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U8",
+            "service": "order-fulfillment",
+            "top1_is_stale": true,
+            "context": "[Session #8 | 2026-10-06 | cos=0.878]: Architecture reference for order-fulfillment and citus-coordinator: what port and database identity does order-fulfillment use to connect to citus-coordinator? order-fulfillment connects to citus-coordinator on port 5432 using database identity order_rw.\n[Session #64 | 2026-11-04 | cos=0.865]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #36 | 2026-10-20 | cos=0.846]: INCIDENT CUTOVER CHANGELOG (order-fulfillment -> citus-coordinator): deprecated legacy listener 5432; cut over order-fulfillment upstream pooler for citus-coordinator to port 16432.\n[Session #57 | 2026-11-02 | cos=0.810]: SECURITY ROTATION NOTICE (checkout-api -> inventory-db): revoked static account app_ro; rotated checkout-api database authentication identity for inventory-db to vault_iam_role (port remains 6432).\n[Session #1 | 2026-10-04 | cos=0.807]: Architecture reference for checkout-api and inventory-db: what port and database identity does checkout-api use to connect to inventory-db? checkout-api connects to inventory-db on port 5432 using database identity app_ro.",
+            "output": "{\n  \"port\": \"16432\",\n  \"identity\": \"vault_dynamic_creds\"\n}",
+            "passed": true
+          }
+        ]
+      },
+      "fact_lineage": {
+        "passed_count": 8,
+        "total": 8,
+        "accuracy_pct": 100.0,
+        "rows": [
+          {
+            "id": "U1",
+            "service": "checkout-api",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- checkout-api.port = 6432 (since 2026-11-02, session #57, supersedes_fact_id=17)\n- checkout-api.identity = vault_iam_role (since 2026-11-02, session #57, supersedes_fact_id=2)",
+            "output": "{\n  \"port\": \"6432\",\n  \"identity\": \"vault_iam_role\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U2",
+            "service": "auth-gateway",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- auth-gateway.port = 6433 (since 2026-11-03, session #58, supersedes_fact_id=18)\n- auth-gateway.identity = mtls_spiffe_id (since 2026-11-03, session #58, supersedes_fact_id=4)",
+            "output": "{\n  \"port\": \"6433\",\n  \"identity\": \"mtls_spiffe_id\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U3",
+            "service": "payment-worker",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- payment-worker.port = 7432 (since 2026-11-04, session #59, supersedes_fact_id=19)\n- payment-worker.identity = kms_token_role (since 2026-11-04, session #59, supersedes_fact_id=6)",
+            "output": "{\n  \"port\": \"7432\",\n  \"identity\": \"kms_token_role\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U4",
+            "service": "search-indexer",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- search-indexer.port = 9250 (since 2026-11-05, session #60, supersedes_fact_id=20)\n- search-indexer.identity = oidc_service_acct (since 2026-11-05, session #60, supersedes_fact_id=8)",
+            "output": "{\n  \"port\": \"9250\",\n  \"identity\": \"oidc_service_acct\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U5",
+            "service": "billing-cron",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- billing-cron.port = 15432 (since 2026-11-06, session #61, supersedes_fact_id=21)\n- billing-cron.identity = iam_rds_signer (since 2026-11-06, session #61, supersedes_fact_id=10)",
+            "output": "{\n  \"port\": \"15432\",\n  \"identity\": \"iam_rds_signer\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U6",
+            "service": "notification-hub",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- notification-hub.port = 6380 (since 2026-11-02, session #62, supersedes_fact_id=22)\n- notification-hub.identity = tls_client_cert (since 2026-11-02, session #62, supersedes_fact_id=12)",
+            "output": "{\n  \"port\": \"6380\",\n  \"identity\": \"tls_client_cert\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U7",
+            "service": "analytics-etl",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- analytics-etl.port = 9009 (since 2026-11-03, session #63, supersedes_fact_id=23)\n- analytics-etl.identity = kerberos_principal (since 2026-11-03, session #63, supersedes_fact_id=14)",
+            "output": "{\n  \"port\": \"9009\",\n  \"identity\": \"kerberos_principal\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U8",
+            "service": "order-fulfillment",
+            "top1_is_stale": false,
+            "context": "ACTIVE NON-SUPERSEDED FACTS IN SQLITE:\n- order-fulfillment.port = 16432 (since 2026-11-04, session #64, supersedes_fact_id=24)\n- order-fulfillment.identity = vault_dynamic_creds (since 2026-11-04, session #64, supersedes_fact_id=16)",
+            "output": "{\n  \"port\": \"16432\",\n  \"identity\": \"vault_dynamic_creds\"\n}",
+            "passed": true
+          }
+        ]
+      }
+    },
+    "historical_date_queries": {
+      "top1_cosine": {
+        "passed_count": 1,
+        "total": 8,
+        "accuracy_pct": 12.5,
+        "rows": [
+          {
+            "id": "U1",
+            "service": "checkout-api",
+            "context": "[Session #29 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (checkout-api -> inventory-db): deprecated legacy listener 5432; cut over checkout-api upstream pooler for inventory-db to port 6432.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"legacy listener\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U2",
+            "service": "auth-gateway",
+            "context": "[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"user-profile-db\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U3",
+            "service": "payment-worker",
+            "context": "[Session #31 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"ledger-postgres\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U4",
+            "service": "search-indexer",
+            "context": "[Session #32 | 2026-10-21]: INCIDENT CUTOVER CHANGELOG (search-indexer -> catalog-opensearch): deprecated legacy listener 9200; cut over search-indexer upstream pooler for catalog-opensearch to port 9250.",
+            "output": "{\n  \"port\": \"9200\",\n  \"identity\": \"legacy listener\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U5",
+            "service": "billing-cron",
+            "context": "[Session #33 | 2026-10-22]: INCIDENT CUTOVER CHANGELOG (billing-cron -> timescale-metrics): deprecated legacy listener 5432; cut over billing-cron upstream pooler for timescale-metrics to port 15432.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"legacy listener\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U6",
+            "service": "notification-hub",
+            "context": "[Session #34 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (notification-hub -> valkey-pubsub): deprecated legacy listener 6379; cut over notification-hub upstream pooler for valkey-pubsub to port 6380.",
+            "output": "{\n  \"port\": \"6379\",\n  \"identity\": \"legacy listener\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U7",
+            "service": "analytics-etl",
+            "context": "[Session #35 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (analytics-etl -> clickhouse-events): deprecated legacy listener 8123; cut over analytics-etl upstream pooler for clickhouse-events to port 9009.",
+            "output": "{\n  \"port\": \"9000\",\n  \"identity\": \"clickhouse-events\"\n}",
+            "passed": false
+          },
+          {
+            "id": "U8",
+            "service": "order-fulfillment",
+            "context": "[Session #8 | 2026-10-06]: Architecture reference for order-fulfillment and citus-coordinator: what port and database identity does order-fulfillment use to connect to citus-coordinator? order-fulfillment connects to citus-coordinator on port 5432 using database identity order_rw.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"order_rw\"\n}",
+            "passed": true
+          }
+        ]
+      },
+      "top5_cosine": {
+        "passed_count": 8,
+        "total": 8,
+        "accuracy_pct": 100.0,
+        "rows": [
+          {
+            "id": "U1",
+            "service": "checkout-api",
+            "context": "[Session #29 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (checkout-api -> inventory-db): deprecated legacy listener 5432; cut over checkout-api upstream pooler for inventory-db to port 6432.\n[Session #1 | 2026-10-04]: Architecture reference for checkout-api and inventory-db: what port and database identity does checkout-api use to connect to inventory-db? checkout-api connects to inventory-db on port 5432 using database identity app_ro.\n[Session #57 | 2026-11-02]: SECURITY ROTATION NOTICE (checkout-api -> inventory-db): revoked static account app_ro; rotated checkout-api database authentication identity for inventory-db to vault_iam_role (port remains 6432).\n[Session #31 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.\n[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"app_ro\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U2",
+            "service": "auth-gateway",
+            "context": "[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.\n[Session #58 | 2026-11-03]: SECURITY ROTATION NOTICE (auth-gateway -> user-profile-db): revoked static account auth_reader; rotated auth-gateway database authentication identity for user-profile-db to mtls_spiffe_id (port remains 6433).\n[Session #2 | 2026-10-05]: Architecture reference for auth-gateway and user-profile-db: what port and database identity does auth-gateway use to connect to user-profile-db? auth-gateway connects to user-profile-db on port 5432 using database identity auth_reader.\n[Session #64 | 2026-11-04]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #59 | 2026-11-04]: SECURITY ROTATION NOTICE (payment-worker -> ledger-postgres): revoked static account pay_legacy; rotated payment-worker database authentication identity for ledger-postgres to kms_token_role (port remains 7432).",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"auth_reader\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U3",
+            "service": "payment-worker",
+            "context": "[Session #31 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.\n[Session #59 | 2026-11-04]: SECURITY ROTATION NOTICE (payment-worker -> ledger-postgres): revoked static account pay_legacy; rotated payment-worker database authentication identity for ledger-postgres to kms_token_role (port remains 7432).\n[Session #3 | 2026-10-06]: Architecture reference for payment-worker and ledger-postgres: what port and database identity does payment-worker use to connect to ledger-postgres? payment-worker connects to ledger-postgres on port 5432 using database identity pay_legacy.\n[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.\n[Session #29 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (checkout-api -> inventory-db): deprecated legacy listener 5432; cut over checkout-api upstream pooler for inventory-db to port 6432.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"pay_legacy\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U4",
+            "service": "search-indexer",
+            "context": "[Session #32 | 2026-10-21]: INCIDENT CUTOVER CHANGELOG (search-indexer -> catalog-opensearch): deprecated legacy listener 9200; cut over search-indexer upstream pooler for catalog-opensearch to port 9250.\n[Session #60 | 2026-11-05]: SECURITY ROTATION NOTICE (search-indexer -> catalog-opensearch): revoked static account basic_admin; rotated search-indexer database authentication identity for catalog-opensearch to oidc_service_acct (port remains 9250).\n[Session #4 | 2026-10-07]: Architecture reference for search-indexer and catalog-opensearch: what port and database identity does search-indexer use to connect to catalog-opensearch? search-indexer connects to catalog-opensearch on port 9200 using database identity basic_admin.\n[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.\n[Session #29 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (checkout-api -> inventory-db): deprecated legacy listener 5432; cut over checkout-api upstream pooler for inventory-db to port 6432.",
+            "output": "{\n  \"port\": \"9200\",\n  \"identity\": \"basic_admin\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U5",
+            "service": "billing-cron",
+            "context": "[Session #33 | 2026-10-22]: INCIDENT CUTOVER CHANGELOG (billing-cron -> timescale-metrics): deprecated legacy listener 5432; cut over billing-cron upstream pooler for timescale-metrics to port 15432.\n[Session #5 | 2026-10-08]: Architecture reference for billing-cron and timescale-metrics: what port and database identity does billing-cron use to connect to timescale-metrics? billing-cron connects to timescale-metrics on port 5432 using database identity cron_user.\n[Session #61 | 2026-11-06]: SECURITY ROTATION NOTICE (billing-cron -> timescale-metrics): revoked static account cron_user; rotated billing-cron database authentication identity for timescale-metrics to iam_rds_signer (port remains 15432).\n[Session #31 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.\n[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"cron_user\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U6",
+            "service": "notification-hub",
+            "context": "[Session #34 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (notification-hub -> valkey-pubsub): deprecated legacy listener 6379; cut over notification-hub upstream pooler for valkey-pubsub to port 6380.\n[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.\n[Session #62 | 2026-11-02]: SECURITY ROTATION NOTICE (notification-hub -> valkey-pubsub): revoked static account default_acl; rotated notification-hub database authentication identity for valkey-pubsub to tls_client_cert (port remains 6380).\n[Session #31 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.\n[Session #33 | 2026-10-22]: INCIDENT CUTOVER CHANGELOG (billing-cron -> timescale-metrics): deprecated legacy listener 5432; cut over billing-cron upstream pooler for timescale-metrics to port 15432.",
+            "output": "{\n  \"port\": \"6379\",\n  \"identity\": \"default_acl\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U7",
+            "service": "analytics-etl",
+            "context": "[Session #35 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (analytics-etl -> clickhouse-events): deprecated legacy listener 8123; cut over analytics-etl upstream pooler for clickhouse-events to port 9009.\n[Session #63 | 2026-11-03]: SECURITY ROTATION NOTICE (analytics-etl -> clickhouse-events): revoked static account etl_readonly; rotated analytics-etl database authentication identity for clickhouse-events to kerberos_principal (port remains 9009).\n[Session #7 | 2026-10-05]: Architecture reference for analytics-etl and clickhouse-events: what port and database identity does analytics-etl use to connect to clickhouse-events? analytics-etl connects to clickhouse-events on port 8123 using database identity etl_readonly.\n[Session #33 | 2026-10-22]: INCIDENT CUTOVER CHANGELOG (billing-cron -> timescale-metrics): deprecated legacy listener 5432; cut over billing-cron upstream pooler for timescale-metrics to port 15432.\n[Session #30 | 2026-10-19]: INCIDENT CUTOVER CHANGELOG (auth-gateway -> user-profile-db): deprecated legacy listener 5432; cut over auth-gateway upstream pooler for user-profile-db to port 6433.",
+            "output": "{\n  \"port\": \"8123\",\n  \"identity\": \"etl_readonly\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U8",
+            "service": "order-fulfillment",
+            "context": "[Session #8 | 2026-10-06]: Architecture reference for order-fulfillment and citus-coordinator: what port and database identity does order-fulfillment use to connect to citus-coordinator? order-fulfillment connects to citus-coordinator on port 5432 using database identity order_rw.\n[Session #36 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (order-fulfillment -> citus-coordinator): deprecated legacy listener 5432; cut over order-fulfillment upstream pooler for citus-coordinator to port 16432.\n[Session #64 | 2026-11-04]: SECURITY ROTATION NOTICE (order-fulfillment -> citus-coordinator): revoked static account order_rw; rotated order-fulfillment database authentication identity for citus-coordinator to vault_dynamic_creds (port remains 16432).\n[Session #29 | 2026-10-18]: INCIDENT CUTOVER CHANGELOG (checkout-api -> inventory-db): deprecated legacy listener 5432; cut over checkout-api upstream pooler for inventory-db to port 6432.\n[Session #31 | 2026-10-20]: INCIDENT CUTOVER CHANGELOG (payment-worker -> ledger-postgres): deprecated legacy listener 5432; cut over payment-worker upstream pooler for ledger-postgres to port 7432.",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"order_rw\"\n}",
+            "passed": true
+          }
+        ]
+      },
+      "fact_lineage": {
+        "passed_count": 8,
+        "total": 8,
+        "accuracy_pct": 100.0,
+        "rows": [
+          {
+            "id": "U1",
+            "service": "checkout-api",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- checkout-api.port = 5432 (recorded 2026-10-04, session #1)\n- checkout-api.identity = app_ro (recorded 2026-10-04, session #1)",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"app_ro\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U2",
+            "service": "auth-gateway",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- auth-gateway.port = 5432 (recorded 2026-10-05, session #2)\n- auth-gateway.identity = auth_reader (recorded 2026-10-05, session #2)",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"auth_reader\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U3",
+            "service": "payment-worker",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- payment-worker.port = 5432 (recorded 2026-10-06, session #3)\n- payment-worker.identity = pay_legacy (recorded 2026-10-06, session #3)",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"pay_legacy\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U4",
+            "service": "search-indexer",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- search-indexer.port = 9200 (recorded 2026-10-07, session #4)\n- search-indexer.identity = basic_admin (recorded 2026-10-07, session #4)",
+            "output": "{\n  \"port\": \"9200\",\n  \"identity\": \"basic_admin\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U5",
+            "service": "billing-cron",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- billing-cron.port = 5432 (recorded 2026-10-08, session #5)\n- billing-cron.identity = cron_user (recorded 2026-10-08, session #5)",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"cron_user\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U6",
+            "service": "notification-hub",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- notification-hub.port = 6379 (recorded 2026-10-04, session #6)\n- notification-hub.identity = default_acl (recorded 2026-10-04, session #6)",
+            "output": "{\n  \"port\": \"6379\",\n  \"identity\": \"default_acl\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U7",
+            "service": "analytics-etl",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- analytics-etl.port = 8123 (recorded 2026-10-05, session #7)\n- analytics-etl.identity = etl_readonly (recorded 2026-10-05, session #7)",
+            "output": "{\n  \"port\": \"8123\",\n  \"identity\": \"etl_readonly\"\n}",
+            "passed": true
+          },
+          {
+            "id": "U8",
+            "service": "order-fulfillment",
+            "context": "POINT-IN-TIME FACTS AS OF 2026-10-12:\n- order-fulfillment.port = 5432 (recorded 2026-10-06, session #8)\n- order-fulfillment.identity = order_rw (recorded 2026-10-06, session #8)",
+            "output": "{\n  \"port\": \"5432\",\n  \"identity\": \"order_rw\"\n}",
+            "passed": true
+          }
+        ]
+      }
+    }
+  },
+  "m4_control_policy_hook_vs_tool": {
+    "single_hop_4_tasks": {
+      "pre_turn_hook": {
+        "passed_count": 4,
+        "mean_gpu_ms": 1316.92,
+        "mean_db_ms": 0.128,
+        "mean_llm_calls": 1.0,
+        "rows": [
+          {
+            "service": "checkout-api",
+            "llm_calls": 1,
+            "db_ms": 0.158,
+            "gpu_ms": 1282.444,
+            "total_tokens": 142,
+            "passed": true,
+            "output": "{\"port\": \"6432\", \"identity\": \"vault_iam_role\"}"
+          },
+          {
+            "service": "auth-gateway",
+            "llm_calls": 1,
+            "db_ms": 0.13,
+            "gpu_ms": 1350.966,
+            "total_tokens": 147,
+            "passed": true,
+            "output": "{\"port\": \"6433\", \"identity\": \"mtls_spiffe_id\"}"
+          },
+          {
+            "service": "payment-worker",
+            "llm_calls": 1,
+            "db_ms": 0.111,
+            "gpu_ms": 1282.051,
+            "total_tokens": 141,
+            "passed": true,
+            "output": "{\"port\": \"7432\", \"identity\": \"kms_token_role\"}"
+          },
+          {
+            "service": "search-indexer",
+            "llm_calls": 1,
+            "db_ms": 0.112,
+            "gpu_ms": 1352.203,
+            "total_tokens": 147,
+            "passed": true,
+            "output": "{\"port\": \"9250\", \"identity\": \"oidc_service_acct\"}"
+          }
+        ]
+      },
+      "agent_tool_loop": {
+        "passed_count": 4,
+        "mean_gpu_ms": 1723.63,
+        "mean_db_ms": 0.114,
+        "mean_llm_calls": 2.0,
+        "rows": [
+          {
+            "service": "checkout-api",
+            "llm_calls": 2,
+            "db_ms": 0.112,
+            "gpu_ms": 1657.024,
+            "total_tokens": 299,
+            "passed": true,
+            "output": "{\"port\": \"6432\", \"identity\": \"vault_iam_role\"}"
+          },
+          {
+            "service": "auth-gateway",
+            "llm_calls": 2,
+            "db_ms": 0.113,
+            "gpu_ms": 1787.788,
+            "total_tokens": 307,
+            "passed": true,
+            "output": "{\"port\": \"6433\", \"identity\": \"mtls_spiffe_id\"}"
+          },
+          {
+            "service": "payment-worker",
+            "llm_calls": 2,
+            "db_ms": 0.105,
+            "gpu_ms": 1654.878,
+            "total_tokens": 298,
+            "passed": true,
+            "output": "{\"port\": \"7432\", \"identity\": \"kms_token_role\"}"
+          },
+          {
+            "service": "search-indexer",
+            "llm_calls": 2,
+            "db_ms": 0.127,
+            "gpu_ms": 1794.812,
+            "total_tokens": 307,
+            "passed": true,
+            "output": "{\"port\": \"9250\", \"identity\": \"oidc_service_acct\"}"
+          }
+        ]
+      },
+      "latency_speedup_hook_vs_tool": 1.31
+    },
+    "two_hop_4_tasks": {
+      "pre_turn_hook_only": {
+        "passed_count": 0,
+        "mean_gpu_ms": 3374.38,
+        "rows": [
+          {
+            "alert": "INC-901",
+            "backing_service": "checkout-api",
+            "llm_calls": 1,
+            "db_ms": 0.013,
+            "gpu_ms": 3009.992,
+            "total_tokens": 163,
+            "passed": false,
+            "output": "{\n  \"alert_id\": \"INC-901\",\n  \"backing_service\": \"checkout-api\",\n  \"database_port\": 5432,\n  \"identity\": \"checkout-api-db\"\n}"
+          },
+          {
+            "alert": "INC-902",
+            "backing_service": "auth-gateway",
+            "llm_calls": 1,
+            "db_ms": 0.013,
+            "gpu_ms": 3539.915,
+            "total_tokens": 164,
+            "passed": false,
+            "output": "{\n  \"alert_name\": \"INC-902\",\n  \"description\": \"Token verification timeout on mobile-sso-edge\",\n  \"backing_service\": \"auth-gateway\",\n  \"database_port\": null,\n  \"identity\": null\n}"
+          },
+          {
+            "alert": "INC-903",
+            "backing_service": "payment-worker",
+            "llm_calls": 1,
+            "db_ms": 0.012,
+            "gpu_ms": 3078.786,
+            "total_tokens": 158,
+            "passed": false,
+            "output": "{\n  \"alert_name\": \"INC-903\",\n  \"backing_service\": \"payment-worker\",\n  \"database_port\": 5432,\n  \"identity\": \"stripe-ingest-edge\"\n}"
+          },
+          {
+            "alert": "INC-904",
+            "backing_service": "search-indexer",
+            "llm_calls": 1,
+            "db_ms": 0.012,
+            "gpu_ms": 3868.82,
+            "total_tokens": 168,
+            "passed": false,
+            "output": "{\n  \"alert\": \"INC-904\",\n  \"service\": \"storefront-graphql-edge\",\n  \"backing_service\": \"search-indexer\",\n  \"database_port\": 5432,\n  \"identity\": \"search-indexer-identity\"\n}"
+          }
+        ]
+      },
+      "hybrid_hook_plus_search_tool": {
+        "passed_count": 4,
+        "mean_gpu_ms": 2582.99,
+        "rows": [
+          {
+            "alert": "INC-901",
+            "backing_service": "checkout-api",
+            "llm_calls": 2,
+            "db_ms": 0.141,
+            "gpu_ms": 2481.736,
+            "total_tokens": 408,
+            "passed": true,
+            "output": "{\n  \"service\": \"checkout-api\",\n  \"port\": 6432,\n  \"identity\": \"vault_iam_role\"\n}"
+          },
+          {
+            "alert": "INC-902",
+            "backing_service": "auth-gateway",
+            "llm_calls": 2,
+            "db_ms": 0.118,
+            "gpu_ms": 2686.689,
+            "total_tokens": 401,
+            "passed": true,
+            "output": "{\n  \"service\": \"auth-gateway\",\n  \"port\": 6433,\n  \"identity\": \"mtls_spiffe_id\"\n}"
+          },
+          {
+            "alert": "INC-903",
+            "backing_service": "payment-worker",
+            "llm_calls": 2,
+            "db_ms": 0.139,
+            "gpu_ms": 2478.617,
+            "total_tokens": 395,
+            "passed": true,
+            "output": "{\n  \"service\": \"payment-worker\",\n  \"port\": 7432,\n  \"identity\": \"kms_token_role\"\n}"
+          },
+          {
+            "alert": "INC-904",
+            "backing_service": "search-indexer",
+            "llm_calls": 2,
+            "db_ms": 0.12,
+            "gpu_ms": 2684.924,
+            "total_tokens": 399,
+            "passed": true,
+            "output": "{\n  \"service\": \"search-indexer\",\n  \"port\": 9250,\n  \"identity\": \"oidc_service_acct\"\n}"
+          }
+        ]
+      }
+    }
+  }
+}
